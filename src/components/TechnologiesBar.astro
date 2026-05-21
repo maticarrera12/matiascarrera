@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+
+const tecnologies = (await getCollection('tecnologies')).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+---
+
+<div class="technologies-bar mt-8">
+	<div class="relative flex items-center justify-center py-1">
+		<div class="tech-bar__divider" aria-hidden="true"></div>
+		<p
+			class="relative z-1 shrink-0 bg-background px-4 text-center text-[0.6875rem] font-medium tracking-[0.28em] text-muted uppercase sm:px-6"
+		>
+			Tecnologías que utilizo
+		</p>
+	</div>
+
+	<div class="mt-2 flex justify-center overflow-x-auto">
+		<ul
+			class="m-0 flex w-max list-none items-stretch p-0"
+			role="list"
+		>
+			{
+				tecnologies.flatMap((tech, index) => [
+					index > 0 ? (
+						<li class="tech-bar__vdivider" aria-hidden="true" />
+					) : null,
+					<li>
+						<div class="flex items-center gap-3 px-6 py-5 sm:px-10 sm:py-6">
+							<img
+								src={tech.data.image}
+								alt=""
+								width={28}
+								height={28}
+								class="size-7 shrink-0 object-contain bg-foreground/20 dark:bg-transparent rounded-full p-1 hover:scale-110 transition-all duration-300"
+								loading="lazy"
+							/>
+							<span class="whitespace-nowrap text-sm font-medium text-foreground sm:text-base">
+								{tech.data.name}
+							</span>
+						</div>
+					</li>,
+				])
+			}
+		</ul>
+	</div>
+</div>
+
+<style>
+	.tech-bar__divider {
+		position: absolute;
+		inset-inline: 0;
+		top: 50%;
+		height: 0.5px;
+		translate: 0 -50%;
+		background-color: var(--color-foreground);
+		-webkit-mask-image: linear-gradient(
+			90deg,
+			transparent 0%,
+			#000 15%,
+			#000 85%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			90deg,
+			transparent 0%,
+			#000 15%,
+			#000 85%,
+			transparent 100%
+		);
+	}
+
+	.tech-bar__vdivider {
+		width: 1px;
+		flex-shrink: 0;
+		align-self: stretch;
+		background-color: var(--color-foreground);
+		opacity: 0.18;
+		-webkit-mask-image: linear-gradient(
+			180deg,
+			transparent 0%,
+			#000 18%,
+			#000 82%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			180deg,
+			transparent 0%,
+			#000 18%,
+			#000 82%,
+			transparent 100%
+		);
+	}
+</style>

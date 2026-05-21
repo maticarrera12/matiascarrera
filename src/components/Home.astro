@@ -13,10 +13,10 @@ import SocialButton from "./SocialButton.astro";
 		<div class="hero-sky__spacer h-24" aria-hidden="true"></div>
 
 		<div
-			class="hero-mountains relative z-[1] -mt-8 flex flex-col items-center justify-end overflow-hidden"
+			class="hero-mountains relative z-1 -mt-8 flex flex-col items-center justify-end overflow-hidden"
 		>
 			<svg
-				class="hero-mountains__svg block h-[28.5rem] w-full min-w-[320rem] max-w-none translate-y-px overflow-visible"
+				class="hero-mountains__svg block h-114 w-full min-w-1280 max-w-none translate-y-px overflow-visible"
 				width="5120"
 				height="456"
 				fill="none"
@@ -36,10 +36,10 @@ import SocialButton from "./SocialButton.astro";
 		</div>
 
 		<div
-			class="hero-mountains-transition pointer-events-none absolute right-0 bottom-0 left-0 z-[2] flex w-full flex-col items-center justify-end overflow-hidden"
+			class="hero-mountains-transition pointer-events-none absolute right-0 bottom-0 left-0 z-2 flex w-full flex-col items-center justify-end overflow-hidden"
 		>
 			<svg
-				class="hero-mountains__svg block h-[28.5rem] w-full min-w-[320rem] max-w-none translate-y-px overflow-visible align-bottom"
+				class="hero-mountains__svg block h-114 w-full min-w-1280 max-w-none translate-y-px overflow-visible align-bottom"
 				width="5120"
 				height="456"
 				fill="none"
@@ -57,7 +57,7 @@ import SocialButton from "./SocialButton.astro";
 
 	<!-- Contenido encima del fondo (misma celda del grid) -->
 	<div
-		class="container relative z-10 col-start-1 row-start-1 -mt-8 w-full pt-20 pb-24"
+		class="container relative z-10 col-start-1 row-start-1 -mt-8 w-full pt-20 lg:pt-48 pb-12"
 	>
 		<section
 			class="relative z-10 mt-24 grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12"
@@ -76,12 +76,12 @@ import SocialButton from "./SocialButton.astro";
 					<span class="text-primary">centradas en las personas</span>
 				</p>
 
-				<div class="reveal flex items-center gap-4 flex-wrap justify-center md:justify-start">
+				<div class="reveal flex items-center gap-1 justify-center lg:justify-start">
 					<a
 						href="#proyectos"
 						class="group/proyectos inline-flex items-center gap-2 rounded-md bg-linear-to-r from-primary to-primary/80 px-4 py-4 font-semibold text-white"
 					>
-						Ver Proyectos
+						Proyectos
 						<Icon
 							is:inline
 							name="lucide:arrow-right"
@@ -112,7 +112,7 @@ import SocialButton from "./SocialButton.astro";
 					/>
 				</div>
 			</div>
-			<div class="relative flex min-w-0 items-center justify-center">
+			<div class="relative flex min-w-0 items-center justify-center mt-12 lg:mt-0">
 				{/* Glow */}
 				<div
 					class="absolute inset-0 bg-primary/10 blur-3xl rounded-full"

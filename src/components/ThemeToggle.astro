@@ -1,5 +1,10 @@
 ---
-const maskId = 'theme-toggle';
+interface Props {
+	instanceId?: string;
+}
+
+const { instanceId = 'main' } = Astro.props;
+const maskId = `theme-toggle-${instanceId}`;
 const sunDots = [
 	{ cx: 22, cy: 12, delay: 280 },
 	{ cx: 19.0711, cy: 19.0711, delay: 200 },
@@ -14,8 +19,8 @@ const sunDots = [
 
 <button
 	type="button"
-	id="theme-toggle"
 	class="theme-toggle shrink-0 text-foreground hover:text-primary"
+	data-theme-toggle
 	aria-label="Activar modo oscuro"
 >
 	<svg

@@ -44,13 +44,7 @@ function applyTheme(mode: ColorMode): void {
 		root.style.setProperty(name, cssValue);
 	}
 
-	const toggle = document.getElementById('theme-toggle');
-	if (toggle) {
-		toggle.setAttribute(
-			'aria-label',
-			mode === 'light' ? 'Activar modo oscuro' : 'Activar modo claro',
-		);
-	}
+	updateThemeToggleLabels(mode);
 
 	try {
 		localStorage.setItem(STORAGE_KEY, mode);
@@ -79,16 +73,29 @@ function registerAnimatedProperties(mode: ColorMode): void {
 	}
 }
 
-function bindThemeToggle(): void {
-	const toggle = document.getElementById('theme-toggle');
-	if (!toggle || toggle.dataset.bound === '1') return;
-	toggle.dataset.bound = '1';
+function getThemeToggles(): HTMLElement[] {
+	return [...document.querySelectorAll<HTMLElement>('[data-theme-toggle]')];
+}
 
-	toggle.addEventListener('click', () => {
-		const current = getResolvedMode();
-		const next: ColorMode = current === 'light' ? 'dark' : 'light';
-		applyTheme(next);
-	});
+function updateThemeToggleLabels(mode: ColorMode): void {
+	const label =
+		mode === 'light' ? 'Activar modo oscuro' : 'Activar modo claro';
+	for (const toggle of getThemeToggles()) {
+		toggle.setAttribute('aria-label', label);
+	}
+}
+
+function bindThemeToggle(): void {
+	for (const toggle of getThemeToggles()) {
+		if (toggle.dataset.bound === '1') continue;
+		toggle.dataset.bound = '1';
+
+		toggle.addEventListener('click', () => {
+			const current = getResolvedMode();
+			const next: ColorMode = current === 'light' ? 'dark' : 'light';
+			applyTheme(next);
+		});
+	}
 }
 
 export function initThemeClient(): void {
@@ -103,13 +110,7 @@ export function initThemeClient(): void {
 	if (current !== mode) {
 		applyTheme(mode);
 	} else {
-		const toggle = document.getElementById('theme-toggle');
-		if (toggle) {
-			toggle.setAttribute(
-				'aria-label',
-				mode === 'light' ? 'Activar modo oscuro' : 'Activar modo claro',
-			);
-		}
+		updateThemeToggleLabels(mode);
 	}
 
 	bindThemeToggle();

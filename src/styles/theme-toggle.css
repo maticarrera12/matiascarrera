@@ -20,8 +20,9 @@
 	outline-offset: 2px;
 }
 
-/* relative: el ::before no debe anclarse al header fixed (toda la barra) */
-.nav-header .theme-toggle {
+/* En barra/nav/footer: no usar fixed del toggle suelto */
+.nav-header .theme-toggle,
+.site-footer .theme-toggle {
 	position: relative;
 	top: auto;
 	right: auto;

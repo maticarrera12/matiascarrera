@@ -1,0 +1,96 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, description, cover, stack, type, demo, repo, status } =
+	project.data;
+
+const href = demo ?? repo ?? '#';
+const isExternal = href.startsWith('http');
+const coverAlt = 'Captura de ' + title;
+
+let statusDot = 'bg-zinc-500';
+let statusGlow = 'bg-zinc-500/40';
+if (status === 'active') {
+	statusDot = 'bg-emerald-400';
+	statusGlow = 'bg-emerald-400/50';
+} else if (status === 'in-progress') {
+	statusDot = 'bg-amber-400';
+	statusGlow = 'bg-amber-400/50';
+}
+
+const stackPreview = stack.slice(0, 3);
+---
+
+<article
+	class="project-card group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 shadow-md transition-colors duration-300 hover:border-gray-300 dark:shadow-zinc-800 dark:hover:border-zinc-700"
+>
+	<a
+		href={href}
+		class="flex h-full min-h-0 flex-col outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary"
+		target={isExternal ? '_blank' : undefined}
+		rel={isExternal ? 'noopener noreferrer' : undefined}
+	>
+		<div class="overflow-hidden">
+			<img
+				src={cover}
+				alt={coverAlt}
+				width={640}
+				height={400}
+				class="aspect-[16/10] w-full shrink-0 object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+				loading="lazy"
+			/>
+		</div>
+
+		<div class="flex min-h-0 flex-1 flex-col gap-4 p-6">
+			<div>
+				<h3 class="text-2xl font-bold tracking-tight text-foreground">
+					{title}
+				</h3>
+				<div class="mt-2 flex items-center gap-2">
+					<span class="relative flex size-2 shrink-0" aria-hidden="true">
+						<span
+							class={'absolute -inset-1 rounded-full blur-sm animate-pulse ' +
+								statusGlow}
+						>
+						</span>
+						<span
+							class={'relative size-2 rounded-full ' + statusDot}
+						>
+						</span>
+					</span>
+					<span class="text-sm text-slate-400">{type}</span>
+				</div>
+			</div>
+
+			<p class="line-clamp-4 flex-1 text-sm leading-relaxed text-slate-400">
+				{description}
+			</p>
+
+			<div class="mt-auto flex items-end justify-between gap-4 pt-1">
+				<ul class="m-0 flex list-none flex-wrap gap-2 p-0">
+					{
+						stackPreview.map((tech) => (
+							<li>
+								<span class="rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-800 px-2.5 py-1 text-xs text-slate-400 dark:text-zinc-400">
+									{tech}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+				<Icon
+					is:inline
+					name="lucide:arrow-right"
+					class="size-5 shrink-0 text-foreground transition-transform duration-200 ease-out group-hover:translate-x-1"
+					aria-hidden="true"
+				/>
+			</div>
+		</div>
+	</a>
+</article>

@@ -60,6 +60,13 @@ export const REVEAL_BOOT_SCRIPT = `
 		section.scrollIntoView({ behavior: "smooth" });
 	};
 
+	window.goProyectos = function () {
+		var section = document.getElementById("proyectos");
+		if (!section) return;
+		replayReveal(section, 80);
+		section.scrollIntoView({ behavior: "smooth" });
+	};
+
 	function boot() {
 		document.documentElement.classList.add("reveal-ready");
 		setupObserver();

@@ -1,9 +1,21 @@
+---
+import { Icon } from 'astro-icon/components';
+import ThemeToggle from './ThemeToggle.astro';
+import { AUTHOR, SOCIAL_LINKS } from '../const';
+
+const socialLinks = [
+	{ href: SOCIAL_LINKS.github, icon: 'mdi:github', label: 'GitHub' },
+	{ href: SOCIAL_LINKS.linkedin, icon: 'mdi:linkedin', label: 'LinkedIn' },
+	{ href: SOCIAL_LINKS.twitter, icon: 'mdi:twitter', label: 'Twitter' },
+	{ href: SOCIAL_LINKS.email, icon: 'mdi:email-outline', label: 'Email' },
+] as const;
+---
 <footer
 	class="site-footer relative flex flex-col justify-end overflow-hidden overflow-clip pt-48 sky-gradient"
 	role="contentinfo"
 >
 	<svg
-		class="footer-cloud-accent pointer-events-none absolute right-1/2 bottom-0 max-w-none translate-x-[86px]"
+		class="footer-cloud-accent pointer-events-none absolute right-1/2 bottom-0 z-0 max-w-none translate-x-[86px]"
 		viewBox="0 0 1557 213"
 		width="1590"
 		height="213"
@@ -13,17 +25,17 @@
 		aria-hidden="true"
 	>
 		<path
-			class="fill-[#20495e] transition-[fill] duration-(--color-swap-duration) ease-(--color-swap-timing-function)"
+			class="footer-cloud-accent__path"
 			d="M1331 165.5C1320.5 162.5 1311 112 1221.5 92.4999C1132 72.9999 1104.5 114 1093.5 112C1082.5 110 1052 6.04351 903.5 1.00011C771 -3.49989 732.5 90 722.5 92.4999C712.5 94.9998 647.5 54.0001 535.5 73.9999C423.5 93.9997 421.5 165.5 411.5 165.5C401.5 165.5 359 58.5001 203.5 49.4999C48 40.4998 0.5 136 0.5 209.5C0.5 283 62.5 309.5 62.5 309.5H100.5L1556.5 304.5V232.5C1556.5 215.5 1542.5 159.009 1464 145.5C1368.81 129.118 1341.5 168.5 1331 165.5Z"
 		></path>
 	</svg>
 
 	<div
-		class="pointer-events-none absolute top-0 right-0 left-0 flex flex-col items-center justify-end overflow-hidden overflow-clip"
+		class="pointer-events-none absolute top-0 right-0 left-0 z-0 flex flex-col items-center justify-end overflow-hidden overflow-clip"
 		aria-hidden="true"
 	>
 		<svg
-			class="footer-clouds__strip relative -mt-px block w-full min-w-[5120px] max-w-none translate-y-[-1px] overflow-visible max-[48rem]:translate-x-[100px] max-[48rem]:translate-y-[-1px]"
+			class="footer-clouds__strip relative -mt-px block w-full min-w-[5120px] max-w-none -translate-y-1 overflow-visible max-[48rem]:translate-x-[100px] max-[48rem]:translate-y-[-1px]"
 			width="320rem"
 			height="15.625rem"
 			viewBox="0 0 5120 337"
@@ -38,9 +50,28 @@
 		</svg>
 	</div>
 
-	<div
-		class="container relative z-2 py-8 pb-12 text-base text-footer-muted"
-	>
-		<p>Footer content — newsletter and links live here on the real site.</p>
+	<div class="container relative z-10 py-8 pb-12">
+		<div class="flex flex-wrap items-center gap-4">
+			<ThemeToggle instanceId="footer" />
+			<div class="flex items-center gap-3">
+				{
+					socialLinks.map((link) => (
+						<a
+							href={link.href}
+							class="inline-flex text-foreground hover:text-primary hover:scale-110 transition-all duration-300"
+							aria-label={link.label}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<Icon is:inline name={link.icon} class="size-5" aria-hidden="true" />
+						</a>
+					))
+				}
+			</div>
+		</div>
+		<p class="mt-4 text-sm text-muted">
+			&copy; {new Date().getFullYear()}
+			{AUTHOR.name}. Todos los derechos reservados.
+		</p>
 	</div>
 </footer>

@@ -90,7 +90,17 @@
 		filter: blur(0);
 	}
 
-	html[data-color-mode='dark'] .footer-cloud-accent path {
+	.footer-cloud-accent__path {
+		fill: var(--color-cloud-500);
+		transition:
+			fill var(--color-swap-duration) var(--color-swap-timing-function);
+	}
+
+	html[data-color-mode='light'] .footer-cloud-accent__path {
+		fill: var(--color-cloud-300);
+	}
+
+	html[data-color-mode='dark'] .footer-cloud-accent__path {
 		fill: rgba(14, 20, 27, 0.5);
 	}
 
@@ -98,7 +108,7 @@
 		html,
 		.page-main,
 		.site-footer,
-		.footer-cloud-accent path {
+		.footer-cloud-accent__path {
 			transition: none;
 		}
 
@@ -138,7 +148,9 @@
 }
 
 ::view-transition-old(site-nav),
-::view-transition-new(site-nav) {
+::view-transition-new(site-nav),
+::view-transition-old(site-footer),
+::view-transition-new(site-footer) {
 	animation: none;
 }
 
