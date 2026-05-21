@@ -25,11 +25,6 @@ const themeInitScript = getThemeInitInlineScript();
 		<link rel="canonical" href={SITE_URL} />
 		<meta name="generator" content={Astro.generator} />
 		<script is:inline set:html={themeInitScript}></script>
-		<script>
-			import { initThemeClient } from '../scripts/theme-client';
-
-			initThemeClient();
-		</script>
 		<Font cssVariable="--font-outfit" />
 		<ClientRouter />
 		<title>{SITE_TITLE}</title>
@@ -37,9 +32,14 @@ const themeInitScript = getThemeInitInlineScript();
 	<body
 		class="page-shell m-0 flex min-h-screen w-full flex-col bg-background font-outfit text-lg leading-[calc(0.95+0.62rem)] antialiased"
 	>
-		<Nav />
+		<Nav transition:persist="site-nav" />
 		<slot />
 		<Footer transition:persist="site-footer" />
+		<script>
+			import { initThemeClient } from '../scripts/theme-client';
+
+			initThemeClient();
+		</script>
 		<script is:inline set:html={REVEAL_BOOT_SCRIPT}></script>
 	</body>
 </html>

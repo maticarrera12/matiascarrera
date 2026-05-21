@@ -10,8 +10,7 @@ const { project } = Astro.props;
 const { title, description, cover, stack, type, demo, repo, status } =
 	project.data;
 
-const href = demo ?? repo ?? '#';
-const isExternal = href.startsWith('http');
+const href = `/projects/${project.id}`;
 const coverAlt = 'Captura de ' + title;
 
 let statusDot = 'bg-zinc-500';
@@ -33,8 +32,6 @@ const stackPreview = stack.slice(0, 3);
 	<a
 		href={href}
 		class="flex h-full min-h-0 flex-col outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary"
-		target={isExternal ? '_blank' : undefined}
-		rel={isExternal ? 'noopener noreferrer' : undefined}
 	>
 		<div class="overflow-hidden">
 			<img

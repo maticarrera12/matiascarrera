@@ -53,7 +53,7 @@ function isSamePageNav(href: string): boolean {
 			</ul>
 		</div>
 
-		<ThemeToggle instanceId="nav" />
+		<ThemeToggle />
 	</div>
 </header>
 
@@ -87,42 +87,39 @@ function isSamePageNav(href: string): boolean {
 		return (header ? header.offsetHeight : 64) + 24;
 	}
 
-	function sectionTop(el) {
-		return window.scrollY + el.getBoundingClientRect().top;
+	function activeFromLocation() {
+		if (location.pathname !== "/" || !location.hash) {
+			return location.pathname === "/" ? "/" : location.pathname;
+		}
+		return location.hash === "#sobre-mi" ? "/#sobre-mi"
+			: location.hash === "#proyectos" ? "/#proyectos"
+			: "/";
 	}
 
 	function getActiveHrefFromScroll() {
 		var y = window.scrollY + navScrollOffset();
-		var sobre = document.getElementById("sobre-mi");
-		var proyectos = document.getElementById("proyectos");
-
-		if (proyectos && y >= sectionTop(proyectos)) return "/#proyectos";
-		if (sobre && y >= sectionTop(sobre)) return "/#sobre-mi";
+		var sections = [
+			{ id: "proyectos", href: "/#proyectos" },
+			{ id: "sobre-mi",  href: "/#sobre-mi"  },
+		];
+		for (var i = 0; i < sections.length; i++) {
+			var el = document.getElementById(sections[i].id);
+			if (el && y >= window.scrollY + el.getBoundingClientRect().top) return sections[i].href;
+		}
 		return "/";
-	}
-
-	function resolveActiveHref(forcedHref) {
-		var p = navPathname();
-		if (typeof forcedHref === "string") return forcedHref;
-		if (p !== "/") return p;
-		return getActiveHrefFromScroll();
 	}
 
 	function syncNav(forcedHref) {
 		var p = navPathname();
-		var activeHref = resolveActiveHref(forcedHref);
+		var activeHref = typeof forcedHref === "string" ? forcedHref
+			: p !== "/" ? p
+			: getActiveHrefFromScroll();
 
 		document.querySelectorAll("[data-nav-link]").forEach(function (el) {
 			var href = el.getAttribute("data-nav");
-			var on = false;
-
-			if (p === "/") {
-				if (href === "/" || href === "/#") on = activeHref === "/";
-				else if (href && href.indexOf("/#") === 0) on = activeHref === href;
-			} else {
-				on = p === href;
-			}
-
+			var on = p === "/"
+				? (href === "/" || href === "/#" ? activeHref === "/" : activeHref === href)
+				: p === href;
 			el.className = on
 				? "text-[0.9375rem] text-foreground"
 				: "text-[0.9375rem] text-muted hover:text-foreground";
@@ -132,18 +129,13 @@ function isSamePageNav(href: string): boolean {
 		if (header) header.classList.toggle("is-scrolled", scrollY > 0);
 	}
 
-	function onNavAction(href) {
+	function navigateSamePage(href) {
+		var target = href === "/" || href === "/#" ? "/" : href;
+		history.pushState(null, "", target);
 		if (href === "/" || href === "/#") window.goHome && window.goHome();
 		if (href === "/#sobre-mi") window.goAbout && window.goAbout();
 		if (href === "/#proyectos") window.goProyectos && window.goProyectos();
-	}
-
-	function navigateSamePage(href) {
-		var url = href === "/" || href === "/#" ? "/" : href;
-		var active = href === "/" || href === "/#" ? "/" : href;
-		history.pushState(null, "", url);
-		onNavAction(href);
-		syncNav(active);
+		syncNav(target);
 	}
 
 	if (!window.__navBound) {
@@ -151,29 +143,23 @@ function isSamePageNav(href: string): boolean {
 
 		document.addEventListener("click", function (e) {
 			var link = e.target.closest("[data-same-page='true'], [data-nav='/']");
-			if (!link) return;
+			if (!link || navPathname() !== "/") return;
 			e.preventDefault();
 			navigateSamePage(link.getAttribute("data-nav"));
 		});
 
 		window.addEventListener("popstate", function () {
-			var active =
-				location.pathname === "/" && !location.hash
-					? "/"
-					: location.pathname + location.hash;
-			syncNav(active === "/" ? "/" : active);
-			if (location.pathname === "/" && !location.hash) window.goHome && window.goHome();
-			if (location.hash === "#sobre-mi") window.goAbout && window.goAbout();
-			if (location.hash === "#proyectos") window.goProyectos && window.goProyectos();
+			var active = activeFromLocation();
+			syncNav(active);
+			if (active === "/") window.goHome && window.goHome();
+			if (active === "/#sobre-mi") window.goAbout && window.goAbout();
+			if (active === "/#proyectos") window.goProyectos && window.goProyectos();
 		});
 
 		window.addEventListener("hashchange", function () {
-			var active =
-				location.pathname === "/" && !location.hash
-					? "/"
-					: location.pathname + location.hash;
-			syncNav(active === "/" ? "/" : active);
+			syncNav(activeFromLocation());
 		});
+
 		document.addEventListener("astro:page-load", syncNav);
 	}
 

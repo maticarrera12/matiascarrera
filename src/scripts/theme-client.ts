@@ -10,6 +10,7 @@ import {
 declare global {
 	interface Window {
 		__themeClientReady?: boolean;
+		__themeToggleClickBound?: boolean;
 	}
 }
 
@@ -73,49 +74,67 @@ function registerAnimatedProperties(mode: ColorMode): void {
 	}
 }
 
-function getThemeToggles(): HTMLElement[] {
-	return [...document.querySelectorAll<HTMLElement>('[data-theme-toggle]')];
-}
-
 function updateThemeToggleLabels(mode: ColorMode): void {
 	const label =
 		mode === 'light' ? 'Activar modo oscuro' : 'Activar modo claro';
-	for (const toggle of getThemeToggles()) {
+	for (const toggle of document.querySelectorAll<HTMLElement>(
+		'[data-theme-toggle]',
+	)) {
 		toggle.setAttribute('aria-label', label);
 	}
 }
 
-function bindThemeToggle(): void {
-	for (const toggle of getThemeToggles()) {
-		if (toggle.dataset.bound === '1') continue;
-		toggle.dataset.bound = '1';
+function bindThemeToggleDelegation(): void {
+	if (window.__themeToggleClickBound) return;
+	window.__themeToggleClickBound = true;
 
-		toggle.addEventListener('click', () => {
-			const current = getResolvedMode();
-			const next: ColorMode = current === 'light' ? 'dark' : 'light';
-			applyTheme(next);
-		});
-	}
+	document.addEventListener('click', (event) => {
+		const toggle = (event.target as Element | null)?.closest(
+			'[data-theme-toggle]',
+		);
+		if (!toggle) return;
+
+		const current = getResolvedMode();
+		const next: ColorMode = current === 'light' ? 'dark' : 'light';
+		applyTheme(next);
+	});
+}
+
+function syncThemeToggles(): void {
+	updateThemeToggleLabels(getResolvedMode());
 }
 
 export function initThemeClient(): void {
-	if (window.__themeClientReady) return;
-	window.__themeClientReady = true;
-
 	const mode = getResolvedMode();
 	const current = document.documentElement.getAttribute('data-color-mode');
 
-	registerAnimatedProperties(mode);
+	if (!window.__themeClientReady) {
+		window.__themeClientReady = true;
+		registerAnimatedProperties(mode);
+		bindThemeToggleDelegation();
 
-	if (current !== mode) {
-		applyTheme(mode);
-	} else {
-		updateThemeToggleLabels(mode);
+		if (current !== mode) {
+			applyTheme(mode);
+		} else {
+			updateThemeToggleLabels(mode);
+		}
+
+		requestAnimationFrame(() => {
+			document.documentElement.classList.add('theme-toggle-animate-in');
+		});
+
+		document.addEventListener('astro:before-swap', (event) => {
+			const m = getResolvedMode();
+			(event as CustomEvent & { newDocument: Document }).newDocument
+				.documentElement.setAttribute('data-color-mode', m);
+		});
+
+		document.addEventListener('astro:after-swap', () => {
+			applyTheme(getResolvedMode());
+		});
+
+		document.addEventListener('astro:page-load', syncThemeToggles);
 	}
 
-	bindThemeToggle();
-
-	requestAnimationFrame(() => {
-		document.documentElement.classList.add('theme-toggle-animate-in');
-	});
+	syncThemeToggles();
 }

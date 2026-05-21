@@ -1,4 +1,6 @@
 ---
+import { AUTHOR } from "../const";
+
 const lead =
 	"text-4xl leading-[1.1] tracking-tight text-foreground md:text-5xl";
 const body = "text-xl leading-9 text-muted";
@@ -12,7 +14,7 @@ const profileChip =
 
 <section id="sobre-mi" class="relative container scroll-mt-24 py-12">
 	<div
-		class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%)] ight:bg-[radial-gradient(circle_at_top,hsl(15_63%_57%/0.1),transparent_42%)]`"
+		class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%)] light:bg-[radial-gradient(circle_at_top,hsl(15_63%_57%/0.1),transparent_42%)]"
 		aria-hidden="true"
 	/>
 
@@ -38,17 +40,15 @@ const profileChip =
 						aria-hidden="true"
 					/>
 
-					<div
-						class="mx-auto aspect-square size-72 shrink-0 overflow-hidden rounded-full shadow-[0_20px_40px_-24px_rgb(0_0_0/0.45)] light:shadow-[0_16px_32px_-12px_rgb(15_23_42/0.2)] light:ring-1 light:ring-slate-900/6"
-					>
-						<img
-							src="/images/profile.jpeg"
-							alt="Matías Carrera"
-							class="size-full object-cover object-[center_18%] transition-transform duration-1200 ease-out group-hover:scale-[1.03]"
-							width="500"
-							height="700"
-						/>
-					</div>
+					<img
+						src={AUTHOR.photo}
+						alt={AUTHOR.name}
+						class="mx-auto block size-72 rounded-full object-cover object-center"
+						width="720"
+						height="720"
+						loading="lazy"
+						decoding="async"
+					/>
 
 					<div class="mt-8 space-y-5 px-2 pb-2">
 						<div>

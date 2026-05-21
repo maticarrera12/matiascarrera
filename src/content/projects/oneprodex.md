@@ -3,7 +3,7 @@ title: OneProdex
 type: Entretenimiento
 description: Plataforma de predicciones para el Mundial FIFA 2026 con grupos privados, bracket completo y puntuación en tiempo real.
 cover: /images/projects/oneprodex.png
-stack: ["Next.js", "TypeScript", "Supabase", "React 19", "Tailwind CSS", "Framer Motion"]
+stack: ["Next.js", "TypeScript", "Supabase", "React", "Tailwind CSS", "Framer Motion"]
 repo: https://github.com/maticarrera12/oneprodex
 demo: https://oneprodex.vercel.app
 status: active
@@ -14,4 +14,13 @@ solution: OneProdex implementa un flujo de onboarding de 4 pasos donde cada usua
 architecture: Frontend y backend en Next.js 16 App Router con Server Actions para todas las mutaciones. Autenticación via Supabase Auth con OAuth de Google y Discord. Base de datos PostgreSQL en Supabase con Row Level Security por usuario. Estado del onboarding persistido en localStorage como caché de UX, con guardado por paso en servidor. Actualizaciones en tiempo real via Supabase Realtime.
 learning: Primer proyecto con una arquitectura orientada a features de forma estricta y un flujo de onboarding multi-step con estado derivado. El mayor desafío fue el slot resolver — un algoritmo puro que mapea los picks de grupos a los 32 slots del bracket FIFA 2026, cubierto con tests de Vitest.
 learningList: ["Arquitectura orientada a features", "Server Actions y mutaciones en Next.js", "Supabase RLS y OAuth", "Algoritmos de derivación de estado puro", "Flujos de onboarding multi-step con persistencia"]
+features:
+  Onboarding multi-step: Ranking de 12 grupos, selección de mejores terceros, bracket de 32 equipos, predicciones de premios individuales
+  Bracket builder: Slot resolver puro que mapea picks a los 32 slots del formato FIFA 2026
+  Grupos privados: Los usuarios compiten entre sí dentro de grupos con código de invitación
+  Predicciones de partidos: Resultado, goleadores, portero sin goles recibidos
+  Puntuación automática: Score calculado en base a picks almacenados vs. resultados reales
+  Standings y rankings: Tabla de posiciones por grupo con tendencias
+  Perfil: Historial, estadísticas, logros y progresión de nivel
+  Realtime: Actualizaciones en vivo vía Supabase Realtime
 ---

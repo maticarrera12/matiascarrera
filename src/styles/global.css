@@ -160,3 +160,48 @@
 		animation: none;
 	}
 }
+
+.bar-divider {
+	position: absolute;
+	inset-inline: 0;
+	top: 50%;
+	height: 0.5px;
+	translate: 0 -50%;
+	background-color: var(--color-foreground);
+	-webkit-mask-image: linear-gradient(
+		90deg,
+		transparent 0%,
+		#000 15%,
+		#000 85%,
+		transparent 100%
+	);
+	mask-image: linear-gradient(
+		90deg,
+		transparent 0%,
+		#000 15%,
+		#000 85%,
+		transparent 100%
+	);
+}
+
+.bar-vdivider {
+	width: 1px;
+	flex-shrink: 0;
+	align-self: stretch;
+	background-color: var(--color-foreground);
+	opacity: 0.18;
+	-webkit-mask-image: linear-gradient(
+		180deg,
+		transparent 0%,
+		#000 18%,
+		#000 82%,
+		transparent 100%
+	);
+	mask-image: linear-gradient(
+		180deg,
+		transparent 0%,
+		#000 18%,
+		#000 82%,
+		transparent 100%
+	);
+}
