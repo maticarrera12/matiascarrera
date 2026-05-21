@@ -1,0 +1,174 @@
+---
+const lead =
+	"text-4xl leading-[1.1] tracking-tight text-foreground md:text-5xl";
+const body = "text-xl leading-9 text-muted";
+
+const profileCard =
+	"group relative rounded-[32px] border border-white/10 bg-white/3 p-4 backdrop-blur-xl light:border-slate-900/10 light:bg-linear-to-br light:from-white/95 light:to-slate-50/88 light:shadow-[0_28px_56px_-28px_rgb(15_23_42/0.18)] light:ring-1 light:ring-slate-900/5 light:backdrop-blur-xl light:saturate-[1.08]";
+
+const profileChip =
+	"rounded-full border border-white/10 bg-white/4 px-3 py-1 text-xs text-zinc-300 light:border-slate-900/10 light:bg-slate-900/4 light:text-muted";
+---
+
+<section id="sobre-mi" class="relative container py-20">
+	<div
+		class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_40%)] ight:bg-[radial-gradient(circle_at_top,hsl(15_63%_57%/0.1),transparent_42%)]`"
+		aria-hidden="true"
+	/>
+
+	<div class="mb-32">
+		<p
+			class="mb-4 text-center text-sm uppercase tracking-[0.3em] text-primary/70"
+		>
+			About
+		</p>
+		<h2
+			class="text-center text-5xl font-bold tracking-tight text-foreground md:text-6xl"
+		>
+			Sobre Mi
+		</h2>
+	</div>
+
+	<div class="grid grid-cols-1 gap-14 lg:grid-cols-[380px_1fr]">
+		<div class="relative hidden lg:block">
+			<div class="sticky top-28">
+				<div class={profileCard}>
+					<div
+						class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-white/6 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 light:from-primary/7"
+						aria-hidden="true"
+					/>
+
+					<div
+						class="mx-auto aspect-square size-72 shrink-0 overflow-hidden rounded-full shadow-[0_20px_40px_-24px_rgb(0_0_0/0.45)] light:shadow-[0_16px_32px_-12px_rgb(15_23_42/0.2)] light:ring-1 light:ring-slate-900/6"
+					>
+						<img
+							src="/images/profile.jpeg"
+							alt="Matías Carrera"
+							class="size-full object-cover object-[center_18%] transition-transform duration-1200 ease-out group-hover:scale-[1.03]"
+							width="500"
+							height="700"
+						/>
+					</div>
+
+					<div class="mt-8 space-y-5 px-2 pb-2">
+						<div>
+							<h3 class="text-2xl font-semibold text-foreground">
+								Matías Carrera
+							</h3>
+							<p class="mt-2 text-sm leading-relaxed text-muted">
+								Fullstack developer enfocado en producto,
+								arquitectura y experiencia visual.
+							</p>
+						</div>
+
+						<div class="h-px w-full bg-white/10 light:bg-slate-900/8" />
+
+						<div class="flex flex-wrap gap-2">
+							<span class={profileChip}>React</span>
+							<span class={profileChip}>Next.js</span>
+							<span class={profileChip}>Astro</span>
+							<span class={profileChip}>Spring Boot</span>
+							<span class={profileChip}>UI/UX</span>
+						</div>
+
+						<div class="flex items-center gap-3 pt-2">
+							<div
+								class="size-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.8)] light:shadow-[0_0_10px_rgba(16,185,129,0.55)]"
+							/>
+							<p class="text-sm text-muted">Disponible para trabajar</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-24">
+			<div class="reveal max-w-3xl space-y-4">
+				<p class={lead}>
+					Empecé estudiando Diseño Gráfico y Multimedia en UADE.
+				</p>
+				<p class={body}>
+					Pero cada vez que aparecía código en la carrera sentía que ahí
+					estaba realmente lo que más me interesaba. Disfrutaba más construir
+					una interfaz funcional que simplemente diseñarla. Me interesaba
+					entender cómo estaban hechas las cosas, cómo se conectaban y cómo
+					transformar una idea en un producto real.
+				</p>
+			</div>
+
+			<div class="reveal max-w-3xl space-y-4">
+				<p class={lead}>Hoy sigo usando mucho de ese background en diseño.</p>
+				<p class={body}>
+					Me dio criterio visual, sensibilidad por la tipografía y una
+					obsesión por la claridad.
+				</p>
+				<p class={body}>
+					Creo que las interfaces deberían sentirse simples, tranquilas y
+					naturales.
+				</p>
+				<p class={body}>
+					Tengo una fascinación particular por las tipografías. Siento que gran
+					parte de la identidad visual de un producto vive ahí.
+				</p>
+			</div>
+
+			<div class="reveal max-w-3xl space-y-4">
+				<p class={lead}>
+					Lo que más disfruto hoy es construir productos desde cero.
+				</p>
+				<p class={body}>
+					Pensar la estructura antes de escribir componentes, definir una
+					arquitectura clara y construir sistemas que puedan crecer bien con el
+					tiempo.
+				</p>
+				<p class={body}>
+					Me gusta recibir un diseño y llevarlo a producción con precisión.
+					Cuidar los detalles y encontrar equilibrio entre estética y
+					funcionalidad.
+				</p>
+			</div>
+
+			<div class="reveal max-w-3xl space-y-8">
+				<p class={lead}>Actualmente estoy profundizando mucho en JavaScript.</p>
+				<p class={body}>
+					Me interesa entender las bases de verdad: cómo funciona el lenguaje,
+					cómo escribir código más sólido y cómo mejorar mi lógica como
+					desarrollador.
+				</p>
+				<p class={body}>
+					También estoy incorporando SDD en mi día a día, especialmente
+					trabajando junto a herramientas de IA.
+				</p>
+			</div>
+
+			<div class="reveal max-w-3xl space-y-4">
+				<p class={lead}>
+					Me atraen especialmente los SaaS y las landing pages.
+				</p>
+				<p class={body}>
+					Me gusta la mezcla entre branding, producto, experiencia y
+					tecnología.
+				</p>
+				<p class={body}>
+					Disfruto pensar cómo pequeñas decisiones visuales o técnicas cambian
+					completamente la percepción de un producto.
+				</p>
+			</div>
+
+			<div class="reveal max-w-3xl space-y-4">
+				<p class={lead}>
+					Creo que lo que más me diferencia es que mis proyectos no son
+					ejercicios.
+				</p>
+				<p class={body}>
+					Son aplicaciones reales construidas por mí: desde la experiencia
+					visual hasta la arquitectura, la lógica y el deployment.
+				</p>
+				<p class={body}>
+					Quiero seguir creciendo técnicamente, trabajar construyendo productos
+					reales y eventualmente liderar equipos.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>

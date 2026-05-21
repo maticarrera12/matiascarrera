@@ -1,0 +1,35 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+	class:list={['section-divider', className]}
+	role="separator"
+	aria-hidden="true"
+></div>
+
+<style>
+	.section-divider {
+		height: 1px;
+		width: 100%;
+		background-color: var(--color-primary);
+		-webkit-mask-image: linear-gradient(
+			90deg,
+			transparent 0%,
+			#000 15%,
+			#000 85%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			90deg,
+			transparent 0%,
+			#000 15%,
+			#000 85%,
+			transparent 100%
+		);
+	}
+</style>

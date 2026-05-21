@@ -1,0 +1,170 @@
+/* Josh-style sun + crescent moon toggle */
+
+.theme-toggle {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	min-width: 2rem;
+	padding: 0;
+	color: inherit;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	border-radius: 1000px;
+	outline-offset: 2px;
+}
+
+/* relative: el ::before no debe anclarse al header fixed (toda la barra) */
+.nav-header .theme-toggle {
+	position: relative;
+	top: auto;
+	right: auto;
+	z-index: auto;
+	flex-shrink: 0;
+}
+
+.theme-toggle::before {
+	content: '';
+	position: absolute;
+	inset: -4px;
+	pointer-events: none;
+}
+
+.theme-toggle__icon {
+	position: relative;
+	overflow: visible;
+	stroke-width: 2px;
+	transition: transform 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
+}
+
+.theme-toggle__icon:hover {
+	cursor: pointer;
+	rotate: -90deg;
+	transition: rotate 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
+}
+
+html[data-color-mode='light'] .theme-toggle__icon {
+	transform: rotate(90deg);
+}
+
+html[data-color-mode='dark'] .theme-toggle__icon {
+	transform: rotate(0deg);
+}
+
+/* Sol */
+.theme-toggle__ray {
+	transform-origin: center;
+	transform-box: fill-box;
+	transition: transform 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
+}
+
+html[data-color-mode='light'] .theme-toggle__ray {
+	transform: scale(1);
+}
+
+html[data-color-mode='dark'] .theme-toggle__ray {
+	transform: scale(0);
+}
+
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(1) {
+	transition-delay: 0ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(2) {
+	transition-delay: 40ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(3) {
+	transition-delay: 80ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(4) {
+	transition-delay: 120ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(5) {
+	transition-delay: 160ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(6) {
+	transition-delay: 200ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(7) {
+	transition-delay: 240ms;
+}
+html[data-color-mode='dark'] .theme-toggle__ray:nth-child(8) {
+	transition-delay: 280ms;
+}
+
+html[data-color-mode='light'] .theme-toggle__ray {
+	transition-delay: 0ms;
+}
+
+/* Círculo central del sol (anillo r=6 con máscara) */
+.theme-toggle__sun-body {
+	transition: opacity 0.35s cubic-bezier(0.07, 0.7, 0.35, 1.35);
+}
+
+html[data-color-mode='light'] .theme-toggle__sun-body {
+	opacity: 1;
+}
+
+html[data-color-mode='dark'] .theme-toggle__sun-body {
+	opacity: 0;
+}
+
+/* Luna */
+.theme-toggle__moon {
+	transform-origin: center;
+	transition:
+		opacity 0.35s cubic-bezier(0.07, 0.7, 0.35, 1.35),
+		transform 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
+}
+
+html[data-color-mode='light'] .theme-toggle__moon {
+	opacity: 0;
+	transform: scale(0.6) rotate(-40deg);
+}
+
+html[data-color-mode='dark'] .theme-toggle__moon {
+	opacity: 1;
+	transform: scale(1) rotate(0deg);
+}
+
+html.theme-toggle-animate-in[data-color-mode='light'] .theme-toggle__ray {
+	animation: theme-toggle-pop 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35) backwards;
+	animation-delay: var(--ray-delay, 0ms);
+}
+
+@keyframes theme-toggle-pop {
+	from {
+		transform: scale(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.theme-toggle__icon,
+	.theme-toggle__ray,
+	.theme-toggle__sun-body,
+	.theme-toggle__moon {
+		transition: none;
+		animation: none;
+	}
+
+	html[data-color-mode='light'] .theme-toggle__icon {
+		transform: rotate(90deg);
+	}
+
+	html[data-color-mode='dark'] .theme-toggle__icon {
+		transform: rotate(0deg);
+	}
+
+	html[data-color-mode='light'] .theme-toggle__moon {
+		opacity: 0;
+	}
+
+	html[data-color-mode='dark'] .theme-toggle__moon {
+		opacity: 1;
+	}
+}

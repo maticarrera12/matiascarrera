@@ -1,0 +1,133 @@
+---
+import { NAV_LINKS } from "../const";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const path = Astro.url.pathname;
+const hash = Astro.url.hash;
+
+function isActive(href: string): boolean {
+	if (href === "/" || href === "/#") return path === "/" && hash === "";
+	if (href.startsWith("/#")) return path === "/" && hash === href.slice(1);
+	return path === href;
+}
+
+function isSamePageNav(href: string): boolean {
+	if (href === "/" || href === "/#") return true;
+	if (href.startsWith("/#")) return true;
+	return false;
+}
+---
+
+<header class="nav-header fixed top-0 right-0 left-0 z-50">
+	<div class="container flex items-center justify-between py-4">
+		<div class="flex items-center gap-4 sm:gap-6">
+			<a
+				href="/"
+				data-nav="/"
+				class="text-lg font-bold text-primary"
+				aria-label="Inicio"
+			>
+				Matias Carrera
+			</a>
+
+			<ul class="m-0 flex list-none gap-4 p-0 sm:gap-8">
+				{
+					NAV_LINKS.map((link) => (
+						<li>
+							<a
+								href={link.href}
+								data-nav={link.href}
+								data-same-page={isSamePageNav(link.href) ? "true" : undefined}
+								class:list={[
+									"text-[0.9375rem]",
+									isActive(link.href)
+										? "text-foreground"
+										: "text-muted hover:text-foreground",
+								]}
+							>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<ThemeToggle />
+	</div>
+</header>
+
+<style>
+	.nav-header {
+		border-bottom: 1px solid transparent;
+		background: transparent;
+		transition:
+			background-color var(--color-swap-duration) var(--color-swap-timing-function),
+			border-color var(--color-swap-duration) var(--color-swap-timing-function),
+			backdrop-filter var(--color-swap-duration) var(--color-swap-timing-function);
+	}
+
+	.nav-header.is-scrolled {
+		-webkit-backdrop-filter: blur(8px);
+		backdrop-filter: blur(8px);
+		background-color: color-mix(in srgb, var(--color-background) 25%, transparent);
+		box-shadow: 0 1px 0 color-mix(in srgb, var(--color-text) 3%, transparent);
+	}
+</style>
+
+<script is:inline>
+	function syncNav() {
+		var p = location.pathname;
+		var h = location.hash;
+
+		document.querySelectorAll("[data-nav]").forEach(function (el) {
+			var href = el.getAttribute("data-nav");
+			var on = false;
+			if (href === "/" || href === "/#") on = p === "/" && !h;
+			else if (href && href.indexOf("/#") === 0) on = p === "/" && h === href.slice(1);
+			else on = p === href;
+
+			el.className = on
+				? "text-[0.9375rem] text-foreground"
+				: "text-[0.9375rem] text-muted hover:text-foreground";
+		});
+
+		var header = document.querySelector(".nav-header");
+		if (header) header.classList.toggle("is-scrolled", scrollY > 0);
+	}
+
+	function onNavAction(href) {
+		if (href === "/" || href === "/#") window.goHome && window.goHome();
+		if (href === "/#sobre-mi") window.goAbout && window.goAbout();
+	}
+
+	function navigateSamePage(href) {
+		var url = href === "/" || href === "/#" ? "/" : href;
+		history.pushState(null, "", url);
+		onNavAction(href);
+		syncNav();
+	}
+
+	if (!window.__navBound) {
+		window.__navBound = true;
+
+		document.addEventListener("click", function (e) {
+			var link = e.target.closest("[data-same-page='true'], [data-nav='/']");
+			if (!link) return;
+			e.preventDefault();
+			navigateSamePage(link.getAttribute("data-nav"));
+		});
+
+		window.addEventListener("popstate", function () {
+			syncNav();
+			if (location.pathname === "/" && !location.hash) window.goHome && window.goHome();
+			if (location.hash === "#sobre-mi") window.goAbout && window.goAbout();
+		});
+
+		window.addEventListener("hashchange", syncNav);
+		document.addEventListener("astro:page-load", syncNav);
+	}
+
+	syncNav();
+	window.addEventListener("scroll", syncNav, { passive: true });
+</script>

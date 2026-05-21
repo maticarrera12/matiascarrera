@@ -1,23 +1,45 @@
+---
+import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '../const';
+import { getThemeInitInlineScript } from '../lib/theme-init-script';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import { REVEAL_BOOT_SCRIPT } from '../scripts/reveal-inline';
+
+const themeInitScript = getThemeInitInlineScript();
+---
+
 <!doctype html>
-<html lang="en">
+<html
+	lang="es"
+	class="font-sans m-0 size-full bg-background text-foreground"
+>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={SITE_DESCRIPTION} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="canonical" href={SITE_URL} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<script is:inline set:html={themeInitScript}></script>
+		<script>
+			import { initThemeClient } from '../scripts/theme-client';
+
+			initThemeClient();
+		</script>
+		<Font cssVariable="--font-outfit" />
+		<ClientRouter />
+		<title>{SITE_TITLE}</title>
 	</head>
-	<body>
+	<body
+		class="page-shell m-0 flex min-h-screen w-full flex-col bg-background font-outfit text-lg leading-[calc(0.95+0.62rem)] antialiased"
+	>
+		<Nav />
 		<slot />
+		<Footer transition:persist="site-footer" />
+		<script is:inline set:html={REVEAL_BOOT_SCRIPT}></script>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

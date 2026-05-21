@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<section id="proyectos" class="container py-20">
+
+    <div class="flex flex-row items-center gap-3">
+        <span class="relative flex size-2 shrink-0" aria-hidden="true">
+            <span
+                class="absolute -inset-1 rounded-full bg-primary/50 blur-sm animate-pulse"
+            ></span>
+            <span class="relative size-2 rounded-full bg-primary"></span>
+        </span>
+        <h5 class="text-sm font-bold text-pretty text-primary">
+            Proyectos Destacados
+        </h5>
+    </div>
+
+    <div class="flex flex-row items-center justify-between gap-3">
+
+        <h2 class="text-6xl font-bold text-pretty text-foreground">
+            Proyectos que diseñé <br> y  <span class="text-primary">desarrollé</span>
+        </h2>
+
+        <a href="/proyectos" class="inline-flex items-center gap-2 rounded-md from-primary border border-primary px-4 py-4 font-semibold text-primary">
+            Ver Proyectos
+            <Icon
+                is:inline
+                name="lucide:arrow-right"
+                class="size-5 transition-transform duration-200 ease-out group-hover/proyectos:translate-x-1.5"
+                aria-hidden="true"
+            />
+        </a>
+
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="project-card">
+            <h3 class="text-xl font-bold text-pretty text-foreground">Proyecto 1</h3>
+            <p class="text-sm text-muted">Descripción del proyecto 1</p>
+        </div>
+    </div>
+</section>

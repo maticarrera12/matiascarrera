@@ -1,0 +1,150 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "./theme-toggle.css";
+
+@custom-variant light (&:where(html[data-color-mode="light"], html[data-color-mode="light"] *));
+@custom-variant dark (&:where(html[data-color-mode="dark"], html[data-color-mode="dark"] *));
+
+/*
+ * Tokens Tailwind → variables CSS del tema (seteadas por theme.ts en runtime).
+ * Uso: bg-background, text-foreground, text-primary, bg-cloud-500, etc.
+ */
+@theme inline {
+	--font-sans: var(--font-outfit);
+
+	--color-background: var(--color-background);
+	--color-foreground: var(--color-text);
+	--color-primary: var(--color-primary);
+	--color-muted: var(--color-gray-700);
+	--color-border: var(--color-gray-300);
+	--color-footer-muted: var(--color-footer-muted);
+	--color-cloud-100: var(--color-cloud-100);
+	--color-cloud-300: var(--color-cloud-300);
+	--color-cloud-400: var(--color-cloud-400);
+	--color-cloud-500: var(--color-cloud-500);
+	--color-cloud-700: var(--color-cloud-700);
+	--color-sky-from: var(--color-sky-from);
+	--color-sky-to: var(--color-sky-to);
+	--color-sky-subtle: var(--color-sky-subtle);
+}
+
+/* Theme tokens + animated @property transitions */
+@layer base {
+	html {
+		scroll-behavior: smooth;
+		scrollbar-gutter: stable;
+		color-scheme: light dark;
+		--color-swap-duration: 200ms;
+		--color-swap-timing-function: cubic-bezier(0.41, 0.1, 0.13, 1);
+		/* Cielo arranca al instante (misma duración que el fondo); montañas con más stagger */
+		--sky-from-duration: var(--color-swap-duration);
+		--sky-to-duration: var(--color-swap-duration);
+		--second-swoop-duration: calc(var(--color-swap-duration) + 100ms);
+		--third-swoop-duration: calc(var(--color-swap-duration) + 180ms);
+		transition:
+			--color-background var(--color-swap-duration) var(--color-swap-timing-function),
+			--color-text var(--color-swap-duration) var(--color-swap-timing-function),
+			--color-primary var(--color-swap-duration) var(--color-swap-timing-function),
+			--color-sky-from var(--sky-from-duration) var(--color-swap-timing-function),
+			--color-sky-to var(--sky-to-duration) var(--color-swap-timing-function),
+			--color-cloud-300 var(--second-swoop-duration) var(--color-swap-timing-function),
+			--color-cloud-500 var(--third-swoop-duration) var(--color-swap-timing-function);
+	}
+
+	::selection {
+		background-color: var(--selection-background-color);
+		color: var(--selection-text-color);
+	}
+}
+
+@layer components {
+	.container {
+		@apply mx-auto w-full max-w-[68.75rem] px-8 max-[35.1875rem]:px-4;
+	}
+
+	.sky-gradient {
+		background: linear-gradient(to bottom, var(--color-sky-from), var(--color-sky-to));
+	}
+
+	html.reveal-ready .reveal:not(.is-revealed) {
+		opacity: 0;
+		transform: translateY(40px);
+		filter: blur(12px);
+		transition:
+			opacity 1s ease,
+			transform 1s ease,
+			filter 1s ease;
+		will-change: transform, opacity, filter;
+	}
+
+	.reveal {
+		transition:
+			opacity 1s ease,
+			transform 1s ease,
+			filter 1s ease;
+	}
+
+	.reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+		filter: blur(0);
+	}
+
+	html[data-color-mode='dark'] .footer-cloud-accent path {
+		fill: rgba(14, 20, 27, 0.5);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html,
+		.page-main,
+		.site-footer,
+		.footer-cloud-accent path {
+			transition: none;
+		}
+
+		.reveal {
+			opacity: 1;
+			transform: none;
+			filter: none;
+		}
+	}
+}
+
+/* View Transitions — fade suave entre páginas */
+@keyframes page-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes page-fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+::view-transition-old(root) {
+	animation: 200ms cubic-bezier(0.41, 0.1, 0.13, 1) both page-fade-out;
+}
+
+::view-transition-new(root) {
+	animation: 200ms cubic-bezier(0.41, 0.1, 0.13, 1) both page-fade-in;
+}
+
+::view-transition-old(site-nav),
+::view-transition-new(site-nav) {
+	animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
+}
