@@ -1,0 +1,380 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+	images: string[];
+	title: string;
+}
+
+const { images, title } = Astro.props;
+const imagesJson = JSON.stringify(images);
+---
+
+<div class="gallery-lightbox" data-gallery-root data-gallery-images={imagesJson}>
+	<div class="flex gap-4 overflow-x-auto pb-4">
+		{
+			images.map((src, i) => (
+				<button
+					type="button"
+					class="gallery-lightbox__thumb group w-72 shrink-0 cursor-zoom-in overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 text-left transition-[border-color,box-shadow] duration-300 hover:border-zinc-600 hover:shadow-lg hover:shadow-black/20 md:w-80"
+					data-gallery-open={i}
+					aria-label={`Ampliar captura ${i + 1} de ${title}`}
+				>
+					<img
+						src={src}
+						alt={`${title} captura ${i + 1}`}
+						class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+						loading="lazy"
+						decoding="async"
+					/>
+				</button>
+			))
+		}
+	</div>
+
+	<dialog
+		class="gallery-lightbox__dialog"
+		aria-label={`Galería de capturas — ${title}`}
+	>
+		<div class="gallery-lightbox__panel">
+			<button
+				type="button"
+				class="gallery-lightbox__close"
+				data-gallery-close
+				aria-label="Cerrar galería"
+			>
+				<Icon name="lucide:x" class="size-5" is:inline />
+			</button>
+
+			<button
+				type="button"
+				class="gallery-lightbox__nav gallery-lightbox__nav--prev"
+				data-gallery-prev
+				aria-label="Captura anterior"
+			>
+				<Icon name="lucide:chevron-left" class="size-6" is:inline />
+			</button>
+
+			<figure class="gallery-lightbox__figure">
+				<img
+					class="gallery-lightbox__image"
+					data-gallery-image
+					alt=""
+					width="1280"
+					height="800"
+				/>
+				<figcaption class="gallery-lightbox__caption" data-gallery-caption />
+			</figure>
+
+			<button
+				type="button"
+				class="gallery-lightbox__nav gallery-lightbox__nav--next"
+				data-gallery-next
+				aria-label="Captura siguiente"
+			>
+				<Icon name="lucide:chevron-right" class="size-6" is:inline />
+			</button>
+		</div>
+	</dialog>
+</div>
+
+<style>
+	.gallery-lightbox__dialog {
+		position: fixed;
+		inset: 0;
+		z-index: 200;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		max-width: none;
+		height: 100%;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background: transparent;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 280ms cubic-bezier(0.41, 0.1, 0.13, 1);
+	}
+
+	.gallery-lightbox__dialog[open] {
+		pointer-events: auto;
+		opacity: 1;
+	}
+
+	.gallery-lightbox__dialog::backdrop {
+		background: color-mix(in srgb, var(--color-background) 15%, rgb(0 0 0 / 0.82));
+		-webkit-backdrop-filter: blur(10px);
+		backdrop-filter: blur(10px);
+		opacity: 0;
+		transition: opacity 280ms cubic-bezier(0.41, 0.1, 0.13, 1);
+	}
+
+	.gallery-lightbox__dialog[open]::backdrop {
+		opacity: 1;
+	}
+
+	.gallery-lightbox__panel {
+		position: relative;
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 0.75rem;
+		width: min(96vw, 72rem);
+		padding: 1rem;
+	}
+
+	.gallery-lightbox__figure {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		margin: 0;
+		min-width: 0;
+	}
+
+	.gallery-lightbox__image {
+		display: block;
+		width: 100%;
+		max-height: min(78dvh, 52rem);
+		border-radius: 0.75rem;
+		object-fit: contain;
+		object-position: center top;
+		box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.55);
+		opacity: 0;
+		transform: scale(0.96) translateY(8px);
+		transition:
+			opacity 320ms cubic-bezier(0.41, 0.1, 0.13, 1),
+			transform 320ms cubic-bezier(0.41, 0.1, 0.13, 1);
+	}
+
+	.gallery-lightbox__dialog.is-ready .gallery-lightbox__image {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+
+	.gallery-lightbox__caption {
+		font-size: 0.8125rem;
+		color: var(--color-gray-700);
+		letter-spacing: 0.04em;
+	}
+
+	.gallery-lightbox__close {
+		position: absolute;
+		top: 0.25rem;
+		right: 0.25rem;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		color: var(--color-text);
+		cursor: pointer;
+		background: color-mix(in srgb, var(--color-background) 70%, transparent);
+		border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+		border-radius: 9999px;
+		transition:
+			background-color 200ms ease,
+			color 200ms ease,
+			transform 200ms ease;
+	}
+
+	.gallery-lightbox__close:hover {
+		color: var(--color-primary);
+		background: color-mix(in srgb, var(--color-background) 88%, transparent);
+		transform: scale(1.05);
+	}
+
+	.gallery-lightbox__nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		color: var(--color-text);
+		cursor: pointer;
+		background: color-mix(in srgb, var(--color-background) 65%, transparent);
+		border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+		border-radius: 9999px;
+		transition:
+			background-color 200ms ease,
+			color 200ms ease,
+			opacity 200ms ease;
+	}
+
+	.gallery-lightbox__nav:hover:not(:disabled) {
+		color: var(--color-primary);
+		background: color-mix(in srgb, var(--color-background) 90%, transparent);
+	}
+
+	.gallery-lightbox__nav:disabled {
+		cursor: default;
+		opacity: 0.35;
+	}
+
+	@media (max-width: 40rem) {
+		.gallery-lightbox__panel {
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr auto auto;
+			width: 100vw;
+			padding: 3rem 1rem 1rem;
+		}
+
+		.gallery-lightbox__nav--prev,
+		.gallery-lightbox__nav--next {
+			justify-self: center;
+		}
+
+		.gallery-lightbox__nav--prev {
+			order: 2;
+		}
+
+		.gallery-lightbox__nav--next {
+			order: 3;
+		}
+
+		.gallery-lightbox__figure {
+			order: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.gallery-lightbox__dialog,
+		.gallery-lightbox__dialog::backdrop,
+		.gallery-lightbox__image,
+		.gallery-lightbox__close,
+		.gallery-lightbox__nav {
+			transition: none;
+		}
+
+		.gallery-lightbox__dialog[open] .gallery-lightbox__image {
+			opacity: 1;
+			transform: none;
+		}
+	}
+</style>
+
+<script is:inline>
+	function initGalleryLightbox(root) {
+		if (!root || root.dataset.galleryReady === "1") return;
+		root.dataset.galleryReady = "1";
+
+		var images = [];
+		try {
+			images = JSON.parse(root.getAttribute("data-gallery-images") || "[]");
+		} catch (e) {
+			return;
+		}
+		if (!images.length) return;
+
+		var dialog = root.querySelector(".gallery-lightbox__dialog");
+		var img = root.querySelector("[data-gallery-image]");
+		var caption = root.querySelector("[data-gallery-caption]");
+		var prevBtn = root.querySelector("[data-gallery-prev]");
+		var nextBtn = root.querySelector("[data-gallery-next]");
+		var index = 0;
+		var closing = false;
+
+		function setSlide(i) {
+			index = (i + images.length) % images.length;
+			if (!img) return;
+			img.style.opacity = "0";
+			img.style.transform = "scale(0.98) translateY(4px)";
+			window.setTimeout(function () {
+				img.src = images[index];
+				img.alt = "Captura " + (index + 1);
+				if (caption) {
+					caption.textContent = (index + 1) + " / " + images.length;
+				}
+				if (prevBtn) prevBtn.disabled = images.length <= 1;
+				if (nextBtn) nextBtn.disabled = images.length <= 1;
+				window.requestAnimationFrame(function () {
+					img.style.opacity = "";
+					img.style.transform = "";
+				});
+			}, 120);
+		}
+
+		function openAt(i) {
+			if (!dialog || closing) return;
+			setSlide(i);
+			if (!dialog.open) dialog.showModal();
+			dialog.classList.remove("is-ready");
+			window.requestAnimationFrame(function () {
+				window.requestAnimationFrame(function () {
+					dialog.classList.add("is-ready");
+				});
+			});
+			document.documentElement.style.overflow = "hidden";
+		}
+
+		function close() {
+			if (!dialog || !dialog.open || closing) return;
+			closing = true;
+			dialog.classList.remove("is-ready");
+			window.setTimeout(function () {
+				dialog.close();
+				document.documentElement.style.overflow = "";
+				closing = false;
+			}, 260);
+		}
+
+		root.addEventListener("click", function (e) {
+			var openBtn = e.target.closest("[data-gallery-open]");
+			if (openBtn) {
+				openAt(Number(openBtn.getAttribute("data-gallery-open")) || 0);
+				return;
+			}
+			if (e.target.closest("[data-gallery-close]")) {
+				close();
+				return;
+			}
+			if (e.target.closest("[data-gallery-prev]")) {
+				setSlide(index - 1);
+				return;
+			}
+			if (e.target.closest("[data-gallery-next]")) {
+				setSlide(index + 1);
+				return;
+			}
+		});
+
+		if (dialog) {
+			dialog.addEventListener("click", function (e) {
+				if (e.target === dialog) close();
+			});
+			dialog.addEventListener("cancel", function (e) {
+				e.preventDefault();
+				close();
+			});
+			dialog.addEventListener("close", function () {
+				document.documentElement.style.overflow = "";
+				dialog.classList.remove("is-ready");
+				closing = false;
+			});
+		}
+
+		if (!root.dataset.galleryKeyBound) {
+			root.dataset.galleryKeyBound = "1";
+			document.addEventListener("keydown", function (e) {
+				if (!dialog || !dialog.open) return;
+				if (e.key === "Escape") {
+					e.preventDefault();
+					close();
+				}
+				if (e.key === "ArrowLeft") setSlide(index - 1);
+				if (e.key === "ArrowRight") setSlide(index + 1);
+			});
+		}
+	}
+
+	function bootGalleries() {
+		document.querySelectorAll("[data-gallery-root]").forEach(initGalleryLightbox);
+	}
+
+	bootGalleries();
+	document.addEventListener("astro:page-load", bootGalleries);
+</script>

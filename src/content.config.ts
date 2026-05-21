@@ -44,6 +44,7 @@ const projects = defineCollection({
 		learning: z.string(),
 		learningList: z.array(z.string()).default([]),
 		features: z.record(z.string(), z.string()).default({}),
+		gallery: z.array(z.string()).default([]),
 	}),
 });
 

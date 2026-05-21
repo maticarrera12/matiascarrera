@@ -2,7 +2,14 @@
 title: KiritaAI
 type: Producto/Saas
 description: Saas sobre analisis de aplicaciones con IA para encontrar gaps de mercado en la PlayStore.
-cover: /images/projects/kiritaai.png
+cover: /images/projects/kiritaai-1.png
+gallery:
+  - /images/projects/kiritaai-1.png
+  - /images/projects/kiritaai-2.png
+  - /images/projects/kiritaai-3.png
+  - /images/projects/kiritaai-4.png
+  - /images/projects/kiritaai-5.png
+  - /images/projects/kiritaai-6.png
 stack: ["Next.js", "Prisma", "TypeScript","OpenAI", "Neon", "Web Scrapping"]
 repo: https://github.com/maticarrera12/kiritaai
 demo: https://kiritaai.com/

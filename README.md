@@ -17,8 +17,8 @@ Personal portfolio built with Astro, Tailwind CSS 4, and TypeScript.
 ## Getting Started
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Runs at `http://localhost:4321`
@@ -27,10 +27,10 @@ Runs at `http://localhost:4321`
 
 | Command | Description |
 |---|---|
-| `npm run dev` | Start dev server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run sync` | Sync Astro content types |
+| `pnpm dev` | Start dev server |
+| `pnpm build` | Build for production |
+| `pnpm preview` | Preview production build |
+| `pnpm sync` | Sync Astro content types |
 
 ## Project Structure
 

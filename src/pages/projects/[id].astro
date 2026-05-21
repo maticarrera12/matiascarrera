@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import GalleryLightbox from '../../components/GalleryLightbox.astro';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
@@ -29,9 +30,11 @@ const {
 	learning,
 	learningList,
 	features,
+	gallery,
 } = project.data;
 
 const featureEntries = features ? Object.entries(features) : [];
+const galleryImages = gallery.length > 0 ? gallery : [];
 
 const featureIcons = [
 	'lucide:users',
@@ -311,31 +314,21 @@ if (status === 'active') {
 			</section>
 		)}
 
-		<!-- Divider -->
-		<div class="container">
-			<div class="h-px w-full bg-zinc-800"></div>
-		</div>
-
-		<!-- Capturas -->
-		<section class="container py-20">
-			<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary"
-				>Capturas</span
-			>
-			<div class="flex gap-4 overflow-x-auto pb-4">
-				{
-					[cover, cover, cover, cover].map((src, i) => (
-						<div class="w-72 shrink-0 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 md:w-80">
-							<img
-								src={src}
-								alt={title + ' captura ' + (i + 1)}
-								class="aspect-[16/10] w-full object-cover object-top"
-								loading="lazy"
-							/>
-						</div>
-					))
-				}
-			</div>
-		</section>
+		{
+			galleryImages.length > 0 && (
+				<>
+					<div class="container">
+						<div class="h-px w-full bg-zinc-800"></div>
+					</div>
+					<section class="container py-20">
+						<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary">
+							Capturas
+						</span>
+						<GalleryLightbox images={galleryImages} title={title} />
+					</section>
+				</>
+			)
+		}
 
 		<!-- Divider -->
 		<div class="container">
