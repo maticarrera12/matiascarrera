@@ -32,7 +32,7 @@ export const THEME_COLORS: Record<ColorMode, ThemePalette> = {
 	dark: {
 		colorText: [210, 10, 90],
 		colorBackground: [210, 15, 6],
-		colorPrimary: TERRACOTTA.dark,
+		colorPrimary: TERRACOTTA.light,
 		colorCloud100: [210, 15, 6],
 		colorCloud300: [212, 40, 9],
 		colorCloud400: [213, 40, 10],

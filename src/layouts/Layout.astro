@@ -2,7 +2,9 @@
 import { Font } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '../const';
+import { FAVICON_VERSION, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '../const';
+
+const faviconHref = `/favicon.ico?v=${FAVICON_VERSION}`;
 import { getThemeInitInlineScript } from '../lib/theme-init-script';
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
@@ -20,8 +22,9 @@ const themeInitScript = getThemeInitInlineScript();
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content={SITE_DESCRIPTION} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/x-icon" href={faviconHref} sizes="any" />
+		<link rel="shortcut icon" href={faviconHref} />
+		<link rel="apple-touch-icon" href={faviconHref} />
 		<link rel="canonical" href={SITE_URL} />
 		<meta name="generator" content={Astro.generator} />
 		<script is:inline set:html={themeInitScript}></script>

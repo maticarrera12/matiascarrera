@@ -3,6 +3,9 @@ export const SITE_TITLE = 'Matías Carrera';
 export const SITE_DESCRIPTION = 'Desarrollador Full Stack. Diseñador convertido a developer. Construyo aplicaciones web con React, Next.js y Astro.';
 export const SITE_URL = 'https://tudominio.dev';
 
+/** Incrementá al cambiar favicon.ico para forzar recarga en navegadores */
+export const FAVICON_VERSION = '2';
+
 export const AUTHOR = {
   name: 'Matías Carrera',
   email: 'mcarreradev12@gmail.com',
