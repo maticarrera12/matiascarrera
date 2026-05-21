@@ -31,11 +31,12 @@ const {
 	learningList,
 	features,
 	gallery,
+	architectureImage,
 } = project.data;
 
 const featureEntries = features ? Object.entries(features) : [];
 const galleryImages = gallery.length > 0 ? gallery : [];
-
+const architectureImageUrl = architectureImage ? architectureImage : '';
 const featureIcons = [
 	'lucide:users',
 	'lucide:list',
@@ -92,18 +93,18 @@ if (status === 'active') {
 			<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
 				<!-- Left -->
 				<div class="flex flex-col gap-6">
-					<!-- <div class="flex items-center gap-2">
-						<span class="relative flex size-2 shrink-0" aria-hidden="true">
-							<span
-								class={'absolute -inset-1 animate-pulse rounded-full blur-sm ' +
-									statusGlow}
-							></span>
-							<span class={'relative size-2 rounded-full ' + statusDot}></span>
-						</span>
-						<span class="text-xs font-bold uppercase tracking-widest text-primary">
-							{featured ? 'Proyecto Destacado' : 'Proyecto'}
-						</span>
-					</div> -->
+							<!-- <div class="flex items-center gap-2">
+								<span class="relative flex size-2 shrink-0" aria-hidden="true">
+									<span
+										class={'absolute -inset-1 animate-pulse rounded-full blur-sm ' +
+											statusGlow}
+									></span>
+									<span class={'relative size-2 rounded-full ' + statusDot}></span>
+								</span>
+								<span class="text-xs font-bold uppercase tracking-widest text-primary">
+									{featured ? 'Proyecto Destacado' : 'Proyecto'}
+								</span>
+							</div> -->
 
 					<h1 class="text-5xl font-bold leading-tight text-foreground md:text-7xl">
 						{title}
@@ -258,36 +259,11 @@ if (status === 'active') {
 
 				<!-- Visual diagram -->
 				<div
-					class="flex items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8"
+					class="flex items-center justify-center rounded-xl border dark:border-zinc-800 border-zinc-100 "
 				>
-					<div class="flex w-full flex-wrap items-center justify-center gap-3">
-						{
-							stack.slice(0, 6).map((tech, i) => (
-								<>
-									<div class="flex flex-col items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-center">
-										{techIconMap[tech] ? (
-											<img
-												src={techIconMap[tech]}
-												alt={tech}
-												class="size-6 object-contain"
-											/>
-										) : (
-											<span class="flex size-6 items-center justify-center rounded-sm bg-zinc-600 text-xs font-bold text-zinc-200">
-												{tech[0]}
-											</span>
-										)}
-										<span class="text-xs text-zinc-400">{tech}</span>
-									</div>
-									{i < stack.slice(0, 6).length - 1 && (
-										<Icon
-											name="lucide:arrow-right"
-											class="size-4 shrink-0 text-zinc-600"
-										/>
-									)}
-								</>
-							))
-						}
-					</div>
+					{architectureImageUrl && (
+						<img src={architectureImageUrl} alt="Arquitectura" class="rounded-xl w-full h-full object-contain" />
+					)}
 				</div>
 			</div>
 		</section>

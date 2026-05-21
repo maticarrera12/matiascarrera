@@ -21,6 +21,7 @@ solution: KiritaAI realiaz analisis FODA en base a las reviews de aplicaciones. 
 architecture: Tanto frontend como backend esta realizado en Next.js, la autenticacion esta realizada en better-auth. Todo almacenado de forma segura en Prisma-Neon. El scrapper es un servicio externo realizado en Node.js
 learning: Este proyecto fue el primero que realice de manera totalmente independiente, si bien ya tenia una buena base en Next.js y diseno web, esta fue una experiencia totalmente nueva. Tuve que aprender totalmente como crear el scrapper que es el motor de la aplicacion, tomar decisiones sobre rendimiento y sobre UX/UI.
 learningList: ["Diseno de arquitectura escalable", "Relaciones de bases de datos", "Autenticacion y autorizacin seguras", "Optimizacion de rendimiento"]
+architectureImage: /images/projects/architecture-kiritaai.png
 features:
   Análisis de apps: Desglose profundo con IA de cualquier app de Google Play — sentimiento en reseñas, huecos de funcionalidades, estrategia de monetización y oportunidades de crecimiento
   Motor de nichos: Descubrimiento automático de nichos con baja competencia y alto potencial por categorías y regiones usando datos reales de la tienda
