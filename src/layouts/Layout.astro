@@ -34,6 +34,7 @@ const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).href;
 const ogImageUrl = new URL(ogImage, SITE_URL).href;
 
 const themeInitScript = getThemeInitInlineScript();
+import Analytics from '@vercel/analytics/astro'
 ---
 
 <!doctype html>
@@ -74,6 +75,7 @@ const themeInitScript = getThemeInitInlineScript();
 		<Nav transition:persist="site-nav" />
 		<slot />
 		<Footer transition:persist="site-footer" />
+		<Analytics />
 		<script>
 			import { initThemeClient } from '../scripts/theme-client';
 
