@@ -8,7 +8,7 @@ import icon from 'astro-icon';
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx(), icon()],
-  site: 'https://tudominio.dev', // keep in sync with SITE_URL in src/const.ts
+  site: 'https://mcarreradev.com', // keep in sync with SITE_URL in src/const.ts
 
   vite: {
     plugins: [tailwindcss()],
