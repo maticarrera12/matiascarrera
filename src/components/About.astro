@@ -2,14 +2,11 @@
 import { AUTHOR } from "../const";
 
 const lead =
-	"text-4xl leading-[1.1] tracking-tight text-foreground md:text-5xl";
+	"text-4xl leading-[1.1] tracking-tight text-foreground md:text-5xl mb-4";
 const body = "text-xl leading-9 text-muted";
 
-const profileCard =
-	"group relative rounded-[32px] border border-white/10 bg-white/3 p-4 backdrop-blur-xl light:border-slate-900/10 light:bg-linear-to-br light:from-white/95 light:to-slate-50/88 light:shadow-[0_28px_56px_-28px_rgb(15_23_42/0.18)] light:ring-1 light:ring-slate-900/5 light:backdrop-blur-xl light:saturate-[1.08]";
-
 const profileChip =
-	"rounded-full border border-white/10 bg-white/4 px-3 py-1 text-xs text-zinc-300 light:border-slate-900/10 light:bg-slate-900/4 light:text-muted";
+	"rounded-fullbg-white/4 px-3 py-1 text-xs text-zinc-300 light:border-slate-900/10 light:bg-slate-900/4 light:text-muted text-foreground rounded-full border border-foreground/10";
 ---
 
 <section id="sobre-mi" class="relative container scroll-mt-24 py-12">
@@ -34,7 +31,7 @@ const profileChip =
 	<div class="grid grid-cols-1 gap-14 lg:grid-cols-[380px_1fr]">
 		<div class="relative hidden lg:block">
 			<div class="sticky top-28">
-				<div class={profileCard}>
+				<div class="group relative p-4">
 					<div
 						class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-white/6 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 light:from-primary/7"
 						aria-hidden="true"
@@ -83,7 +80,7 @@ const profileChip =
 		</div>
 
 		<div class="flex flex-col gap-24">
-			<div class="reveal max-w-3xl space-y-4">
+			<div class="reveal max-w-3xl space-y-2">
 				<p class={lead}>
 					Empecé estudiando Diseño Gráfico y Multimedia en UADE.
 				</p>
@@ -96,7 +93,7 @@ const profileChip =
 				</p>
 			</div>
 
-			<div class="reveal max-w-3xl space-y-4">
+			<div class="reveal max-w-3xl space-y-2">
 				<p class={lead}>Hoy sigo usando mucho de ese background en diseño.</p>
 				<p class={body}>
 					Me dio criterio visual, sensibilidad por la tipografía y una
@@ -112,7 +109,7 @@ const profileChip =
 				</p>
 			</div>
 
-			<div class="reveal max-w-3xl space-y-4">
+			<div class="reveal max-w-3xl space-y-2">
 				<p class={lead}>
 					Lo que más disfruto hoy es construir productos desde cero.
 				</p>
@@ -128,7 +125,7 @@ const profileChip =
 				</p>
 			</div>
 
-			<div class="reveal max-w-3xl space-y-8">
+			<div class="reveal max-w-3xl space-y-2">
 				<p class={lead}>Actualmente estoy profundizando mucho en JavaScript.</p>
 				<p class={body}>
 					Me interesa entender las bases de verdad: cómo funciona el lenguaje,
@@ -141,7 +138,7 @@ const profileChip =
 				</p>
 			</div>
 
-			<div class="reveal max-w-3xl space-y-4">
+			<div class="reveal max-w-3xl space-y-2">
 				<p class={lead}>
 					Me atraen especialmente los SaaS y las landing pages.
 				</p>
@@ -155,7 +152,7 @@ const profileChip =
 				</p>
 			</div>
 
-			<div class="reveal max-w-3xl space-y-4">
+			<div class="reveal max-w-3xl space-y-2">
 				<p class={lead}>
 					Creo que lo que más me diferencia es que mis proyectos no son
 					ejercicios.
