@@ -2,13 +2,36 @@
 import { Font } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import { FAVICON_VERSION, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '../const';
+import {
+	FAVICON_VERSION,
+	OG_IMAGE,
+	OG_IMAGE_HEIGHT,
+	OG_IMAGE_WIDTH,
+	SITE_DESCRIPTION,
+	SITE_TITLE,
+	SITE_URL,
+} from '../const';
 
 const faviconHref = `/favicon.ico?v=${FAVICON_VERSION}`;
 import { getThemeInitInlineScript } from '../lib/theme-init-script';
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import { REVEAL_BOOT_SCRIPT } from '../scripts/reveal-inline';
+
+interface Props {
+	title?: string;
+	description?: string;
+	ogImage?: string;
+}
+
+const {
+	title = SITE_TITLE,
+	description = SITE_DESCRIPTION,
+	ogImage = OG_IMAGE,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).href;
+const ogImageUrl = new URL(ogImage, SITE_URL).href;
 
 const themeInitScript = getThemeInitInlineScript();
 ---
@@ -21,16 +44,29 @@ const themeInitScript = getThemeInitInlineScript();
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<meta name="description" content={SITE_DESCRIPTION} />
+		<meta name="description" content={description} />
 		<link rel="icon" type="image/x-icon" href={faviconHref} sizes="any" />
 		<link rel="shortcut icon" href={faviconHref} />
 		<link rel="apple-touch-icon" href={faviconHref} />
-		<link rel="canonical" href={SITE_URL} />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+		<meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+		<meta property="og:image:alt" content={title} />
+		<meta property="og:locale" content="es_AR" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
 		<meta name="generator" content={Astro.generator} />
 		<script is:inline set:html={themeInitScript}></script>
 		<Font cssVariable="--font-outfit" />
 		<ClientRouter />
-		<title>{SITE_TITLE}</title>
+		<title>{title}</title>
 	</head>
 	<body
 		class="page-shell m-0 flex min-h-screen w-full flex-col bg-background font-outfit text-lg leading-[calc(0.95+0.62rem)] antialiased"

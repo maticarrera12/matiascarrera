@@ -1,7 +1,12 @@
 // Site-wide constants
 export const SITE_TITLE = 'Matías Carrera';
 export const SITE_DESCRIPTION = 'Desarrollador Full Stack. Diseñador convertido a developer. Construyo aplicaciones web con React, Next.js y Astro.';
-export const SITE_URL = 'https://tudominio.dev';
+export const SITE_URL = 'https://mcarreradev.com';
+
+/** Imagen para Open Graph / Twitter Cards (ruta en public/) */
+export const OG_IMAGE = '/images/op-graph.png';
+export const OG_IMAGE_WIDTH = 3024;
+export const OG_IMAGE_HEIGHT = 1656;
 
 /** Incrementá al cambiar favicon.ico para forzar recarga en navegadores */
 export const FAVICON_VERSION = '2';
