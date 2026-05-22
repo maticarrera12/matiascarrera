@@ -62,8 +62,10 @@ import SocialButton from "./SocialButton.astro";
 		<section
 			class="relative z-10 mt-24 grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12"
 		>
-			<div class="flex min-w-0 flex-col justify-between h-full gap-6 text-center lg:text-left">
-				<h1 class="sr-only">{AUTHOR.name}</h1>
+			<div
+				class="flex min-w-0 flex-col justify-between h-full gap-6 text-center lg:text-left"
+			>
+				<!-- <h1 class="sr-only">{AUTHOR.name}</h1>
 				<h2 class="reveal text-6xl font-bold text-pretty text-foreground">
 					Construyo productos digitales
 					<span class="text-primary">
@@ -74,9 +76,28 @@ import SocialButton from "./SocialButton.astro";
 					Desarrollador Full Stack apasionado por crear aplicaciones
 					robustas, escalables y
 					<span class="text-primary">centradas en las personas</span>
-				</p>
+				</p> -->
+				<div>
+					<p class="text-2xl font-bold text-pretty text-foreground">
+						Hola, soy <span class="text-primary">Matías.</span>
+					</p>
+					<h1
+						class="reveal text-6xl font-bold text-pretty text-foregorund"
+					>
+						Desarrollador Web <br />
+						<span class="text-primary font-bold text-8xl"
+							>Full Stack</span
+						>
+					</h1>
+				</div>
 
-				<div class="reveal flex items-center gap-1 justify-center lg:justify-start">
+				<p class="reveal text-xl font-bold text-pretty text-muted">
+					Apasionado por crear aplicaciones robustas, escalables y
+					<span class="text-primary">centradas en las personas.</span>
+				</p>
+				<div
+					class="reveal flex items-center gap-1 justify-center lg:justify-start"
+				>
 					<a
 						href="#proyectos"
 						class="group/proyectos inline-flex items-center gap-2 rounded-md bg-linear-to-r from-primary to-primary/80 px-4 py-4 font-semibold text-white"
@@ -112,22 +133,33 @@ import SocialButton from "./SocialButton.astro";
 					/>
 				</div>
 			</div>
-			<div class="relative flex min-w-0 items-center justify-center mt-12 lg:mt-0">
+			<div
+				class="relative flex min-w-0 items-center justify-center mt-12 lg:mt-0"
+			>
 				{/* Glow */}
 				<div
 					class="absolute inset-0 bg-primary/10 blur-3xl rounded-full"
 				>
 				</div>
 
-				{/* Main Card — en light: panel oscuro fijo para sintaxis legible */}
-				<div class="code-card relative w-full overflow-hidden rounded-3xl shadow-2xl">
+				{
+					/* Main Card — en light: panel oscuro fijo para sintaxis legible */
+				}
+				<div
+					class="code-card relative w-full overflow-hidden rounded-3xl shadow-2xl"
+				>
 					{/* Top bar */}
-					<div class="code-card__chrome flex items-center gap-2 px-5 py-4">
+					<div
+						class="code-card__chrome flex items-center gap-2 px-5 py-4"
+					>
 						<div class="w-3 h-3 rounded-full bg-red-400/80"></div>
-						<div class="w-3 h-3 rounded-full bg-yellow-400/80"></div>
+						<div class="w-3 h-3 rounded-full bg-yellow-400/80">
+						</div>
 						<div class="w-3 h-3 rounded-full bg-green-400/80"></div>
 
-						<div class="code-card__filename ml-auto text-xs font-medium">
+						<div
+							class="code-card__filename ml-auto text-xs font-medium"
+						>
 							matias.tsx
 						</div>
 					</div>
@@ -144,13 +176,16 @@ import SocialButton from "./SocialButton.astro";
 						<p class="pl-6">
 							<span class="text-[#e06c75]">name</span>
 							<span class="text-zinc-500">:</span>{" "}
-							<span class="text-[#98c379]">'Matias Carrera'</span>,
+							<span class="text-[#98c379]">'Matias Carrera'</span
+							>,
 						</p>
 
 						<p class="pl-6">
 							<span class="text-[#e06c75]">role</span>
 							<span class="text-zinc-500">:</span>{" "}
-							<span class="text-[#98c379]">'Fullstack Developer'</span>,
+							<span class="text-[#98c379]"
+								>'Fullstack Developer'</span
+							>,
 						</p>
 
 						<p class="pl-6">
@@ -174,9 +209,12 @@ import SocialButton from "./SocialButton.astro";
 						</p>
 
 						<p class="pl-6">
-							<span class="text-[#e06c75]">currentlyBuilding</span>
+							<span class="text-[#e06c75]">currentlyBuilding</span
+							>
 							<span class="text-zinc-500">:</span>{" "}
-							<span class="text-[#98c379]">'Digital products'</span>,
+							<span class="text-[#98c379]"
+								>'Digital products'</span
+							>,
 						</p>
 
 						<p>
@@ -210,7 +248,7 @@ import SocialButton from "./SocialButton.astro";
 	}
 
 	/* Light mode: oscuro translúcido — contraste + cristal */
-	html[data-color-mode='light'] .code-card {
+	html[data-color-mode="light"] .code-card {
 		border-color: rgb(15 23 42 / 0.18);
 		background: hsl(222 24% 12% / 0.82);
 		box-shadow:
@@ -220,11 +258,11 @@ import SocialButton from "./SocialButton.astro";
 		backdrop-filter: blur(20px) saturate(1.15);
 	}
 
-	html[data-color-mode='light'] .code-card__chrome {
+	html[data-color-mode="light"] .code-card__chrome {
 		border-bottom-color: rgb(255 255 255 / 0.08);
 	}
 
-	html[data-color-mode='light'] .code-card__filename {
+	html[data-color-mode="light"] .code-card__filename {
 		color: hsl(215 12% 72%);
 	}
 
