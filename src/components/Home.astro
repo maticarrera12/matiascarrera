@@ -63,7 +63,7 @@ import SocialButton from "./SocialButton.astro";
 			class="relative z-10 mt-24 grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12"
 		>
 			<div
-				class="flex min-w-0 flex-col justify-between h-full gap-6 text-center lg:text-left"
+				class="flex min-w-0 flex-col justify-between h-full gap-6 text-lg text-left"
 			>
 				<!-- <h1 class="sr-only">{AUTHOR.name}</h1>
 				<h2 class="reveal text-6xl font-bold text-pretty text-foreground">
@@ -77,15 +77,16 @@ import SocialButton from "./SocialButton.astro";
 					robustas, escalables y
 					<span class="text-primary">centradas en las personas</span>
 				</p> -->
-				<div>
+				<div class="mb-2">
 					<p class="text-2xl font-bold text-pretty text-foreground">
 						Hola, soy <span class="text-primary">Matías.</span>
 					</p>
 					<h1
-						class="reveal text-6xl font-bold text-pretty text-foregorund"
+						class="reveal text-4xl lg:text-6xl font-bold text-pretty text-foregorund"
 					>
 						Desarrollador Web <br />
-						<span class="text-primary font-bold text-8xl"
+						<span
+							class="text-primary font-bold text-6xl lg:text-8xl"
 							>Full Stack</span
 						>
 					</h1>
@@ -96,41 +97,45 @@ import SocialButton from "./SocialButton.astro";
 					<span class="text-primary">centradas en las personas.</span>
 				</p>
 				<div
-					class="reveal flex items-center gap-1 justify-center lg:justify-start"
+					class="reveal flex flex-col items-start gap-4 md:flex-row md:gap-1"
 				>
-					<a
-						href="#proyectos"
-						class="group/proyectos inline-flex items-center gap-2 rounded-md bg-linear-to-r from-primary to-primary/80 px-4 py-4 font-semibold text-white"
-					>
-						Proyectos
-						<Icon
-							is:inline
-							name="lucide:arrow-right"
-							class="size-5 transition-transform duration-200 ease-out group-hover/proyectos:translate-x-1.5"
-							aria-hidden="true"
+					<div class="flex flex-row items-start gap-4 md:gap-1">
+						<a
+							href="#proyectos"
+							class="group/proyectos inline-flex h-15 w-fit items-center justify-center gap-2 rounded-md bg-linear-to-r from-primary to-primary/80 px-4 font-semibold text-white"
+						>
+							Proyectos
+							<Icon
+								is:inline
+								name="lucide:arrow-right"
+								class="size-5 transition-transform duration-200 ease-out group-hover/proyectos:translate-x-1.5"
+								aria-hidden="true"
+							/>
+						</a>
+						<a
+							href="#sobre-mi"
+							class="inline-flex h-15 w-fit items-center justify-center gap-2 rounded-md md:border border-foreground/70 px-4 font-semibold text-foreground/70 transition-colors hover:bg-primary/5"
+						>
+							Sobre Mi
+						</a>
+					</div>
+					<div class="flex w-full flex-row justify-center gap-1 md:w-auto md:justify-start">
+						<SocialButton
+							href={SOCIAL_LINKS.linkedin}
+							icon="mdi:linkedin"
+							label="LinkedIn"
 						/>
-					</a>
-					<a
-						href="#sobre-mi"
-						class="inline-flex items-center gap-2 rounded-md border border-primary px-4 py-4 font-semibold text-primary transition-colors hover:bg-primary/5"
-					>
-						Sobre Mi
-					</a>
-					<SocialButton
-						href={SOCIAL_LINKS.linkedin}
-						icon="mdi:linkedin"
-						label="LinkedIn"
-					/>
-					<SocialButton
-						href={SOCIAL_LINKS.github}
-						icon="mdi:github"
-						label="GitHub"
-					/>
-					<SocialButton
-						href={SOCIAL_LINKS.email}
-						icon="mdi:email-outline"
-						label="Email"
-					/>
+						<SocialButton
+							href={SOCIAL_LINKS.github}
+							icon="mdi:github"
+							label="GitHub"
+						/>
+						<SocialButton
+							href={SOCIAL_LINKS.email}
+							icon="mdi:email-outline"
+							label="Email"
+						/>
+					</div>
 				</div>
 			</div>
 			<div
