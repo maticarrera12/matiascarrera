@@ -46,14 +46,24 @@ const imagesJson = JSON.stringify(images);
 				<Icon name="lucide:x" class="size-5" is:inline />
 			</button>
 
-			<button
-				type="button"
-				class="gallery-lightbox__nav gallery-lightbox__nav--prev"
-				data-gallery-prev
-				aria-label="Captura anterior"
-			>
-				<Icon name="lucide:chevron-left" class="size-6" is:inline />
-			</button>
+			<div class="gallery-lightbox__nav-group">
+				<button
+					type="button"
+					class="gallery-lightbox__nav gallery-lightbox__nav--prev"
+					data-gallery-prev
+					aria-label="Captura anterior"
+				>
+					<Icon name="lucide:chevron-left" class="size-6" is:inline />
+				</button>
+				<button
+					type="button"
+					class="gallery-lightbox__nav gallery-lightbox__nav--next"
+					data-gallery-next
+					aria-label="Captura siguiente"
+				>
+					<Icon name="lucide:chevron-right" class="size-6" is:inline />
+				</button>
+			</div>
 
 			<figure class="gallery-lightbox__figure">
 				<img
@@ -65,15 +75,6 @@ const imagesJson = JSON.stringify(images);
 				/>
 				<figcaption class="gallery-lightbox__caption" data-gallery-caption />
 			</figure>
-
-			<button
-				type="button"
-				class="gallery-lightbox__nav gallery-lightbox__nav--next"
-				data-gallery-next
-				aria-label="Captura siguiente"
-			>
-				<Icon name="lucide:chevron-right" class="size-6" is:inline />
-			</button>
 		</div>
 	</dialog>
 </div>
@@ -215,29 +216,52 @@ const imagesJson = JSON.stringify(images);
 		opacity: 0.35;
 	}
 
+	/* Desktop: prev | imagen | next */
+	.gallery-lightbox__nav-group {
+		display: contents;
+	}
+
+	.gallery-lightbox__nav--prev {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.gallery-lightbox__figure {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.gallery-lightbox__nav--next {
+		grid-column: 3;
+		grid-row: 1;
+	}
+
 	@media (max-width: 40rem) {
 		.gallery-lightbox__panel {
 			grid-template-columns: 1fr;
-			grid-template-rows: 1fr auto auto;
+			grid-template-rows: 1fr auto;
 			width: 100vw;
 			padding: 3rem 1rem 1rem;
 		}
 
+		.gallery-lightbox__figure {
+			grid-column: 1;
+			grid-row: 1;
+		}
+
+		.gallery-lightbox__nav-group {
+			display: flex;
+			grid-column: 1;
+			grid-row: 2;
+			align-items: center;
+			justify-content: center;
+			gap: 0.75rem;
+		}
+
 		.gallery-lightbox__nav--prev,
 		.gallery-lightbox__nav--next {
-			justify-self: center;
-		}
-
-		.gallery-lightbox__nav--prev {
-			order: 2;
-		}
-
-		.gallery-lightbox__nav--next {
-			order: 3;
-		}
-
-		.gallery-lightbox__figure {
-			order: 1;
+			grid-column: auto;
+			grid-row: auto;
 		}
 	}
 
