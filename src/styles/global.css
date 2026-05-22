@@ -104,11 +104,41 @@
 		fill: rgba(14, 20, 27, 0.5);
 	}
 
+	.mobile-menu__panel {
+		background-color: var(--color-cloud-500);
+		transition:
+			background-color var(--color-swap-duration) var(--color-swap-timing-function);
+	}
+
+	html[data-color-mode='light'] .mobile-menu__panel {
+		background-color: var(--color-cloud-300);
+	}
+
+	html[data-color-mode='dark'] .mobile-menu__panel {
+		background-color: var(--color-cloud-500);
+	}
+
+	.mobile-menu__cloud-path {
+		fill: var(--color-cloud-500);
+		transition:
+			fill var(--color-swap-duration) var(--color-swap-timing-function);
+	}
+
+	html[data-color-mode='light'] .mobile-menu__cloud-path {
+		fill: var(--color-cloud-300);
+	}
+
+	html[data-color-mode='dark'] .mobile-menu__cloud-path {
+		fill: var(--color-cloud-500);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		html,
 		.page-main,
 		.site-footer,
-		.footer-cloud-accent__path {
+		.footer-cloud-accent__path,
+		.mobile-menu__panel,
+		.mobile-menu__cloud-path {
 			transition: none;
 		}
 

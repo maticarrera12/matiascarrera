@@ -1,5 +1,10 @@
 ---
 import { NAV_LINKS } from "../const";
+import {
+	FOOTER_CLOUD_ACCENT_PATH,
+	FOOTER_CLOUD_ACCENT_VIEWBOX,
+	MOBILE_MENU_CLOUD_FLIP,
+} from "../lib/cloud-strip";
 import ThemeToggle from "./ThemeToggle.astro";
 const path = Astro.url.pathname;
 const hash = Astro.url.hash;
@@ -29,7 +34,7 @@ function isSamePageNav(href: string): boolean {
 				Matias Carrera
 			</a>
 
-			<ul class="m-0 flex list-none gap-4 p-0 sm:gap-8">
+			<ul class="m-0 hidden list-none gap-4 p-0 sm:flex sm:gap-8">
 				{
 					NAV_LINKS.map((link) => (
 						<li>
@@ -53,9 +58,65 @@ function isSamePageNav(href: string): boolean {
 			</ul>
 		</div>
 
-		<ThemeToggle />
+		<div class="flex items-center gap-3">
+			<ThemeToggle />
+
+			<button
+				type="button"
+				id="mobile-menu-btn"
+				class="mobile-menu-btn sm:hidden flex flex-col items-center justify-center gap-[5px] w-8 h-8 text-foreground hover:text-primary transition-colors"
+				aria-label="Abrir menú"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+			>
+				<span class="menu-bar block h-[2px] w-5 bg-current rounded-full origin-center"></span>
+				<span class="menu-bar block h-[2px] w-5 bg-current rounded-full origin-center"></span>
+				<span class="menu-bar block h-[2px] w-5 bg-current rounded-full origin-center"></span>
+			</button>
+		</div>
 	</div>
 </header>
+
+<div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+	<div class="mobile-menu__panel">
+		<nav class="mobile-menu__nav" aria-label="Menú de navegación">
+			<ul class="m-0 flex list-none flex-col items-center gap-6 p-0">
+				{
+					NAV_LINKS.map((link) => (
+						<li>
+							<a
+								href={link.href}
+								data-nav={link.href}
+								data-nav-link
+								data-same-page={isSamePageNav(link.href) ? "true" : undefined}
+								class:list={[
+									"mobile-nav-link text-2xl font-semibold transition-colors",
+									isActive(link.href)
+										? "text-foreground"
+										: "text-muted hover:text-foreground",
+								]}
+							>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+	</div>
+
+	<svg
+		class="mobile-menu__cloud"
+		viewBox={FOOTER_CLOUD_ACCENT_VIEWBOX}
+		preserveAspectRatio="none"
+		xmlns="http://www.w3.org/2000/svg"
+		aria-hidden="true"
+	>
+		<g transform={MOBILE_MENU_CLOUD_FLIP}>
+			<path class="mobile-menu__cloud-path" d={FOOTER_CLOUD_ACCENT_PATH} />
+		</g>
+	</svg>
+</div>
 
 <style>
 	.nav-header {
@@ -70,8 +131,122 @@ function isSamePageNav(href: string): boolean {
 	.nav-header.is-scrolled {
 		-webkit-backdrop-filter: blur(8px);
 		backdrop-filter: blur(8px);
-		background-color: color-mix(in srgb, var(--color-background) 25%, transparent);
+		background-color: color-mix(in srgb, var(--color-cloud-500) 25%, transparent);
 		box-shadow: 0 1px 0 color-mix(in srgb, var(--color-text) 3%, transparent);
+	}
+
+	/* Panel + nube SVG: siempre display:flex en mobile, oculto con transform */
+
+	.mobile-menu {
+		display: none;
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		z-index: 45;
+		flex-direction: column;
+		pointer-events: none;
+		transform: translateY(-105%);
+		transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	@media (max-width: 639px) {
+		.mobile-menu {
+			display: flex;
+		}
+	}
+
+	.mobile-menu.is-open {
+		transform: translateY(0);
+	}
+
+	.mobile-menu__panel {
+		display: flex;
+		justify-content: center;
+		padding: 5rem 2rem 1.5rem;
+		background: var(--color-cloud-500);
+		pointer-events: none;
+	}
+
+	.mobile-menu.is-open .mobile-menu__panel {
+		pointer-events: auto;
+	}
+
+	.mobile-menu__cloud {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1557 / 213;
+		flex-shrink: 0;
+		margin-top: -1px;
+		overflow: visible;
+		pointer-events: none;
+	}
+
+	.mobile-menu__cloud-path {
+		fill: var(--color-cloud-500);
+	}
+
+	.mobile-menu__nav {
+		pointer-events: none;
+	}
+
+	.mobile-menu.is-open .mobile-menu__nav {
+		pointer-events: auto;
+	}
+
+	.mobile-menu__nav a {
+		pointer-events: auto;
+	}
+
+	/* ── Stagger de links al abrir ─────────────────────────────────── */
+
+	.mobile-menu__nav li a {
+		display: inline-block;
+		opacity: 0;
+		transform: translateY(-10px);
+		transition:
+			opacity 0.28s ease,
+			transform 0.32s ease;
+	}
+
+	.mobile-menu.is-open .mobile-menu__nav li a {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.mobile-menu.is-open .mobile-menu__nav li:nth-child(1) a { transition-delay: 0.18s; }
+	.mobile-menu.is-open .mobile-menu__nav li:nth-child(2) a { transition-delay: 0.26s; }
+	.mobile-menu.is-open .mobile-menu__nav li:nth-child(3) a { transition-delay: 0.34s; }
+
+	/* ── Hamburger → X ────────────────────────────────────────────── */
+
+	/* Menú abierto: sin glass en la nav (aunque haya scroll) */
+	.nav-header.is-menu-open,
+	.nav-header.is-menu-open.is-scrolled {
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.menu-bar {
+		transition:
+			transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.2s ease;
+	}
+
+	.mobile-menu-btn.is-open .menu-bar:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.mobile-menu-btn.is-open .menu-bar:nth-child(2) {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+
+	.mobile-menu-btn.is-open .menu-bar:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
 	}
 </style>
 
@@ -91,8 +266,10 @@ function isSamePageNav(href: string): boolean {
 		if (location.pathname !== "/" || !location.hash) {
 			return location.pathname === "/" ? "/" : location.pathname;
 		}
-		return location.hash === "#sobre-mi" ? "/#sobre-mi"
-			: location.hash === "#proyectos" ? "/#proyectos"
+		return location.hash === "#sobre-mi"
+			? "/#sobre-mi"
+			: location.hash === "#proyectos"
+			? "/#proyectos"
 			: "/";
 	}
 
@@ -100,33 +277,46 @@ function isSamePageNav(href: string): boolean {
 		var y = window.scrollY + navScrollOffset();
 		var sections = [
 			{ id: "proyectos", href: "/#proyectos" },
-			{ id: "sobre-mi",  href: "/#sobre-mi"  },
+			{ id: "sobre-mi", href: "/#sobre-mi" },
 		];
 		for (var i = 0; i < sections.length; i++) {
 			var el = document.getElementById(sections[i].id);
-			if (el && y >= window.scrollY + el.getBoundingClientRect().top) return sections[i].href;
+			if (el && y >= window.scrollY + el.getBoundingClientRect().top)
+				return sections[i].href;
 		}
 		return "/";
 	}
 
 	function syncNav(forcedHref) {
 		var p = navPathname();
-		var activeHref = typeof forcedHref === "string" ? forcedHref
-			: p !== "/" ? p
-			: getActiveHrefFromScroll();
+		var activeHref =
+			typeof forcedHref === "string"
+				? forcedHref
+				: p !== "/"
+				? p
+				: getActiveHrefFromScroll();
 
 		document.querySelectorAll("[data-nav-link]").forEach(function (el) {
 			var href = el.getAttribute("data-nav");
-			var on = p === "/"
-				? (href === "/" || href === "/#" ? activeHref === "/" : activeHref === href)
-				: p === href;
-			el.className = on
+			var on =
+				p === "/"
+					? href === "/" || href === "/#"
+						? activeHref === "/"
+						: activeHref === href
+					: p === href;
+			var isMobile = el.classList.contains("mobile-nav-link");
+			el.className = isMobile
+				? on
+					? "mobile-nav-link text-2xl font-semibold transition-colors text-foreground"
+					: "mobile-nav-link text-2xl font-semibold transition-colors text-muted hover:text-foreground"
+				: on
 				? "text-[0.9375rem] text-foreground"
 				: "text-[0.9375rem] text-muted hover:text-foreground";
 		});
 
 		var header = document.querySelector(".nav-header");
-		if (header) header.classList.toggle("is-scrolled", scrollY > 0);
+		var menuOpen = document.getElementById("mobile-menu")?.classList.contains("is-open");
+		if (header) header.classList.toggle("is-scrolled", scrollY > 0 && !menuOpen);
 	}
 
 	function navigateSamePage(href) {
@@ -138,14 +328,73 @@ function isSamePageNav(href: string): boolean {
 		syncNav(target);
 	}
 
+	function closeMobileMenu() {
+		var menu = document.getElementById("mobile-menu");
+		var btn = document.getElementById("mobile-menu-btn");
+		if (!menu || !btn) return;
+		menu.classList.remove("is-open");
+		btn.classList.remove("is-open");
+		btn.setAttribute("aria-expanded", "false");
+		menu.setAttribute("aria-hidden", "true");
+		btn.setAttribute("aria-label", "Abrir menú");
+		setMenuOpenNavGlass(false);
+	}
+
+	function setMenuOpenNavGlass(open) {
+		var header = document.querySelector(".nav-header");
+		if (header) header.classList.toggle("is-menu-open", open);
+	}
+
+	function initMobileMenu() {
+		var btn = document.getElementById("mobile-menu-btn");
+		var menu = document.getElementById("mobile-menu");
+		/* dataset.bound evita doble-bind en el mismo elemento
+		   (astro:page-load dispara también en el load inicial) */
+		if (!btn || !menu || btn.dataset.bound) return;
+		btn.dataset.bound = "1";
+
+		btn.addEventListener("click", function () {
+			if (menu.classList.contains("is-open")) {
+				closeMobileMenu();
+			} else {
+				menu.classList.add("is-open");
+				btn.classList.add("is-open");
+				btn.setAttribute("aria-expanded", "true");
+				menu.setAttribute("aria-hidden", "false");
+				btn.setAttribute("aria-label", "Cerrar menú");
+				setMenuOpenNavGlass(true);
+			}
+		});
+
+		/* Cerrar al hacer click en cualquier link del menú */
+		menu.querySelectorAll("a").forEach(function (link) {
+			link.addEventListener("click", closeMobileMenu);
+		});
+	}
+
 	if (!window.__navBound) {
 		window.__navBound = true;
 
 		document.addEventListener("click", function (e) {
+			/* Navegación same-page */
 			var link = e.target.closest("[data-same-page='true'], [data-nav='/']");
-			if (!link || navPathname() !== "/") return;
-			e.preventDefault();
-			navigateSamePage(link.getAttribute("data-nav"));
+			if (link && navPathname() === "/") {
+				e.preventDefault();
+				navigateSamePage(link.getAttribute("data-nav"));
+				return;
+			}
+			/* Cerrar menú mobile al clickear fuera */
+			var menu = document.getElementById("mobile-menu");
+			var header = document.querySelector(".nav-header");
+			if (
+				menu &&
+				menu.classList.contains("is-open") &&
+				!menu.contains(e.target) &&
+				header &&
+				!header.contains(e.target)
+			) {
+				closeMobileMenu();
+			}
 		});
 
 		window.addEventListener("popstate", function () {
@@ -161,8 +410,10 @@ function isSamePageNav(href: string): boolean {
 		});
 
 		document.addEventListener("astro:page-load", syncNav);
+		document.addEventListener("astro:page-load", initMobileMenu);
 	}
 
 	syncNav();
+	initMobileMenu();
 	window.addEventListener("scroll", syncNav, { passive: true });
 </script>
