@@ -27,7 +27,6 @@
 	--color-sky-to: var(--color-sky-to);
 	--color-sky-subtle: var(--color-sky-subtle);
 }
-
 /* Theme tokens + animated @property transitions */
 @layer base {
 	html {
