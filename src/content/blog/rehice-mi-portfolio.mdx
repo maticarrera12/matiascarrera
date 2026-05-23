@@ -1,0 +1,167 @@
+---
+title: "Menos ruido, más intención: rehice mi portfolio desde cero"
+description: "Empezó como un cambio de diseño. Terminó siendo un cambio de filosofía."
+publishedAt: 2026-05-24
+tags: ["astro", "portfolio", "nextjs", "diseño-web", "aprender-en-publico"]
+draft: false
+updatedAt: 2026-05-24
+readingTime: 10
+---
+
+import portfolioAnterior from '../../assets/old-portflio-work.png'
+import Figure from '../../components/Figure.astro'
+
+HTML, CSS, JavaScript, React, Node.js. Ese es el background que tenemos casi todos los que empezamos a programar post pandemia. Es a lo que mejor se adaptaron las plataformas de cursos, y es lo que pasó a ser la ruta default. Yo no fui la excepción.
+
+Después de React conocí Next.js y me voló la cabeza. La posibilidad de tener frontend y backend juntos. La sensación de que con eso podía construir cualquier cosa. Y con ello los tutoriales infinitos. Pasé días — no horas, días — copiando `<div>` por `<div>` de proyectos que hoy, mirando en retrospectiva, no me identifican demasiado. Los hice, pero no los siento míos.
+
+Con ese stack arranqué dos cosas: mi primer SaaS y mi primer portfolio.
+
+El SaaS, hasta hoy, es un fracaso comercial rotundo. Y aun así me llena de orgullo, porque es mío de verdad: identifica un problema real y lo resuelve. Por más chico que sea el impacto, ese proyecto fue el primero donde sentí que estaba **construyendo, no copiando**.
+
+El portfolio fue otra historia.
+
+Mi background de diseñador me había empujado a aprender GSAP y Framer Motion. Y el portfolio tenía que llevar como insignia animaciones por todos lados.
+
+En algún momento empecé a preguntarme: ¿alguien va a tomarse la molestia de recorrer todo esto? ¿O van a cerrar la pestaña a los diez segundos?
+
+Me hacía ruido hasta a mí.
+
+Y lo curioso es que esa sobrecarga visual combinaba perfectamente con la sobrecarga técnica del stack. Next.js tiene infinitas features, y para una landing personal eso era complejidad innecesaria. Empecé a sospechar que podía existir algo más simple, más flexible, más rápido.
+
+## Quería gritar que sabía usarlo todo
+
+Y exageré. Un naranja estridente, navegación larguísima rellena de transiciones, galerías interminables, secciones que existían solo para tener algo más que mover. Texto que aparecía letra por letra. Cards que rotaban en hover. Cinco secciones donde había más animación que contenido.
+
+<Figure
+  src={portfolioAnterior}
+  alt="Portfolio anterior con animaciones sobrecargadas"
+  caption="Esta es una pequena muestra de la sobrecarga visual del portfolio anterior."
+/>
+
+Y no era solo la superficie. La estructura interna acompañaba el caos: muchísimos componentes, hooks por todos lados, scripts que no recuerdo para qué servían, código spaghetti dentro de archivos de 400 líneas que podrían haber sido cuatro de 100.
+
+Técnicamente, estaba usando todo lo que había aprendido. Para una landing personal. La mayoría sin razón clara más que "lo aprendí y quería mostrarlo." Si veía un tutorial sobre una feature de Next.js, asumía que algo tenía que servir y lo metía.
+
+El resultado: cada build tardaba una eternidad. Hoy, la build de este sitio con Astro dura **15 segundos**.
+
+Iba a linkear el repo para que vean con sus propios ojos cómo era, pero parte del cambio de rehacerme como programador involucró limpiar GitHub y borré el repo. Perdí también unas animaciones bastante buenas en el proceso. Por suerte el live site todavía vive en [mcarrera.vercel.app](https://mcarrera.vercel.app). Veo que solo el Home tiene unas 7 animaciones, no me equivocaba al pensar que estaba sobrecargado.
+
+A alguien fuera del rubro le podía parecer impresionante. Pero cualquier dev que entrara iba a notar exactamente lo mismo que yo terminé notando: que toda esa cantidad de animaciones y transiciones no estaba al servicio de la comunicación. Estaba al servicio de **demostrar que sabía hacerlas**.
+
+Y ahí está la diferencia.
+
+Un portfolio no se mide por cuánto se mueve. Se mide por qué tan rápido la persona que lo abre entiende quién sos y qué hacés. El mío estaba haciendo lo contrario: **distraía del mensaje en vez de entregarlo**.
+
+Decidí empezar de cero.
+
+## Los devs que más respeto no son los más vistosos
+
+Esa decisión vino de mirar mucho.
+
+Pasé semanas estudiando sitios de devs de la puta madre, tratando de entender qué los hacía sentir distintos al mío. Y encontré algo contraintuitivo: los mejores no eran los más vistosos. Eran los **más claros**.
+
+Así aparecen [Maciej Cegłowski](https://idlewords.com) o [Derek Sivers](https://sivers.org), cuyo sitio es básicamente texto plano sobre fondo blanco. Tipografía del sistema. Cero animaciones. Y aun así son las webs de devs más respetadas que conozco. ¿Por qué? Porque la presentación está al servicio de lo que tienen para decir, no encima.
+
+Del otro lado del espectro hay devs como [Rauno](https://rauno.me) donde sí hay diseño cuidado, microinteracciones, paletas trabajadas. Pero acá también pasa lo mismo: cada decisión visual está al servicio de la claridad, no peleando con ella. Cuando ves una animación en el sitio de Rauno, está ahí porque ayuda a entender algo, no porque demuestra que sabe hacerla.
+
+Independientemente del nivel de minimalismo, todos los sitios que me marcaron compartían una cualidad: precisión. Sabían exactamente qué querían comunicar, y todo lo demás —tipografía, color, espaciado, movimiento— estaba ordenado alrededor de ese mensaje. No había ruido. Hasta transmitían calma.
+
+Ahora, viniendo del diseño gráfico, hay algo que tengo que admitir: no podía hacer un sitio fondo blanco con texto plano y quedarme tranquilo. Mi cerebro no funciona así. Le presto atención obsesiva a la tipografía, a los colores, al espaciado, a los detalles que mucha gente no nota.
+
+Y ahí estaba la pregunta que terminé respondiéndome con este rediseño: ¿cómo construyo un sitio que tenga la claridad del minimalismo extremo, pero que también tenga el cuidado visual que necesito para sentir que lo hice yo?
+
+La respuesta no fue dejar de prestarle atención al diseño. Fue ponerlo **al servicio del mensaje** en vez de poner el mensaje al servicio del diseño.
+
+## De la UI al framework
+
+Podrías pensar: todo esto se podía lograr igual con un proyecto de Next.js bien armado, sin sobrecargarlo. Y es cierto.
+
+Pero el cambio de filosofía que quería para el portfolio (calma, aire, foco, claridad, precisión) me llevó a una pregunta más profunda: ¿por qué no aplicar esa filosofía también al stack?
+
+Por defecto, un proyecto de Next.js trae mucho más de lo que una landing personal necesita. Server components, server actions, route handlers, middleware, edge functions, dynamic imports. Para una aplicación con autenticación, base de datos, dashboards y flujos complejos, todo eso es valioso. Para una landing casi estática con un blog adelante, es complejidad innecesaria.
+
+Quería que el framework reflejara la misma intención que el diseño:
+
+- Menos JavaScript innecesario
+- Menos ruido
+- Más control
+- Más liviano
+- Más simple
+
+Mi primer contacto con [Astro](https://docs.astro.build) fue un directo de Midudev haciendo la web de La Velada. No le presté demasiada atención al funcionamiento técnico, pero me quedó la sensación de que era rápido y simple. Eso fue todo el trigger que necesité.
+
+Después hice algo que me encanta y que sigo recomendando por encima de cualquier curso o tutorial: leer la documentación y seguir las guías oficiales. (Sí, también me vi un tutorial de una hora — hay cosas que no cambian.) Pero el grueso del aprendizaje vino de la docs. Es, sin discusión, la mejor forma de aprender una tecnología en serio.
+
+Astro me terminó convenciendo por cuatro cosas concretas:
+
+1. **Cero JavaScript por defecto.** Si una página no necesita JS, no se envía JS. Punto.
+2. **Content Collections nativas.** Modelado de contenido tipado para blogs y proyectos sin librerías externas ni configuración compleja.
+3. **Performance en sitios estáticos.** Builds rápidas, sitios livianos, Core Web Vitals fuera de discusión.
+4. **Simplicidad para este caso de uso.** Menos abstracciones entre lo que escribo y lo que se sirve.
+
+Cuando empiece otro SaaS con autenticación, dashboards o flujos dinámicos serios, voy a volver a Next.js sin dudarlo. La elección del stack no es ideológica, es contextual. Astro fue la herramienta correcta para este problema específico.
+
+## Las decisiones
+
+Lo primero que cambié fue la tipografía y la paleta.
+
+El portfolio anterior usaba Satoshi — una sans serif geométrica que técnicamente está bien, pero se siente fría. Probé varias alternativas hasta que llegué a Outfit. Es una sans serif también, pero con curvas más suaves y un peso visual más amigable. Misma claridad técnica, mejor calidez. Es la tipografía que terminó sintiéndose como mía.
+
+Con el color hice un movimiento parecido. El naranja estridente del portfolio anterior cansaba la vista — incluso aunque no había grandes superficies en naranja, los acentos pegaban fuerte cada vez que aparecían. Lo cambié por un terracota más tranquilo. Mismo registro cromático cálido, pero sin agredir. La paleta entera se construyó alrededor de ese terracota, con un fondo nocturno azul muy oscuro y blancos cálidos para el texto.
+
+Las nubes que le robé a Comeau. La web de [Josh Comeau](https://joshwcomeau.com) tiene nubes flotantes de fondo. Me encantó la idea de tener algo en el fondo que diera dinamismo sin robar protagonismo. Las montañas hacen lo mismo conceptualmente —ambiente sin distracción— pero le dan al portfolio un paisaje propio. No es un fondo plano, pero tampoco compite con el contenido. Y cierran con las nubes del footer, que sí me permití conservar como guiño. Todo el sitio tiene cierta armonía visual donde nada parece al azar.
+
+(Detalle técnico: la navbar es donde se concentra el 90% del JavaScript del sitio. Maneja el cambio de tema, el desplegable en mobile, y un efecto translucid en scroll.)
+
+La estructura del contenido. Dividí la web en tres secciones: Home, About y Projects. Cada una con un trabajo específico.
+
+El Home es lo más simple del sitio: una declaración rápida de quién soy y qué hago. Acá hice un cambio importante respecto al portfolio anterior: unifiqué mi rol. Antes me presentaba como "UX/UI Designer + Full Stack Developer", y eso confundía. Hoy soy Full Stack Developer, y quizás en algún momento se reduzca aún más a Frontend Developer.
+
+En About me di la libertad de escribir más. El portfolio anterior tenía un "Sobre mí" mínimo, casi protocolar. Acá conté mi historia con el diseño gráfico, lo que me gusta del código, qué me motiva a buildear, qué busco hoy. Una microanimación de blur y fade-in al scroll acompaña la lectura sin interrumpirla. Es la sección donde dejé que el portfolio respire.
+
+Projects es la que más tiempo me llevó. En layout va segunda, pero la dejé para el final del trabajo porque es donde puse más decisión. En un vistazo rápido te muestra proyectos que creo que valen la pena contar y una mini barra con mi stack. Pasé de poner muchísimas tecnologías de las cuales había visto algún tutorial a mi core, reduccionismo al máximo.
+
+Cada proyecto tiene su historia. Acá está la diferencia más grande con el portfolio anterior.
+
+Antes, "Projects" era una galería con muchos proyectos, imagen, sin contexto, sin historia, cada uno con un link externo a su demo. Ese era el final del recorrido — el visitante miraba thumbnails, clickeaba uno, se iba.
+
+Ahora cada proyecto tiene su propia página dentro del portfolio. Y cada una documenta el proyecto en serio: overview, problema que resuelve, solución, stack técnico, decisiones de arquitectura, funcionalidades principales, galería de capturas y aprendizajes específicos.
+
+La diferencia conceptual es importante: el portfolio anterior mostraba **resultados**. Este muestra **decisiones**. Los resultados los podés ver entrando al demo. Las decisiones son lo que un reclutador o un colega quiere saber para evaluar cómo pensás.
+
+Si tuviera que destacar una sola decisión de todo este rediseño, sería esta: invertir tiempo en cada página de proyecto en lugar de en la galería general.
+
+## Lo que aprendí construyéndolo
+
+El cambio más importante no fue visual, fue de pensamiento.
+
+Estudié casos, miré otros sitios, analicé qué problema quería resolver con mi portfolio antes de tocar la UI. Sin ese análisis previo, habría terminado con otro portfolio sobrecargado, solo que con paleta distinta. El proceso reflexivo es lo que diferenció el resultado, no la tecnología.
+
+Hay cinco cosas que me llevo de este rediseño.
+
+El stack se elige por proyecto, no por costumbre. Veo que muchos devs (yo incluido) usamos Next.js como default para todo porque es lo que aprendimos. Pero cada proyecto tiene su tecnología correcta. Astro es la correcta para un sitio mayormente estático.
+
+Astro merece más contenido en español. Trabajando con el framework noté que hay muy poca documentación, tutoriales o artículos en castellano comparado con Next.js o React. Es intuitivo, accesible para devs que arrancan, y está creciendo. Voy a escribir más sobre Astro en próximos posts.
+
+Arrancar de cero vale la pena cuando lo que tenés ya no te representa. No hay que esperar a que algo esté roto técnicamente. A veces el problema es que aprendiste cosas nuevas, tu criterio cambió, y el trabajo viejo refleja un vos anterior. El ojo se afina con la práctica, y cuando volvés a ver proyectos viejos, ves cosas que antes no veías.
+
+Menos código no es menos trabajo. Mi portfolio anterior me llevó semanas. Adapté el contenido para encajar en animaciones que veía en sitios de Awwwards. Este lo hice en aproximadamente 4 sesiones de dos horas de código. Lo que me llevó más tiempo fue el análisis. Y aun así, lo considero mucho mejor: me representa mejor, comunica más claro, pesa menos y tiene poquísimas dependencias extras. La simplificación bien hecha lleva tiempo de pensamiento, no de implementación.
+
+**Lo simple suele ser lo más difícil de lograr.** Es fácil sumar features y componentes y animaciones. Es difícil decidir qué sacar. La curaduría editorial es habilidad técnica, no solo estética.
+
+## Y ahora qué
+
+El portfolio es lo menos importante de lo que me llevo de este proceso.
+
+Me llevo un stack que voy a seguir usando para landings y sitios mayormente estáticos. Una filosofía de desarrollo web distinta, donde el ruido visual y técnico ya no son sinónimos de capacidad. Una forma nueva de pensar UX/UI, que sigue siendo lo que más me apasiona pero ahora con más calma: ver qué funciona, mirar lo que hacen los mejores, pensar en lo que quiero comunicar antes de decidir cómo.
+
+Y me llevo, sobre todo, el hábito de documentar lo que voy aprendiendo y haciendo. Escribir este post fue más útil para ordenar mis propias ideas que el rediseño en sí.
+
+Por eso voy a seguir escribiendo acá.
+
+Ahora te dejo dos preguntas para que las pienses:
+
+¿Sentís que tu portfolio te representa hoy?
+
+¿Podrías simplificarlo y contar más?

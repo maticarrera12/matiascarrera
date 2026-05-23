@@ -1,0 +1,80 @@
+---
+interface Props {
+	class?: string;
+	align?: 'center' | 'start';
+}
+
+const { class: className, align = 'center' } = Astro.props;
+
+const slotClass =
+	align === 'start'
+		? 'container relative z-10 flex flex-1 flex-col items-start justify-center pt-24 pb-52'
+		: 'relative z-10 flex flex-1 flex-col items-center justify-center px-4 pt-24 pb-52';
+---
+
+<section class:list={['mountain-hero relative isolate min-h-[60vh] overflow-hidden flex flex-col', className]}>
+	<!-- Sky gradient fills entire section -->
+	<div class="absolute inset-0 sky-gradient pointer-events-none" aria-hidden="true"></div>
+
+	<!-- Mountain layers: cloud-500 (back) + cloud-300 (front) -->
+	<div
+		class="pointer-events-none absolute inset-x-0 bottom-0 z-0 flex flex-col items-center justify-end overflow-hidden"
+		aria-hidden="true"
+	>
+		<svg
+			class="hero-mountains__svg block h-114 w-full min-w-1280 max-w-none translate-y-px overflow-visible"
+			width="5120"
+			height="456"
+			fill="none"
+			viewBox="0 0 5120 456"
+			preserveAspectRatio="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				fill="var(--color-cloud-500)"
+				d="M-120 456V368L0 328L256 352L512 308L768 340L1024 296L1280 332L1536 288L1792 324L2048 284L2304 318L2560 278L2816 312L3072 274L3328 306L3584 270L3840 300L4096 266L4352 294L4608 262L4864 290L5120 268L5240 300V456H-120Z"
+			/>
+			<path
+				fill="var(--color-cloud-300)"
+				d="M-120 456V396L128 356L384 388L640 344L896 376L1152 336L1408 368L1664 328L1920 360L2176 324L2432 356L2688 320L2944 352L3200 316L3456 348L3712 312L3968 344L4224 308L4480 340L4736 304L4992 336L5240 364V456H-120Z"
+			/>
+		</svg>
+	</div>
+
+	<!-- Transition: mountain silhouette blends into flat page background -->
+	<div
+		class="pointer-events-none absolute inset-x-0 bottom-0 z-1 flex flex-col items-center justify-end overflow-hidden"
+		aria-hidden="true"
+	>
+		<svg
+			class="hero-mountains__svg block h-114 w-full min-w-1280 max-w-none translate-y-px overflow-visible"
+			width="5120"
+			height="456"
+			fill="none"
+			viewBox="0 0 5120 456"
+			preserveAspectRatio="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				fill="var(--color-background)"
+				d="M-120 456V408L256 416L512 404L768 412L1024 402L1280 410L1536 400L1792 408L2048 398L2304 406L2560 396L2816 404L3072 394L3328 402L3584 392L3840 400L4096 390L4352 398L4608 388L4864 396L5120 388L5240 404V456H-120Z"
+			/>
+		</svg>
+	</div>
+
+	<!-- Content slot: centered in the hero above mountains -->
+	<div class={slotClass}>
+		<slot />
+	</div>
+</section>
+
+<style>
+	@media (max-width: 50rem) {
+		.hero-mountains__svg {
+			--magic-number: calc(-50vw + 25rem);
+			height: calc(5rem + 50vw);
+			margin-top: -1rem;
+			transform: translate(var(--magic-number), 1px);
+		}
+	}
+</style>

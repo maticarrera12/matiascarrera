@@ -1,0 +1,30 @@
+---
+// src/components/Figure.astro
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="post-figure">
+  <Image src={src} alt={alt} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .post-figure {
+    margin: 2rem 0;
+  }
+  figcaption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+</style>

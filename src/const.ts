@@ -1,5 +1,5 @@
 // Site-wide constants
-export const SITE_TITLE = 'Matías Carrera';
+export const SITE_TITLE = 'Matías Carrera | Full Stack Developer';
 export const SITE_DESCRIPTION = 'Desarrollador Full Stack. Diseñador convertido a developer. Construyo aplicaciones web con React, Next.js y Astro.';
 export const SITE_URL = 'https://mcarreradev.com';
 
@@ -31,4 +31,5 @@ export const NAV_LINKS = [
   { href: '/', label: 'Inicio' },
   { href: '/#sobre-mi', label: 'Sobre Mi' },
   { href: '/#proyectos', label: 'Proyectos' },
+  // { href: '/blog', label: 'Blog' },
 ];

@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import MountainHero from '../../components/MountainHero.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+
+const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' } as const;
+---
+
+<Layout
+	title="Blog · Matías Carrera"
+	description="Desarrollo web, diseño y aprendizaje en público."
+>
+	<MountainHero align="start">
+		<div class="text-left mt-24">
+			<span
+				class="mb-4 block text-xs font-bold uppercase tracking-widest text-primary"
+			>
+				Blog
+			</span>
+			<h1 class="text-5xl font-bold text-foreground lg:text-7xl">
+		Entre interfaces y código
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg text-muted">
+				Desarrollo web, diseño y las cosas que aprendo construyendo.
+			</p>
+		</div>
+	</MountainHero>
+
+	<main class="container">
+		{
+			posts.length === 0 ? (
+				<p class="text-muted">No hay posts publicados todavía.</p>
+			) : (
+				<ul class="flex flex-col divide-y divide-border/40 m-0 list-none p-0">
+					{posts.map((post) => (
+						<li>
+							<a
+								href={`/blog/${post.id}`}
+								class="post-card group block py-10 transition-colors"
+							>
+								<div class="flex flex-col gap-4">
+									{post.data.tags.length > 0 && (
+										<div class="flex flex-wrap gap-2">
+											{post.data.tags.map((tag) => (
+												<span class="post-tag text-xs font-semibold uppercase tracking-wider text-primary/70">
+													#{tag}
+												</span>
+											))}
+										</div>
+									)}
+
+									<h2 class="text-2xl font-bold text-foreground transition-colors group-hover:text-primary lg:text-3xl">
+										{post.data.title}
+									</h2>
+
+									<p class="text-base leading-relaxed text-muted">
+										{post.data.description}
+									</p>
+
+									<div class="flex items-center gap-3 text-sm text-muted">
+										<time datetime={post.data.publishedAt.toISOString().slice(0, 10)}>
+											{post.data.publishedAt.toLocaleDateString('es-AR', dateOptions)}
+										</time>
+										{post.data.readingTime && (
+											<>
+												<span aria-hidden="true">·</span>
+												<span>{post.data.readingTime} min de lectura</span>
+											</>
+										)}
+									</div>
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</main>
+</Layout>
+
+<style>
+	.post-card:hover h2 {
+		color: var(--color-primary);
+	}
+</style>

@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import ThemeToggle from './ThemeToggle.astro';
 import { AUTHOR, SOCIAL_LINKS } from '../const';
@@ -10,6 +11,10 @@ const socialLinks = [
 	{ href: SOCIAL_LINKS.twitter, icon: 'mdi:twitter', label: 'Twitter' },
 	{ href: SOCIAL_LINKS.email, icon: 'mdi:email-outline', label: 'Email' },
 ] as const;
+
+const latestPost = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+)[0];
 ---
 <footer
 	class="site-footer relative flex flex-col justify-end overflow-hidden overflow-clip pt-48 sky-gradient"
@@ -46,6 +51,30 @@ const socialLinks = [
 	</div>
 
 	<div class="container relative z-10 py-8 pb-12">
+
+
+			{/* BLOG CTA */}
+			<!-- <div class="max-w-2xl  space-y-5 mb-16">
+				<p class="text-2xl leading-relaxed text-foreground">
+					Si llegaste hasta acá,
+					también estoy empezando a escribir sobre mi camino en programación.
+				</p>
+	
+				<p class="text-lg leading-8 text-muted">
+					El primer post es sobre el proceso detrás de este portfolio leelo aca: <br>
+					{
+						latestPost && (
+							<a
+								href={`/blog/${latestPost.id}`}
+								class="text-primary transition-colors hover:underline"
+							>
+								{latestPost.data.title}
+							</a>
+						)
+					}
+				</p>
+
+			</div> -->
 		<div class="flex flex-wrap items-center gap-4">
 			<ThemeToggle />
 			<div class="flex items-center gap-3">
