@@ -31,5 +31,5 @@ export const NAV_LINKS = [
   { href: '/', label: 'Inicio' },
   { href: '/#sobre-mi', label: 'Sobre Mi' },
   { href: '/#proyectos', label: 'Proyectos' },
-  // { href: '/blog', label: 'Blog' },
+  { href: '/blog', label: 'Blog' },
 ];
