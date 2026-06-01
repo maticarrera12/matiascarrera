@@ -2,18 +2,27 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import MountainHero from '../../components/MountainHero.astro';
+import PostPagination from '../../components/PostPagination.astro';
 
 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' } as const;
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog', ({ data }) => !data.draft);
-	return posts.map((post) => ({
+	const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+	const posts = allPosts.sort(
+		(a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf(),
+	);
+
+	return posts.map((post, index) => ({
 		params: { id: post.id },
-		props: { post },
+		props: {
+			post,
+			prevPost: index > 0 ? posts[index - 1] : null,
+			nextPost: index < posts.length - 1 ? posts[index + 1] : null,
+		},
 	}));
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content, headings } = await render(post);
 
 const h2Headings = headings
@@ -96,6 +105,8 @@ const h2Headings = headings
 				)
 			}
 		</div>
+
+		<PostPagination prevPost={prevPost} nextPost={nextPost} />
 	</div>
 </Layout>
 
@@ -285,6 +296,7 @@ const h2Headings = headings
 			transition: none;
 		}
 	}
+
 </style>
 
 <script>

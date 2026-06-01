@@ -12,8 +12,8 @@ const socialLinks = [
 	{ href: SOCIAL_LINKS.email, icon: 'mdi:email-outline', label: 'Email' },
 ] as const;
 
-const latestPost = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+const firstPost = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+	(a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf(),
 )[0];
 ---
 <footer
@@ -63,12 +63,12 @@ const latestPost = (await getCollection('blog', ({ data }) => !data.draft)).sort
 				<p class="text-lg leading-8 text-muted">
 					El primer post es sobre el proceso detrás de este portfolio leelo aca: <br>
 					{
-						latestPost && (
+						firstPost && (
 							<a
-								href={`/blog/${latestPost.id}`}
+								href={`/blog/${firstPost.id}`}
 								class="text-primary transition-colors hover:underline"
 							>
-								{latestPost.data.title}
+								{firstPost.data.title}
 							</a>
 						)
 					}

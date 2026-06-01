@@ -1,0 +1,177 @@
+---
+title: "Soy un pésimo estudiante"
+description: "Me cuesta muchísimo estudiar. Me informé sobre cómo hacerlo mejor y lo plasmé en una app."
+publishedAt: 2026-06-01
+tags: ["aprender-en-publico", "estudio", "gentle-ai", "tauri", "javascript", "sqlite"]
+draft: false
+updatedAt: 2026-06-01
+readingTime: 9
+---
+
+import Figure from '../../components/Figure.astro'
+import ebbinghaus from '../../assets/blog/soy-un-pesimo-estudiante/Ebbinghaus.webp'
+import studyCompanionHome from '../../assets/blog/soy-un-pesimo-estudiante/study-companion-home.png'
+import studyCompanionCornell from '../../assets/blog/soy-un-pesimo-estudiante/study-companion-cornell.png'
+import studyCompanionFlashcards from '../../assets/blog/soy-un-pesimo-estudiante/study-companion-flashcards.png'
+
+Me cuesta sentarme a leer algo que no me interesa. Cuando tenía que preparar cualquier materia que me generara poco interés en la facultad eran horas y horas de procrastinación. Nunca aprendí a resumir del todo. Transcribía todo lo que decía el profesor, palabra por palabra, sin destilar nada. Solo resolvía los ejercicios que él mismo hacía en clase. Pésimo método de estudio, lo sé ahora.
+
+Y si el tema sí me interesa, igualmente me distraigo en pequeñas cosas. Me cuesta mucho sostener el foco. Con una sola excepción: la programación. Puedo estar horas y horas, sin problema, perdido en código.
+
+El otro gran problema que tengo es que siempre siento que o bien no aprendí lo que leí o que a la larga no sé nada.
+
+Hace una semana me propuse aprender programación desde las bases. Sí, aunque ya construyo aplicaciones full stack con React, Node.js o Next.js. Aunque la IA programe cada vez más por nosotros. Aunque pueda seguir entregando proyectos sin tocar lo fundamental.
+
+Lo decidí porque sé que tengo una deuda técnica enorme: lógica de programación, algoritmos, features profundas de los lenguajes que uso todos los días. Llevo 3 años en esto y la mayor parte de lo que "sé" lo aprendí copiando código de tutoriales o pidiéndole a ChatGPT o Claude. Cero comprensión real de lo que estaba escribiendo.
+
+Pero antes de meterme con JavaScript en serio, me hice una pregunta más incómoda: **¿el que falla soy yo, o mi método de estudio?**
+
+Tutorial hell. Saltearme las partes teóricas para llegar antes al código. Copiar sin entender. Llevo 3 años haciendo eso. Y ahora veo que es un error que sigo cometiendo, en 3 años más voy a seguir igual.
+
+## Soluciones modernas
+
+Hice lo que cualquiera haría en 2026.
+
+Busqué en YouTube "cómo estudiar mejor" y le pregunté lo mismo a mi IA de confianza. Cayeron videos, métodos, sistemas complejísimos pensados para gente que dedica su vida a estudiar. Y también algo más útil: estudios reales sobre cómo funciona la memoria humana.
+
+Resulta que hay una **curva del olvido** documentada desde 1885 por un tipo llamado Hermann Ebbinghaus. Y dice que a las 24 horas olvidás cerca del 70% de lo que aprendiste si no hacés nada con la información. A la semana queda un 20%. A un mes, prácticamente nada.
+
+<Figure
+  src={ebbinghaus}
+  alt="Curva del olvido de Ebbinghaus"
+  caption="La curva del olvido: sin repaso activo, la retención cae abruptamente en los primeros días."
+/>
+
+Llevo 3 años estudiando programación. Sumando horas viendo tutoriales que se evaporaron a los pocos días.
+
+Entre toda la búsqueda me quedé sobre todo con la serie de aprender a estudiar de [DotDager](https://www.youtube.com/@DotDager), pueden ver la lista de reproducción de la que hablo en [este link](https://youtube.com/playlist?list=PL6ZpaevWeaf-fFW6wTMDaWxXPOcmz5C9G&si=TLqW5SJMee-scusK). De ahí saqué métodos que combinaban las tres etapas que importan en cualquier aprendizaje real: cómo entra la información, cómo la retenés y cómo la recuperás después cuando la necesitás.
+
+En la lista no había nada de lo que yo hice toda la vida.
+
+No estaba subrayar libros. Tampoco releer apuntes. Ni hacer resúmenes lineales. Ni tampoco transcribir palabra por palabra lo que dice el profesor, que es exactamente lo que yo hago en la facultad.
+
+Por lo visto, todo lo que yo entendía como "estudiar" es llamado **consumo pasivo**. Y el consumo pasivo no consolida. Por eso al día siguiente no me acordaba de nada.
+
+El opuesto es el consumo activo: forzar al cerebro a hacer algo con la información en lugar de solo recibirla. Probarte, explicarla con tus palabras, aplicarla en código, conectarla con lo que ya sabés.
+
+#### Los cinco que mejor me vinieron:
+
+**Pomodoro.** El más conocido. Alternar foco y descanso con intención. 25 minutos de foco, 5 de descanso. Suena simple. Lo es. Pero la mayoría lo hace mal o lo abandona en una semana.
+
+**Notas Cornell.** Convertir la página de notas en una herramienta de tres zonas: notas principales, preguntas para repasar, y un resumen breve. Las preguntas son lo importante: son el material para probarte después.
+
+**Active recall.** Dejar de releer, empezar a testearte. La diferencia entre "miré el video y me sonó todo familiar" y "cerré el video e intenté hacer lo que dijo".
+
+**Spaced repetition.** Repasar en intervalos crecientes: 2, 3, 5 y 7 días. Tu cerebro recuerda mejor lo que ve varias veces espaciado que lo que ve mucho una sola vez. No hacer una noche heroica cada parcial.
+
+**Método Feynman.** Explicarle el concepto a alguien que no sabe del tema, como si tuvieras que enseñarlo. Cuando te trabás explicando, ahí están los huecos. Este lo hago con mi gato.
+
+## No encontré algo que combinara todo, así que me la hice yo.
+
+Yo ya estoy sumamente acostumbrado a hacer todo en computadora. Los apuntes se me pierden, los cuadernos no los vuelvo a abrir, y necesito todo al alcance del teclado. Quería las cards digitales, las notas digitales, todo en un mismo lugar. Además la app me da algo que el apunte físico no: cierta automatización, como que las flashcards me aparecieran solas el día que tocaba revisarlas.
+
+El problema fue que no encontré nada que juntara las tres cosas. Anki es solo flashcards. Notion es solo notas. Las apps de Pomodoro son solo el timer.
+
+Lógicamente puedo ir saltando de app en app, pero los elementos quedan desconectados entre sí. La pregunta que aparece en una nota Cornell no se convierte automáticamente en flashcard. La sesión de Pomodoro no queda asociada al tema que estudiaste.
+
+Saltar de herramienta en herramienta rompe el flujo, y el flujo es justamente lo que estoy tratando de cuidar.
+
+Haciendo un resumen mental de los métodos que quería implementar, me di cuenta de algo: era una app posible. Las features eran simples, el flujo era claro, el alcance era personal. No necesitaba pensar en usuarios, ni en autenticación, ni en escala. Solo necesitaba algo que funcionara para mí, en mi Mac, con un flujo lógico donde cada pieza se conectara con la siguiente.
+
+<Figure
+  src={studyCompanionHome}
+  alt="Pantalla principal de Study Companion con timer Pomodoro"
+  caption="La pantalla principal de Study Companion con las configuraciones que fui iterando."
+/>
+
+## Una tarde, Gentle-AI y un deadline duro
+
+Ya había hecho todo el trabajo previo: tenía los métodos claros, tenía el flujo lógico, tenía el alcance limitado. Y tenía ganas de arrancar a estudiar lo antes posible, no quería que la app se convirtiera en otra excusa para procrastinar el estudio y de meterme dos semanas a buildearla.
+
+Así que me puse un deadline bastante agresivo: tener algo funcionando ese mismo día a las 21:00hs. Más o menos cinco horas para pasar de una idea a una aplicación usable. Probarla al día siguiente y si servía, irla iterando con los detalles que vaya notando, siempre terminado el estudio.
+
+Para construirla usé [Gentle-AI](https://github.com/Gentleman-Programming/gentle-ai), que es el flujo que vengo usando últimamente. Me pongo un poco técnico, pero se entiende rápido: en lugar de lanzar prompts y que la IA haga codigo, lanza sub-agentes especializados que voy aprobando uno por uno. Claude no toca una linea de codigo, delega a sub-agentes. Primero, si, entiende el problema, y luego deja que cada subagente explore lo que hay creado, el siguiente arme una especificación, otro proponga el diseño, y otro después implementa. Todo lo que apruebo queda guardado en engram, su memoria persistente, y cada paso nuevo toma como base lo que aprobó el anterior.
+
+Eso me gusta porque las decisiones no se pierden por el camino. El diseño parte del spec que aprobé. La implementación parte de las tareas que aprobé. Cada decisión queda bastante cementada antes de pasar a la siguiente.
+
+Lo primero que decidí fue que no quería una web que son a lo que me dedico todos los días. Quería algo local, sin servidores, sin deploy, sin auth. Una app que ejecuto cada vez que la quiero usar, con los datos viviendo en mi máquina. Obvio me interesó la idea de probar algo nuevo.
+
+Busqué opciones y llegué a **Tauri 2** por tres razones principales:
+
+- El frontend está basado en JavaScript, así que podía usar `.tsx` que es lo que uso diariamente
+- Es cross-platform (Mac, Windows, Linux, incluso Android) sin tener que aprender stacks distintos
+- Los binarios pesan poco comparado con Electron, que es la alternativa más conocida
+
+Lo único que me preocupaba era que la lógica por detrás corre en Rust, un lenguaje que toqué muy por arriba. Pero como iba a delegárselo a Claude vía Gentle-AI, decidí ir para adelante.
+
+Para la persistencia elegí **SQLite local**. Es una base de datos completa que vive como un único archivo en mi máquina, sin servidor corriendo aparte. La app la lee y escribe directamente. Eso significa que mis sesiones, notas y flashcards están guardadas como un archivo `.sqlite` que puedo respaldar copiando y pegando. No hay nube, no hay cuentas, no hay nada. Si pierdo la máquina, pierdo los datos. Me pareció lógico para un proyecto personal.
+
+El core de **Study Companion** quedó así:
+
+- **Pomodoro** con tiempos configurables (foco y descanso)
+- **Notas Cornell** que aparecen opcionalmente antes, durante o después del descanso
+- **Flashcards** que se generan a partir de las preguntas de la nota Cornell
+- **Spaced repetition** automático en los intervalos que definí: 2, 3, 5 y 7 días
+- **Visualizador** de sesiones pasadas y biblioteca de flashcards
+
+
+
+Un detalle que sumé y está genial: cuando vuelvo a abrir una nota Cornell vieja, las notas principales y el resumen aparecen blureados. Solo veo las preguntas que me hice esa vez. Intento responder mentalmente, y solo cuando quiero verificar destapo el resto. Es la parte de active recall integrado en el flujo, no como feature aparte.
+
+<Figure
+  src={studyCompanionCornell}
+  alt="Nota Cornell en Study Companion con preguntas visibles y contenido blureado"
+  caption="Las notas Cornell con active recall: solo las preguntas visibles hasta que las destapás."
+/>
+
+Ese fue el core. Cinco métodos de los seis que me había propuesto integrar. El que falta es el **método Feynman**: explicar lo aprendido a alguien que no sabe del tema. Ese lo voy aplicando con este blog, con LinkedIn y con X.
+
+## Tres días después
+
+Llevo tres días usándola y realmente me está sirviendo.
+
+Lo primero que decidí re-estudiar fue JavaScript. Exploré varias fuentes y me armé un path propio: como estructura uso el [curso de fundamentos de MoureDev](https://www.youtube.com/watch?v=1glVfFxj8a4&t=156s), profundizo cada tema en [javascript.info](https://javascript.info/), y hago los ejercicios sin asistencia de IA. Los videos los miro durante los 25 minutos del pomodoro y generalmente también llego a leer la doc correspondiente. Desde antes de ver qué contenido voy a ver, decido si el Cornell lo hago antes, durante o después del descanso. Los ejercicios los resuelvo sin pomodoro, por comodidad.
+
+Si una nota Cornell tiene preguntas que valen la pena, las convierto en flashcards. La respuesta la sigo completando a mano, no se autogenera. Eso es a propósito: cuando escribo la respuesta ya doy otro paso de estudio.
+
+<Figure
+  src={studyCompanionFlashcards}
+  alt="Biblioteca de flashcards en Study Companion"
+  caption="Flashcards generadas a partir de las preguntas de las notas Cornell."
+/>
+
+En tres días consolidé conceptos básicos que llevaba años usando sin entender. Ni me acordaba que dividir por cero en JavaScript da `Infinity` y no error, como sí pasa en Python. Pequeñas cosas que muestran cuánto me había salteado.
+
+
+
+**Siempre me costó estudiar**
+
+Capaz nunca fue que no me gustara estudiar. Capaz nunca aprendí a hacerlo, y al hacerlo mal terminé pensando que estudiar era algo malo, algo que me iba a costar y me iba a ir mal. Eso me pasa todavía.
+
+Capaz venía estudiando cosas que no me interesaban.
+
+Capaz tendría que haberle prestado más atención a la señora que venía en primaria con el librito de "Aprender a Aprender".
+
+No sé.
+
+Pero hoy, con más información y con mejores métodos, estoy logrando sentarme, leer, hacer ejercicios y estudiar temas que realmente me importan.
+
+
+### Primeras iteraciones
+
+Con el uso fui notando detalles que mejoré:
+
+- **Pomodoros sin Cornell.** Configurable. No siempre tiene sentido tomar notas.
+- **Wake lock.** La pantalla no se bloquea con un timer activo, evita el corte de flujo.
+- **Paginación.** Las sesiones y las flashcards se paginan a 25 por página.
+- **Búsqueda extendida.** No solo por título sino también por la respuesta de las flashcards y por las notas y resúmenes de Cornell.
+- **Persistencia del timer.** Si cierro la app en medio de un pomodoro, lo retoma al volver. El timer del descanso no se persiste a propósito: si cerré la app, ya pasó el descanso.
+- **Terminar pomodoro sin tomar notas.**
+- **Cornell con timer compartido.** Las notas restan tiempo del descanso o del pomodoro, así no se rompe el cronómetro general.
+- **Agregar minutos al descanso.** A veces 5 no alcanzan. Botón rápido para sumar.
+
+Detalles chicos que van sumando comodidad a la aplicación.
+
+La app que hice no es una revolución del estudio. Podría haber tabeado entre tres apps distintas y llegar a algo parecido. Pero aplica los métodos que me importaron, en el orden y el flujo que yo necesito, y eso es lo que me está sirviendo.
+
+¿Vos cómo estudiás? ¿Cómo aprendiste a hacerlo?

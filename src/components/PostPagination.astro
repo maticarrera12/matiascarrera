@@ -1,0 +1,98 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	prevPost?: CollectionEntry<'blog'> | null;
+	nextPost?: CollectionEntry<'blog'> | null;
+}
+
+const { prevPost, nextPost } = Astro.props;
+---
+
+{
+	(prevPost || nextPost) && (
+		<nav class="pagination" aria-label="Navegación entre artículos">
+			<div class="pagination-grid">
+				{prevPost ? (
+					<a href={`/blog/${prevPost.id}`} class="pagination-item pagination-prev" rel="prev">
+						<span class="pagination-dir">← Anterior</span>
+						<span class="pagination-title">{prevPost.data.title}</span>
+					</a>
+				) : (
+					<div />
+				)}
+				{nextPost ? (
+					<a href={`/blog/${nextPost.id}`} class="pagination-item pagination-next" rel="next">
+						<span class="pagination-dir">Siguiente →</span>
+						<span class="pagination-title">{nextPost.data.title}</span>
+					</a>
+				) : (
+					<div />
+				)}
+			</div>
+		</nav>
+	)
+}
+
+<style>
+	.pagination {
+		max-width: 720px;
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-gray-300);
+	}
+
+	.pagination-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+	}
+
+	@media (max-width: 600px) {
+		.pagination-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.pagination-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+		padding: 0.5rem 0;
+		text-decoration: none;
+	}
+
+	.pagination-next {
+		text-align: right;
+	}
+
+	.pagination-dir {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-primary);
+	}
+
+	.pagination-title {
+		font-size: 0.9375rem;
+		line-height: 1.45;
+		color: var(--color-text);
+		font-weight: 500;
+		transition: transform 0.2s ease;
+	}
+
+	.pagination-prev:hover .pagination-title {
+		transform: translateX(-6px);
+	}
+
+	.pagination-next:hover .pagination-title {
+		transform: translateX(6px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pagination-title {
+			transition: none;
+		}
+	}
+</style>
