@@ -300,7 +300,7 @@ const h2Headings = headings
 </style>
 
 <script>
-	(function () {
+	function initToc() {
 		const headings = [
 			...document.querySelectorAll<HTMLHeadingElement>('.post-body h2[id]'),
 		];
@@ -317,7 +317,6 @@ const h2Headings = headings
 			});
 		}
 
-		// Activate first heading on load
 		setActive(headings[0].id);
 
 		const observer = new IntersectionObserver(
@@ -329,12 +328,13 @@ const h2Headings = headings
 				});
 			},
 			{
-				// Top offset: 80px for fixed nav; bottom: only top 30% of viewport triggers
 				rootMargin: '-80px 0px -70% 0px',
 				threshold: 0,
 			},
 		);
 
 		headings.forEach((h) => observer.observe(h));
-	})();
+	}
+
+	document.addEventListener('astro:page-load', initToc);
 </script>
