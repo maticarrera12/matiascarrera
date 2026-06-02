@@ -78,8 +78,12 @@ import SocialButton from "./SocialButton.astro";
 					<span class="text-primary">centradas en las personas</span>
 				</p> -->
 				<div class="mb-2">
-					<p class="text-2xl font-bold text-pretty text-foreground">
-						Hola, soy <span class="text-primary">Matías.</span>
+					<p class="ml6 text-2xl font-bold text-pretty text-foreground">
+						<span class="text-wrapper">
+							<span class="letters">Hola, soy </span><span
+								class="letters text-primary">Matías.</span
+							>
+						</span>
 					</p>
 					<h1
 						class="reveal text-4xl lg:text-6xl font-bold text-pretty text-foregorund"
@@ -93,7 +97,8 @@ import SocialButton from "./SocialButton.astro";
 				</div>
 
 				<p class="reveal text-xl font-bold text-pretty text-muted">
-					Vengo del diseño y migré al código. Construyo productos web pensados desde la experiencia, no desde el framework.
+					Vengo del diseño y migré al código. Construyo productos web
+					pensados desde la experiencia, no desde el framework.
 				</p>
 				<div
 					class="reveal flex flex-col items-start gap-4 md:flex-row md:gap-1"
@@ -118,7 +123,9 @@ import SocialButton from "./SocialButton.astro";
 							Sobre Mi
 						</a>
 					</div>
-					<div class="flex w-full flex-row justify-center gap-1 md:w-auto md:justify-start">
+					<div
+						class="flex w-full flex-row justify-center gap-1 md:w-auto md:justify-start"
+					>
 						<SocialButton
 							href={SOCIAL_LINKS.linkedin}
 							icon="mdi:linkedin"
@@ -216,8 +223,7 @@ import SocialButton from "./SocialButton.astro";
 							<span class="text-[#e06c75]">currentlyBuilding</span
 							>
 							<span class="text-zinc-500">:</span>{" "}
-							<span class="text-[#98c379]"
-								>'mcarreradev.com'</span
+							<span class="text-[#98c379]">'mcarreradev.com'</span
 							>,
 						</p>
 
@@ -231,7 +237,69 @@ import SocialButton from "./SocialButton.astro";
 	</div>
 </section>
 
+<script>
+	import { createTimeline, set, stagger } from "animejs";
+
+	let tl: ReturnType<typeof createTimeline> | null = null;
+
+	function init() {
+		const root = document.querySelector<HTMLElement>(".ml6");
+		if (!root) return;
+
+		root.querySelectorAll<HTMLElement>(".letters").forEach((el) => {
+			if (el.dataset.lettersWrapped) return;
+			el.dataset.lettersWrapped = "1";
+			el.innerHTML = el.textContent!.replace(
+				/\S/g,
+				"<span class='letter'>$&</span>",
+			);
+		});
+
+		tl?.pause();
+		tl = null;
+
+		set(".ml6 .letter", { translateY: "1.1em" });
+
+		tl = createTimeline({ loop: true })
+			.add(".ml6 .letter", {
+				translateY: 0,
+				duration: 750,
+				delay: stagger(50),
+			})
+			.add(".ml6", {
+				opacity: 0,
+				duration: 1000,
+				ease: "outExpo",
+				delay: 1000,
+			})
+			.add(".ml6 .letter", {
+				translateY: "1.1em",
+				duration: 0,
+			})
+			.add(".ml6", {
+				opacity: 1,
+				duration: 0,
+			});
+	}
+
+	document.addEventListener("astro:page-load", init);
+</script>
+
 <style>
+	.ml6 .text-wrapper {
+		position: relative;
+		display: inline-block;
+		padding-top: 0.2em;
+		padding-right: 0.05em;
+		padding-bottom: 0.1em;
+		overflow: hidden;
+	}
+
+	/* Las .letter se crean en JS — sin :global el scope de Astro no las estiliza */
+	.ml6 :global(.letter) {
+		display: inline-block;
+		line-height: 1em;
+	}
 	.hero-mountains-transition path {
 		pointer-events: auto;
 	}
