@@ -319,23 +319,23 @@ import SocialButton from "./SocialButton.astro";
 		color: hsl(220 8% 58%);
 	}
 
-	/* Light mode: oscuro translúcido — contraste + cristal */
+	/* Light mode: oscuro cálido translúcido — armoniza con el fondo */
 	html[data-color-mode="light"] .code-card {
-		border-color: rgb(15 23 42 / 0.18);
-		background: hsl(222 24% 12% / 0.82);
+		border-color: rgb(60 35 15 / 0.20);
+		background: hsl(30 18% 13% / 0.88);
 		box-shadow:
-			0 24px 48px -12px rgb(15 23 42 / 0.22),
-			0 0 0 1px rgb(15 23 42 / 0.06);
+			0 24px 48px -12px rgb(40 25 10 / 0.28),
+			0 0 0 1px rgb(60 35 15 / 0.08);
 		-webkit-backdrop-filter: blur(20px) saturate(1.15);
 		backdrop-filter: blur(20px) saturate(1.15);
 	}
 
 	html[data-color-mode="light"] .code-card__chrome {
-		border-bottom-color: rgb(255 255 255 / 0.08);
+		border-bottom-color: rgb(255 220 180 / 0.08);
 	}
 
 	html[data-color-mode="light"] .code-card__filename {
-		color: hsl(215 12% 72%);
+		color: hsl(35 15% 68%);
 	}
 
 	@media (max-width: 50rem) {

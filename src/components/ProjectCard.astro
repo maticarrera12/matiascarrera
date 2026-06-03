@@ -27,7 +27,7 @@ const stackPreview = stack.slice(0, 3);
 ---
 
 <article
-	class="project-card group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 shadow-md transition-colors duration-300 hover:border-gray-300 dark:shadow-zinc-800 dark:hover:border-zinc-700"
+	class="project-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-cloud-100 transition-colors duration-300 hover:border-border/60"
 >
 	<a
 		href={href}
@@ -61,11 +61,11 @@ const stackPreview = stack.slice(0, 3);
 						>
 						</span>
 					</span>
-					<span class="text-sm text-slate-400">{type}</span>
+					<span class="text-sm text-muted">{type}</span>
 				</div>
 			</div>
 
-			<p class="line-clamp-4 flex-1 text-sm leading-relaxed text-slate-400">
+			<p class="line-clamp-4 flex-1 text-sm leading-relaxed text-muted">
 				{description}
 			</p>
 
@@ -74,7 +74,7 @@ const stackPreview = stack.slice(0, 3);
 					{
 						stackPreview.map((tech) => (
 							<li>
-								<span class="rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-100 dark:bg-zinc-800 px-2.5 py-1 text-xs text-slate-400 dark:text-zinc-400">
+								<span class="rounded-lg border border-border bg-cloud-300 px-2.5 py-1 text-xs text-muted">
 									{tech}
 								</span>
 							</li>
@@ -91,3 +91,38 @@ const stackPreview = stack.slice(0, 3);
 		</div>
 	</a>
 </article>
+
+<style>
+	/*
+	 * Layered shadows à la Josh Comeau:
+	 * cada capa dobla el blur y baja la opacidad,
+	 * con el hue del fondo (no negro puro).
+	 */
+	.project-card {
+		--shadow-color: 32deg 38% 18%;
+		box-shadow:
+			0px 1px 2px   hsl(var(--shadow-color) / 0.18),
+			0px 2px 4px   hsl(var(--shadow-color) / 0.13),
+			0px 4px 8px   hsl(var(--shadow-color) / 0.09),
+			0px 8px 16px  hsl(var(--shadow-color) / 0.06),
+			0px 16px 32px hsl(var(--shadow-color) / 0.04);
+		transition:
+			box-shadow 300ms ease,
+			transform 300ms ease,
+			border-color 300ms ease;
+	}
+
+	.project-card:hover {
+		transform: translateY(-3px);
+		box-shadow:
+			0px 2px 4px   hsl(var(--shadow-color) / 0.22),
+			0px 4px 8px   hsl(var(--shadow-color) / 0.17),
+			0px 8px 16px  hsl(var(--shadow-color) / 0.13),
+			0px 16px 32px hsl(var(--shadow-color) / 0.09),
+			0px 24px 48px hsl(var(--shadow-color) / 0.06);
+	}
+
+	html[data-color-mode="dark"] .project-card {
+		--shadow-color: 30deg 12% 4%;
+	}
+</style>
