@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import SocialButton from "./SocialButton.astro";
 ---
 
-<section class="hero relative isolate grid w-full">
+<section class="hero relative isolate grid w-full" aria-label="Inicio">
 	<!-- Fondo: franja arriba (cielo + montañas) -->
 	<div
 		class="hero-sky pointer-events-none relative col-start-1 row-start-1 z-0 w-full self-start overflow-hidden sky-gradient"
@@ -59,11 +59,11 @@ import SocialButton from "./SocialButton.astro";
 	<div
 		class="container relative z-10 col-start-1 row-start-1 -mt-8 w-full pt-20 lg:pt-48 pb-12"
 	>
-		<section
+		<div
 			class="relative z-10 mt-24 grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12"
 		>
 			<div
-				class="flex min-w-0 flex-col justify-between h-full gap-6 text-lg text-left"
+				class="flex h-full min-w-0 flex-col justify-between gap-6 text-left text-lg"
 			>
 				<!-- <h1 class="sr-only">{AUTHOR.name}</h1>
 				<h2 class="reveal text-6xl font-bold text-pretty text-foreground">
@@ -77,7 +77,7 @@ import SocialButton from "./SocialButton.astro";
 					robustas, escalables y
 					<span class="text-primary">centradas en las personas</span>
 				</p> -->
-				<div class="mb-2">
+				<header class="mb-2">
 					<p class="ml6 text-2xl font-bold text-pretty text-foreground">
 						<span class="text-wrapper">
 							<span class="letters">Hola, soy </span><span
@@ -86,15 +86,15 @@ import SocialButton from "./SocialButton.astro";
 						</span>
 					</p>
 					<h1
-						class="reveal text-4xl lg:text-6xl font-bold text-pretty text-foreground"
+						class="reveal text-4xl font-bold text-pretty text-foreground lg:text-6xl"
 					>
 						Desarrollador Web <br />
 						<span
-							class="text-primary font-bold text-6xl lg:text-8xl"
+							class="text-6xl font-bold text-primary lg:text-8xl"
 							>Full Stack</span
 						>
 					</h1>
-				</div>
+				</header>
 
 				<p class="reveal text-xl font-bold text-pretty text-muted">
 					Vengo del diseño y migré al código. Construyo productos web
@@ -103,79 +103,90 @@ import SocialButton from "./SocialButton.astro";
 				<div
 					class="reveal flex flex-col items-start gap-4 md:flex-row md:gap-1"
 				>
-					<div class="flex flex-row items-start gap-4 md:gap-1">
-						<a
-							href="#proyectos"
-							class="group/proyectos inline-flex h-15 w-fit items-center justify-center gap-2 rounded-md bg-linear-to-r from-primary to-primary/80 px-4 font-semibold text-white"
+					<nav aria-label="Enlaces principales">
+						<ul
+							class="flex list-none flex-row items-start gap-4 p-0 md:gap-1"
 						>
-							Proyectos
-							<Icon
-								is:inline
-								name="lucide:arrow-right"
-								class="size-5 transition-transform duration-200 ease-out group-hover/proyectos:translate-x-1.5"
-								aria-hidden="true"
-							/>
-						</a>
-						<a
-							href="#sobre-mi"
-							class="inline-flex h-15 w-fit items-center justify-center gap-2 rounded-md md:border border-foreground/70 px-4 font-semibold text-foreground/70 transition-colors hover:bg-primary/5"
+							<li>
+								<a
+									href="#proyectos"
+									class="group/proyectos inline-flex h-15 w-fit items-center justify-center gap-2 rounded-md bg-linear-to-r from-primary to-primary/80 px-4 font-semibold text-white"
+								>
+									Proyectos
+									<Icon
+										is:inline
+										name="lucide:arrow-right"
+										class="size-5 transition-transform duration-200 ease-out group-hover/proyectos:translate-x-1.5"
+										aria-hidden="true"
+									/>
+								</a>
+							</li>
+							<li>
+								<a
+									href="#sobre-mi"
+									class="inline-flex h-15 w-fit items-center justify-center gap-2 rounded-md border-foreground/70 px-4 font-semibold text-foreground/70 transition-colors hover:bg-primary/5 md:border"
+								>
+									Sobre Mi
+								</a>
+							</li>
+						</ul>
+					</nav>
+					<nav aria-label="Redes sociales">
+						<ul
+							class="flex w-full list-none flex-row justify-center gap-1 p-0 md:w-auto md:justify-start"
 						>
-							Sobre Mi
-						</a>
-					</div>
-					<div
-						class="flex w-full flex-row justify-center gap-1 md:w-auto md:justify-start"
-					>
-						<SocialButton
-							href={SOCIAL_LINKS.linkedin}
-							icon="mdi:linkedin"
-							label="LinkedIn"
-						/>
-						<SocialButton
-							href={SOCIAL_LINKS.github}
-							icon="mdi:github"
-							label="GitHub"
-						/>
-						<SocialButton
-							href={SOCIAL_LINKS.email}
-							icon="mdi:email-outline"
-							label="Email"
-						/>
-					</div>
+							<li>
+								<SocialButton
+									href={SOCIAL_LINKS.linkedin}
+									icon="mdi:linkedin"
+									label="LinkedIn"
+								/>
+							</li>
+							<li>
+								<SocialButton
+									href={SOCIAL_LINKS.github}
+									icon="mdi:github"
+									label="GitHub"
+								/>
+							</li>
+							<li>
+								<SocialButton
+									href={SOCIAL_LINKS.email}
+									icon="mdi:email-outline"
+									label="Email"
+								/>
+							</li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 			<div
-				class="relative flex min-w-0 items-center justify-center mt-12 lg:mt-0"
+				class="relative mt-12 flex min-w-0 items-center justify-center lg:mt-0"
 			>
-				{/* Glow */}
 				<div
-					class="absolute inset-0 bg-primary/10 blur-3xl rounded-full"
+					class="absolute inset-0 rounded-full bg-primary/10 blur-3xl"
+					aria-hidden="true"
 				>
 				</div>
 
-				{
-					/* Main Card — en light: panel oscuro fijo para sintaxis legible */
-				}
-				<div
-					class="code-card relative w-full overflow-hidden rounded-3xl shadow-2xl"
+				<figure
+					class="code-card relative m-0 w-full overflow-hidden rounded-3xl shadow-2xl"
+					aria-label="Perfil en código"
 				>
-					{/* Top bar */}
 					<div
 						class="code-card__chrome flex items-center gap-2 px-5 py-4"
+						aria-hidden="true"
 					>
-						<div class="w-3 h-3 rounded-full bg-red-400/80"></div>
-						<div class="w-3 h-3 rounded-full bg-yellow-400/80">
+						<div class="h-3 w-3 rounded-full bg-red-400/80"></div>
+						<div class="h-3 w-3 rounded-full bg-yellow-400/80">
 						</div>
-						<div class="w-3 h-3 rounded-full bg-green-400/80"></div>
+						<div class="h-3 w-3 rounded-full bg-green-400/80"></div>
 
-						<div
-							class="code-card__filename ml-auto text-xs font-medium"
-						>
+						<div class="code-card__filename ml-auto text-xs font-medium">
 							matias.tsx
 						</div>
 					</div>
 
-					{/* Content */}
 					<pre
 						class="overflow-x-auto p-8 font-mono text-sm leading-7"
 					><code><span class="text-[#c678dd]">const</span> <span class="text-white">developer</span> <span class="text-zinc-500">=</span> <span class="text-zinc-400">{"{"}</span>
@@ -185,9 +196,9 @@ import SocialButton from "./SocialButton.astro";
   <span class="text-[#e06c75]">stack</span><span class="text-zinc-500">:</span> <span class="text-zinc-400">[</span><span class="text-[#98c379]">'React'</span>, <span class="text-[#98c379]">'Next.js'</span>, <span class="text-[#98c379]">'Astro'</span><span class="text-zinc-400">]</span>,
   <span class="text-[#e06c75]">currentlyBuilding</span><span class="text-zinc-500">:</span> <span class="text-[#98c379]">'mcarreradev.com'</span>,
 <span class="text-zinc-400">{"}"}</span></code></pre>
-				</div>
+				</figure>
 			</div>
-		</section>
+		</div>
 	</div>
 </section>
 

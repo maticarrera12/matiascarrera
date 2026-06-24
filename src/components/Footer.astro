@@ -16,6 +16,7 @@ const firstPost = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf(),
 )[0];
 ---
+
 <footer
 	class="site-footer relative flex flex-col justify-end overflow-hidden overflow-clip pt-48 sky-gradient"
 >
@@ -50,50 +51,60 @@ const firstPost = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	</div>
 
 	<div class="container relative z-10 py-8 pb-12">
+		<section class="mb-16 max-w-2xl space-y-5" aria-label="Blog">
+			<p class="text-2xl leading-relaxed text-foreground">
+				Si llegaste hasta acá, también estoy empezando a escribir sobre mi
+				camino en programación.
+			</p>
 
+			<p class="text-lg leading-8 text-muted">
+				El primer post es sobre el proceso detrás de este portfolio leelo aca:
+				<br />
+				{
+					firstPost && (
+						<a
+							href={`/blog/${firstPost.id}`}
+							class="text-primary transition-colors hover:underline"
+						>
+							{firstPost.data.title}
+						</a>
+					)
+				}
+			</p>
+		</section>
 
-			{/* BLOG CTA */}
-			<div class="max-w-2xl  space-y-5 mb-16">
-				<p class="text-2xl leading-relaxed text-foreground">
-					Si llegaste hasta acá,
-					también estoy empezando a escribir sobre mi camino en programación.
-				</p>
-	
-				<p class="text-lg leading-8 text-muted">
-					El primer post es sobre el proceso detrás de este portfolio leelo aca: <br>
-					{
-						firstPost && (
-							<a
-								href={`/blog/${firstPost.id}`}
-								class="text-primary transition-colors hover:underline"
-							>
-								{firstPost.data.title}
-							</a>
-						)
-					}
-				</p>
-
-			</div>
 		<div class="flex flex-wrap items-center gap-4">
 			<ThemeToggle />
-			<div class="flex items-center gap-3">
-				{
-					socialLinks.map((link) => (
-						<a
-							href={link.href}
-							class="inline-flex text-foreground hover:text-primary hover:scale-110 transition-all duration-300"
-							aria-label={link.label}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<Icon is:inline name={link.icon} class="size-5" aria-hidden="true" />
-						</a>
-					))
-				}
-			</div>
+
+			<nav aria-label="Redes sociales">
+				<ul class="flex list-none items-center gap-3 p-0">
+					{
+						socialLinks.map((link) => (
+							<li>
+								<a
+									href={link.href}
+									class="inline-flex text-foreground transition-all duration-300 hover:scale-110 hover:text-primary"
+									aria-label={link.label}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<Icon
+										is:inline
+										name={link.icon}
+										class="size-5"
+										aria-hidden="true"
+									/>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
 		</div>
+
 		<p class="mt-4 text-sm text-muted">
-			&copy; {new Date().getFullYear()} {AUTHOR.name} · Mate, café, código y tipografía. <span class="font-bold">Buenos Aires, Argentina</span>.
+			&copy; {new Date().getFullYear()} {AUTHOR.name} · Mate, café, código y
+			tipografía. <span class="font-bold">Buenos Aires, Argentina</span>.
 		</p>
 	</div>
 </footer>

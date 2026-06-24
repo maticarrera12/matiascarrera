@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import GalleryLightbox from '../../components/GalleryLightbox.astro';
 import Layout from '../../layouts/Layout.astro';
+import { AUTHOR } from '../../const';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -15,14 +16,11 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const {
 	title,
-	type,
 	description,
 	cover,
 	stack,
 	repo,
 	demo,
-	status,
-	featured,
 	overview,
 	problem,
 	solution,
@@ -37,67 +35,31 @@ const {
 const featureEntries = features ? Object.entries(features) : [];
 const galleryImages = gallery.length > 0 ? gallery : [];
 const architectureImageUrl = architectureImage ? architectureImage : '';
-const featureIcons = [
-	'lucide:users',
-	'lucide:list',
-	'lucide:map',
-	'lucide:message-circle',
-	'lucide:bookmark',
-	'lucide:clock',
-	'lucide:trophy',
-	'lucide:credit-card',
-	'lucide:search',
-	'lucide:settings',
-	'lucide:globe',
-	'lucide:mail',
-	'lucide:bell',
-	'lucide:bar-chart',
-	'lucide:shield',
-];
-
-let statusDot = 'bg-zinc-500';
-let statusGlow = 'bg-zinc-500/40';
-if (status === 'active') {
-	statusDot = 'bg-emerald-400';
-	statusGlow = 'bg-emerald-400/50';
-} else if (status === 'in-progress') {
-	statusDot = 'bg-amber-400';
-	statusGlow = 'bg-amber-400/50';
-}
 ---
 
 <Layout>
-	<main class="min-h-screen bg-background pt-24 pb-0">
-		<!-- Back link -->
-		<div class="container mb-10">
+	<article class="min-h-screen bg-background pt-24 pb-0">
+		<nav class="container mb-10" aria-label="Navegación del proyecto">
 			<a
 				href="/#proyectos"
-				class="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-foreground group"
+				class="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-foreground"
 			>
-				<Icon name="lucide:arrow-left" class="size-4 transition-all  group-hover:-translate-x-1 duration-300" />
+				<Icon
+					name="lucide:arrow-left"
+					class="size-4 transition-all duration-300 group-hover:-translate-x-1"
+					aria-hidden="true"
+				/>
 				Volver a Proyectos
 			</a>
-		</div>
+		</nav>
 
-		<!-- Hero -->
-		<section class="container mb-24">
+		<section class="container mb-24" aria-labelledby="project-title">
 			<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-				<!-- Left -->
-				<div class="flex flex-col gap-6">
-							<!-- <div class="flex items-center gap-2">
-								<span class="relative flex size-2 shrink-0" aria-hidden="true">
-									<span
-										class={'absolute -inset-1 animate-pulse rounded-full blur-sm ' +
-											statusGlow}
-									></span>
-									<span class={'relative size-2 rounded-full ' + statusDot}></span>
-								</span>
-								<span class="text-xs font-bold uppercase tracking-widest text-primary">
-									{featured ? 'Proyecto Destacado' : 'Proyecto'}
-								</span>
-							</div> -->
-
-					<h1 class="text-5xl font-bold leading-tight text-foreground md:text-7xl">
+				<header class="flex flex-col gap-6">
+					<h1
+						id="project-title"
+						class="text-5xl font-bold leading-tight text-foreground md:text-7xl"
+					>
 						{title}
 					</h1>
 
@@ -105,48 +67,66 @@ if (status === 'active') {
 						{description}
 					</p>
 
-					<div class="flex flex-wrap gap-2">
+					<ul
+						class="m-0 flex list-none flex-wrap gap-2 p-0"
+						aria-label="Stack tecnológico"
+					>
 						{
 							stack.map((tech) => (
-								<span class="rounded-lg border border-zinc-700 bg-zinc-100 dark:bg-zinc-900 px-3 py-1 text-sm text-foreground">
-									{tech}
-								</span>
+								<li>
+									<span class="rounded-lg border border-zinc-700 bg-zinc-100 px-3 py-1 text-sm text-foreground dark:bg-zinc-900">
+										{tech}
+									</span>
+								</li>
 							))
 						}
-					</div>
+					</ul>
 
-					<div class="flex flex-wrap gap-3 pt-2">
-						{
-							demo && (
-								<a
-									href={demo}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-								>
-									Ver demo
-									<Icon name="lucide:external-link" class="size-4" />
-								</a>
-							)
-						}
-						{
-							repo && (
-								<a
-									href={repo}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="inline-flex items-center gap-2 rounded-lg border border-zinc-900 bg-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:text-white"
-								>
-									Ver repositorio
-									<Icon name="lucide:github" class="size-4" />
-								</a>
-							)
-						}
-					</div>
-				</div>
+					<nav aria-label="Enlaces del proyecto" class="pt-2">
+						<ul class="m-0 flex list-none flex-wrap gap-3 p-0">
+							{
+								demo && (
+									<li>
+										<a
+											href={demo}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+										>
+											Ver demo
+											<Icon
+												name="lucide:external-link"
+												class="size-4"
+												aria-hidden="true"
+											/>
+										</a>
+									</li>
+								)
+							}
+							{
+								repo && (
+									<li>
+										<a
+											href={repo}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center gap-2 rounded-lg border border-zinc-900 bg-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:text-white"
+										>
+											Ver repositorio
+											<Icon
+												name="lucide:github"
+												class="size-4"
+												aria-hidden="true"
+											/>
+										</a>
+									</li>
+								)
+							}
+						</ul>
+					</nav>
+				</header>
 
-				<!-- Right: cover image -->
-				<div class="relative">
+				<figure class="relative m-0">
 					<div
 						class="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl shadow-black/50"
 					>
@@ -160,54 +140,75 @@ if (status === 'active') {
 					</div>
 					<div
 						class="pointer-events-none absolute -inset-4 -z-10 rounded-3xl bg-primary/5 blur-2xl"
+						aria-hidden="true"
 					>
 					</div>
-				</div>
+				</figure>
 			</div>
 		</section>
 
-		<!-- Overview / Problema / Solución -->
-		<section class="container mb-24">
-			<ul class="m-0 flex list-none flex-col gap-10 p-0 md:flex-row md:items-stretch md:gap-8">
+		<section class="container mb-24" aria-label="Resumen del proyecto">
+			<ul
+				class="m-0 flex list-none flex-col gap-10 p-0 md:flex-row md:items-stretch md:gap-8"
+			>
 				<li class="min-w-0 flex-1">
-					<div class="flex flex-col gap-3">
-						<span class="text-xs font-bold uppercase tracking-widest text-primary"
-							>Overview</span
+					<section aria-labelledby="project-overview">
+						<h2
+							id="project-overview"
+							class="text-xs font-bold uppercase tracking-widest text-primary"
 						>
-						<p class="text-sm leading-relaxed text-slate-400">{overview}</p>
-					</div>
+							Overview
+						</h2>
+						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+							{overview}
+						</p>
+					</section>
 				</li>
 				<li class="min-w-0 flex-1">
-					<div class="flex flex-col gap-3">
-						<span class="text-xs font-bold uppercase tracking-widest text-primary"
-							>Problema</span
+					<section aria-labelledby="project-problem">
+						<h2
+							id="project-problem"
+							class="text-xs font-bold uppercase tracking-widest text-primary"
 						>
-						<p class="text-sm leading-relaxed text-slate-400">{problem}</p>
-					</div>
+							Problema
+						</h2>
+						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+							{problem}
+						</p>
+					</section>
 				</li>
 				<li class="min-w-0 flex-1">
-					<div class="flex flex-col gap-3">
-						<span class="text-xs font-bold uppercase tracking-widest text-primary"
-							>Mi Solución</span
+					<section aria-labelledby="project-solution">
+						<h2
+							id="project-solution"
+							class="text-xs font-bold uppercase tracking-widest text-primary"
 						>
-						<p class="text-sm leading-relaxed text-slate-400">{solution}</p>
-					</div>
+							Mi Solución
+						</h2>
+						<p class="mt-3 text-sm leading-relaxed text-slate-400">
+							{solution}
+						</p>
+					</section>
 				</li>
 			</ul>
 		</section>
 
-		<!-- Divider -->
 		<div class="container">
 			<hr class="h-px w-full border-0 bg-zinc-800" />
 		</div>
 
-		<!-- Tecnologías -->
-		<section class="container py-20">
-			<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary"
-				>Tecnologías</span
+		<section class="container py-20" aria-labelledby="project-stack">
+			<h2
+				id="project-stack"
+				class="mb-8 text-xs font-bold uppercase tracking-widest text-primary"
 			>
+				Tecnologías
+			</h2>
 			<div class="overflow-x-auto">
-				<ul class="m-0 flex w-max list-none flex-wrap items-center gap-x-8 gap-y-2 p-0" role="list">
+				<ul
+					class="m-0 flex w-max list-none flex-wrap items-center gap-x-8 gap-y-2 p-0"
+					role="list"
+				>
 					{
 						stack.map((tech) => (
 							<li>
@@ -219,57 +220,80 @@ if (status === 'active') {
 			</div>
 		</section>
 
-		<!-- Divider -->
 		<div class="container">
 			<hr class="h-px w-full border-0 bg-zinc-800" />
 		</div>
 
-		<!-- Arquitectura -->
-		<section class="container py-20">
-			<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary"
-				>Arquitectura</span
+		<section class="container py-20" aria-labelledby="project-architecture">
+			<h2
+				id="project-architecture"
+				class="mb-8 text-xs font-bold uppercase tracking-widest text-primary"
 			>
+				Arquitectura
+			</h2>
 			<div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
 				<div class="flex flex-col justify-center gap-3">
 					{
 						architecture.split('. ').filter(Boolean).map((sentence) => (
-							<p class="text-sm leading-relaxed text-slate-400">{sentence }</p>
+							<p class="text-sm leading-relaxed text-slate-400">
+								{sentence}
+							</p>
 						))
 					}
 				</div>
 
-				<!-- Visual diagram -->
-				<div
-					class="flex items-center justify-center rounded-xl border dark:border-zinc-800 border-zinc-100 "
-				>
-					{architectureImageUrl && (
-						<img src={architectureImageUrl} alt="Arquitectura" class=" w-full h-full object-contain" />
-					)}
-				</div>
+				{
+					architectureImageUrl && (
+						<figure
+							class="m-0 flex items-center justify-center rounded-xl border border-zinc-100 dark:border-zinc-800"
+						>
+							<img
+								src={architectureImageUrl}
+								alt={`Diagrama de arquitectura de ${title}`}
+								class="h-full w-full object-contain"
+							/>
+						</figure>
+					)
+				}
 			</div>
 		</section>
 
-		<!-- Funcionalidades -->
-		{featureEntries.length > 0 && (
-			<div class="container">
-				<hr class="h-px w-full border-0 bg-zinc-800" />
-			</div>
-		)}
-		{featureEntries.length > 0 && (
-			<section class="container py-20">
-				<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary">
-					Funcionalidades Principales
-				</span>
-				<div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-					{featureEntries.map(([name, desc]) => (
-						<div class="flex flex-col gap-2 rounded-xl p-5 transition-colors">
-							<h3 class="text-sm font-semibold text-foreground">{name}</h3>
-							<p class="text-xs leading-relaxed text-slate-500">{desc}</p>
-						</div>
-					))}
+		{
+			featureEntries.length > 0 && (
+				<div class="container">
+					<hr class="h-px w-full border-0 bg-zinc-800" />
 				</div>
-			</section>
-		)}
+			)
+		}
+		{
+			featureEntries.length > 0 && (
+				<section
+					class="container py-20"
+					aria-labelledby="project-features"
+				>
+					<h2
+						id="project-features"
+						class="mb-8 text-xs font-bold uppercase tracking-widest text-primary"
+					>
+						Funcionalidades Principales
+					</h2>
+					<ul class="m-0 grid list-none grid-cols-2 gap-4 p-0 lg:grid-cols-4">
+						{
+							featureEntries.map(([name, desc]) => (
+								<li class="flex flex-col gap-2 rounded-xl p-5 transition-colors">
+									<h3 class="text-sm font-semibold text-foreground">
+										{name}
+									</h3>
+									<p class="text-xs leading-relaxed text-slate-500">
+										{desc}
+									</p>
+								</li>
+							))
+						}
+					</ul>
+				</section>
+			)
+		}
 
 		{
 			galleryImages.length > 0 && (
@@ -277,69 +301,82 @@ if (status === 'active') {
 					<div class="container">
 						<hr class="h-px w-full border-0 bg-zinc-800" />
 					</div>
-					<section class="container py-20">
-						<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary">
+					<section class="container py-20" aria-labelledby="project-gallery">
+						<h2
+							id="project-gallery"
+							class="mb-8 text-xs font-bold uppercase tracking-widest text-primary"
+						>
 							Capturas
-						</span>
+						</h2>
 						<GalleryLightbox images={galleryImages} title={title} />
 					</section>
 				</>
 			)
 		}
 
-		<!-- Divider -->
 		<div class="container">
 			<hr class="h-px w-full border-0 bg-zinc-800" />
 		</div>
 
-		<!-- Qué aprendí -->
-		<section class="container py-20">
-			<span class="mb-8 block text-xs font-bold uppercase tracking-widest text-primary"
-				>Qué aprendí</span
+		<section class="container py-20" aria-labelledby="project-learning">
+			<h2
+				id="project-learning"
+				class="mb-8 text-xs font-bold uppercase tracking-widest text-primary"
 			>
+				Qué aprendí
+			</h2>
 			<div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
 				<p class="text-sm leading-relaxed text-muted-foreground">{learning}</p>
 				{
 					learningList.length > 0 && (
-						<ul class="flex flex-col gap-3">
-							{learningList.map((item) => (
-								<li class="flex items-center gap-3 text-sm text-slate-400">
-									<Icon
-										name="lucide:check-circle"
-										class="size-4 shrink-0 text-primary"
-									/>
-									{item}
-								</li>
-							))}
+						<ul class="m-0 flex list-none flex-col gap-3 p-0">
+							{
+								learningList.map((item) => (
+									<li class="flex items-center gap-3 text-sm text-slate-400">
+										<Icon
+											name="lucide:check-circle"
+											class="size-4 shrink-0 text-primary"
+											aria-hidden="true"
+										/>
+										{item}
+									</li>
+								))
+							}
 						</ul>
 					)
 				}
 			</div>
 		</section>
 
-		<!-- CTA -->
-		<section class="mt-8">
+		<section class="mt-8" aria-labelledby="project-cta">
 			<div
 				class="mx-auto flex flex-col items-center justify-between gap-6 px-8 py-16 text-center sm:flex-row sm:text-left lg:px-24"
 			>
-				<div>
-					<h2 class="text-2xl font-bold text-foreground md:text-3xl">
+				<header>
+					<h2
+						id="project-cta"
+						class="text-2xl font-bold text-foreground md:text-3xl"
+					>
 						¿Tenés un proyecto en mente?
 					</h2>
 					<p class="mt-2 text-sm text-slate-400">
 						Estoy disponible para trabajar en nuevos desafíos.
 					</p>
-				</div>
+				</header>
 				<a
-					href="mailto:mcarreradev12@gmail.com?subject=Proyecto:"
+					href={`mailto:${AUTHOR.email}?subject=Proyecto:`}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-flex shrink-0 items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
 				>
 					Hablemos
-					<Icon name="lucide:arrow-right" class="size-4" />
+					<Icon
+						name="lucide:arrow-right"
+						class="size-4"
+						aria-hidden="true"
+					/>
 				</a>
 			</div>
 		</section>
-	</main>
+	</article>
 </Layout>

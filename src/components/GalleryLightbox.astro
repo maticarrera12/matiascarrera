@@ -10,27 +10,37 @@ const { images, title } = Astro.props;
 const imagesJson = JSON.stringify(images);
 ---
 
-<div class="gallery-lightbox" data-gallery-root data-gallery-images={imagesJson}>
-	<div class="flex gap-4 overflow-x-auto pb-4">
+<section
+	class="gallery-lightbox"
+	data-gallery-root
+	data-gallery-images={imagesJson}
+	aria-label={`Capturas de ${title}`}
+>
+	<ul
+		class="flex list-none gap-4 overflow-x-auto p-0 pb-4"
+		aria-label="Miniaturas de capturas"
+	>
 		{
 			images.map((src, i) => (
-				<button
-					type="button"
-					class="gallery-lightbox__thumb group w-72 shrink-0 cursor-zoom-in overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 text-left transition-[border-color,box-shadow] duration-300 hover:border-zinc-600 hover:shadow-lg hover:shadow-black/20 md:w-80"
-					data-gallery-open={i}
-					aria-label={`Ampliar captura ${i + 1} de ${title}`}
-				>
-					<img
-						src={src}
-						alt={`${title} captura ${i + 1}`}
-						class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-						loading="lazy"
-						decoding="async"
-					/>
-				</button>
+				<li class="shrink-0">
+					<button
+						type="button"
+						class="gallery-lightbox__thumb group w-72 cursor-zoom-in overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 text-left transition-[border-color,box-shadow] duration-300 hover:border-zinc-600 hover:shadow-lg hover:shadow-black/20 md:w-80"
+						data-gallery-open={i}
+						aria-label={`Ampliar captura ${i + 1} de ${title}`}
+					>
+						<img
+							src={src}
+							alt={`${title} captura ${i + 1}`}
+							class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+							loading="lazy"
+							decoding="async"
+						/>
+					</button>
+				</li>
 			))
 		}
-	</div>
+	</ul>
 
 	<dialog
 		class="gallery-lightbox__dialog"
@@ -46,7 +56,10 @@ const imagesJson = JSON.stringify(images);
 				<Icon name="lucide:x" class="size-5" is:inline />
 			</button>
 
-			<div class="gallery-lightbox__nav-group">
+			<nav
+				class="gallery-lightbox__nav-group"
+				aria-label="Navegación de galería"
+			>
 				<button
 					type="button"
 					class="gallery-lightbox__nav gallery-lightbox__nav--prev"
@@ -63,7 +76,7 @@ const imagesJson = JSON.stringify(images);
 				>
 					<Icon name="lucide:chevron-right" class="size-6" is:inline />
 				</button>
-			</div>
+			</nav>
 
 			<figure class="gallery-lightbox__figure">
 				<img
@@ -77,7 +90,7 @@ const imagesJson = JSON.stringify(images);
 			</figure>
 		</div>
 	</dialog>
-</div>
+</section>
 
 <style>
 	.gallery-lightbox__dialog {

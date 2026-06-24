@@ -3,21 +3,27 @@ import { Icon } from "astro-icon/components";
 import { AUTHOR } from "../const";
 
 const ctaImage = "/images/projects/mre-landing-1.png";
+const body = "text-xl leading-9 text-muted";
 ---
 
-<section class="container py-24">
-	<div class="relative h-auto overflow-hidden rounded-4xl bg-cloud-500 md:min-h-96 lg:min-h-88">
+<section class="container py-24" aria-labelledby="cta-heading">
+	<div
+		class="relative h-auto overflow-hidden rounded-4xl bg-cloud-500 md:min-h-96 lg:min-h-88"
+	>
 		<div class="relative z-10 max-w-xl space-y-8 p-8 md:p-12 lg:p-16">
-			<h2 class="text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl">
+			<h2
+				id="cta-heading"
+				class="text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl"
+			>
 				Me interesa construir productos claros, sólidos y bien pensados.
 			</h2>
 
 			<div class="space-y-4">
-				<p class="text-xl leading-9 text-muted">
+				<p class={body}>
 					Actualmente busco mi primera experiencia profesional como
 					desarrollador frontend/fullstack.
 				</p>
-				<p class="text-xl leading-9 text-muted">
+				<p class={body}>
 					Me interesa trabajar en productos reales, rodeado de personas de las
 					que pueda seguir aprendiendo.
 				</p>
@@ -36,8 +42,8 @@ const ctaImage = "/images/projects/mre-landing-1.png";
 			</a>
 		</div>
 
-		<div
-			class="pointer-events-none absolute inset-y-0 right-0 hidden w-[62%] md:block lg:w-[58%]"
+		<figure
+			class="pointer-events-none absolute inset-y-0 right-0 m-0 hidden w-[62%] md:block lg:w-[58%]"
 			aria-hidden="true"
 		>
 			<img
@@ -49,6 +55,6 @@ const ctaImage = "/images/projects/mre-landing-1.png";
 				loading="lazy"
 				decoding="async"
 			/>
-		</div>
+		</figure>
 	</div>
 </section>

@@ -33,16 +33,18 @@ const h2Headings = headings
 <Layout title={`${post.data.title} · Matías Carrera`} description={post.data.description}>
 	<!-- Hero with mountains: title, description, meta -->
 	<MountainHero align="start">
-		<div class="flex flex-col gap-6 text-left mt-24">
+		<header class="mt-24 flex flex-col gap-6 text-left">
 			{
 				post.data.tags.length > 0 && (
-					<div class="flex flex-wrap justify-start gap-2">
+					<ul class="m-0 flex list-none flex-wrap justify-start gap-2 p-0">
 						{post.data.tags.map((tag) => (
-							<span class="text-xs font-bold uppercase tracking-widest text-primary/80">
-								#{tag}
-							</span>
+							<li>
+								<span class="text-xs font-bold uppercase tracking-widest text-primary/80">
+									#{tag}
+								</span>
+							</li>
 						))}
-					</div>
+					</ul>
 				)
 			}
 
@@ -54,8 +56,7 @@ const h2Headings = headings
 				{post.data.description}
 			</p>
 
-			<div class="flex items-center gap-3 text-sm text-muted">
-				<span aria-hidden="true">·</span>
+			<p class="flex items-center gap-3 text-sm text-muted">
 				<time datetime={post.data.publishedAt.toISOString().slice(0, 10)}>
 					{post.data.publishedAt.toLocaleDateString('es-AR', dateOptions)}
 				</time>
@@ -67,26 +68,27 @@ const h2Headings = headings
 						</>
 					)
 				}
-			</div>
-		</div>
+			</p>
+		</header>
 	</MountainHero>
 
 	<!-- Post content + TOC -->
 	<div class="container py-12">
 		<div class="post-layout">
-			<!-- Main content -->
 			<article class="post-body prose min-w-0">
 				<Content />
 			</article>
 
-			<!-- TOC sidebar: hidden on mobile/tablet, sticky on desktop -->
 			{
 				h2Headings.length > 0 && (
 					<aside class="post-toc hidden lg:block" aria-label="Tabla de contenidos">
-						<nav>
-							<p class="toc-title mb-4 text-xs font-bold uppercase tracking-widest text-muted">
+						<nav aria-labelledby="toc-heading">
+							<h2
+								id="toc-heading"
+								class="toc-title mb-4 text-xs font-bold uppercase tracking-widest text-muted"
+							>
 								Contenidos
-							</p>
+							</h2>
 							<ol class="m-0 list-none p-0 flex flex-col gap-1">
 								{h2Headings.map((heading) => (
 									<li>

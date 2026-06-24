@@ -7,6 +7,8 @@ const body = "text-xl leading-9 text-muted";
 
 const profileChip =
 	"bg-white/4 px-3 py-1 text-xs text-zinc-300 light:border-slate-900/10 light:bg-slate-900/4 light:text-muted text-foreground rounded-full border border-foreground/10";
+
+const skills = ["React", "Next.js", "Astro", "Spring Boot", "UI/UX"];
 ---
 
 <section id="sobre-mi" class="relative container scroll-mt-24 py-12">
@@ -15,7 +17,7 @@ const profileChip =
 		aria-hidden="true"
 	/>
 
-	<div class="mb-12">
+	<header class="mb-12">
 		<p
 			class="mb-4 text-center text-sm uppercase tracking-[0.3em] text-primary/70"
 		>
@@ -26,12 +28,15 @@ const profileChip =
 		>
 			Sobre Mi
 		</h2>
-	</div>
+	</header>
 
 	<div class="grid grid-cols-1 gap-14 lg:grid-cols-[380px_1fr]">
-		<div class="relative hidden lg:block">
+		<aside
+			class="relative hidden lg:block"
+			aria-label={`Perfil de ${AUTHOR.name}`}
+		>
 			<div class="sticky top-28">
-				<div class="group relative p-4">
+				<figure class="group relative p-4">
 					<div
 						class="pointer-events-none absolute inset-0 rounded-[32px] bg-linear-to-b from-white/6 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 light:from-primary/7"
 						aria-hidden="true"
@@ -47,43 +52,49 @@ const profileChip =
 						decoding="async"
 					/>
 
-					<div class="mt-8 space-y-5 px-2 pb-2">
-						<div>
+					<figcaption class="mt-8 space-y-5 px-2 pb-2">
+						<header>
 							<h3 class="text-2xl font-semibold text-foreground">
-								Matías Carrera
+								{AUTHOR.name}
 							</h3>
 							<p class="mt-2 text-sm leading-relaxed text-muted">
 								Fullstack developer enfocado en producto,
 								arquitectura y experiencia visual.
 							</p>
-						</div>
+						</header>
 
 						<hr class="h-px w-full border-0 bg-white/10 light:bg-slate-900/8" />
 
-						<div class="flex flex-wrap gap-2">
-							<span class={profileChip}>React</span>
-							<span class={profileChip}>Next.js</span>
-							<span class={profileChip}>Astro</span>
-							<span class={profileChip}>Spring Boot</span>
-							<span class={profileChip}>UI/UX</span>
-						</div>
+						<ul class="flex list-none flex-wrap gap-2 p-0">
+							{
+								skills.map((skill) => (
+									<li>
+										<span class={profileChip}>{skill}</span>
+									</li>
+								))
+							}
+						</ul>
 
-						<div class="flex items-center gap-3 pt-2">
-							<div
+						<p class="flex items-center gap-3 pt-2 text-sm text-muted">
+							<span
 								class="size-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.8)] light:shadow-[0_0_10px_rgba(16,185,129,0.55)]"
+								aria-hidden="true"
 							/>
-							<p class="text-sm text-muted">Disponible para trabajar</p>
-						</div>
-					</div>
-				</div>
+							Disponible para trabajar
+						</p>
+					</figcaption>
+				</figure>
 			</div>
-		</div>
+		</aside>
 
 		<div class="flex flex-col gap-24">
-			<div class="reveal max-w-3xl space-y-2">
-				<p class={lead}>
+			<section
+				class="reveal max-w-3xl space-y-2"
+				aria-labelledby="about-origins"
+			>
+				<h3 id="about-origins" class={lead}>
 					Empecé estudiando Diseño Gráfico y Multimedia en UADE.
-				</p>
+				</h3>
 				<p class={body}>
 					Pero cada vez que aparecía código en la carrera sentía que ahí
 					estaba realmente lo que más me interesaba. Disfrutaba más construir
@@ -91,10 +102,15 @@ const profileChip =
 					entender cómo estaban hechas las cosas, cómo se conectaban y cómo
 					transformar una idea en un producto real.
 				</p>
-			</div>
+			</section>
 
-			<div class="reveal max-w-3xl space-y-2">
-				<p class={lead}>Hoy sigo usando mucho de ese background en diseño.</p>
+			<section
+				class="reveal max-w-3xl space-y-2"
+				aria-labelledby="about-design"
+			>
+				<h3 id="about-design" class={lead}>
+					Hoy sigo usando mucho de ese background en diseño.
+				</h3>
 				<p class={body}>
 					Me dio criterio visual, sensibilidad por la tipografía y una
 					obsesión por la claridad.
@@ -107,12 +123,15 @@ const profileChip =
 					Tengo una fascinación particular por las tipografías. Siento que gran
 					parte de la identidad visual de un producto vive ahí.
 				</p>
-			</div>
+			</section>
 
-			<div class="reveal max-w-3xl space-y-2">
-				<p class={lead}>
+			<section
+				class="reveal max-w-3xl space-y-2"
+				aria-labelledby="about-building"
+			>
+				<h3 id="about-building" class={lead}>
 					Lo que más disfruto hoy es construir productos desde cero.
-				</p>
+				</h3>
 				<p class={body}>
 					Pensar la estructura antes de escribir componentes, definir una
 					arquitectura clara y construir sistemas que puedan crecer bien con el
@@ -123,10 +142,15 @@ const profileChip =
 					Cuidar los detalles y encontrar equilibrio entre estética y
 					funcionalidad.
 				</p>
-			</div>
+			</section>
 
-			<div class="reveal max-w-3xl space-y-2">
-				<p class={lead}>Actualmente estoy profundizando mucho en JavaScript.</p>
+			<section
+				class="reveal max-w-3xl space-y-2"
+				aria-labelledby="about-javascript"
+			>
+				<h3 id="about-javascript" class={lead}>
+					Actualmente estoy profundizando mucho en JavaScript.
+				</h3>
 				<p class={body}>
 					Me interesa entender las bases de verdad: cómo funciona el lenguaje,
 					cómo escribir código más sólido y cómo mejorar mi lógica como
@@ -136,12 +160,15 @@ const profileChip =
 					También estoy incorporando SDD en mi día a día, especialmente
 					trabajando junto a herramientas de IA.
 				</p>
-			</div>
+			</section>
 
-			<div class="reveal max-w-3xl space-y-2">
-				<p class={lead}>
+			<section
+				class="reveal max-w-3xl space-y-2"
+				aria-labelledby="about-saas"
+			>
+				<h3 id="about-saas" class={lead}>
 					Me atraen especialmente los SaaS y las landing pages.
-				</p>
+				</h3>
 				<p class={body}>
 					Me gusta la mezcla entre branding, producto, experiencia y
 					tecnología.
@@ -150,13 +177,16 @@ const profileChip =
 					Disfruto pensar cómo pequeñas decisiones visuales o técnicas cambian
 					completamente la percepción de un producto.
 				</p>
-			</div>
+			</section>
 
-			<div class="reveal max-w-3xl space-y-2">
-				<p class={lead}>
+			<section
+				class="reveal max-w-3xl space-y-2"
+				aria-labelledby="about-projects"
+			>
+				<h3 id="about-projects" class={lead}>
 					Creo que lo que más me diferencia es que mis proyectos no son
 					ejercicios.
-				</p>
+				</h3>
 				<p class={body}>
 					Son aplicaciones reales construidas por mí: desde la experiencia
 					visual hasta la arquitectura, la lógica y el deployment.
@@ -165,7 +195,7 @@ const profileChip =
 					Quiero seguir creciendo técnicamente, trabajar construyendo productos
 					reales y eventualmente liderar equipos.
 				</p>
-			</div>
+			</section>
 		</div>
 	</div>
 </section>
