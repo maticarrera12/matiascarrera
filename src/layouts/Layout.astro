@@ -73,7 +73,9 @@ import Analytics from '@vercel/analytics/astro'
 		class="page-shell m-0 flex min-h-screen w-full flex-col bg-background font-outfit text-lg leading-[calc(0.95+0.62rem)] antialiased"
 	>
 		<Nav transition:persist="site-nav" />
-		<slot />
+		<main class="flex w-full flex-col">
+			<slot />
+		</main>
 		<Footer transition:persist="site-footer" />
 		<Analytics />
 		<script>

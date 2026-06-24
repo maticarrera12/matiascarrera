@@ -34,28 +34,30 @@ function isSamePageNav(href: string): boolean {
 				Matías Carrera
 			</a>
 
-			<ul class="m-0 hidden list-none gap-4 p-0 sm:flex sm:gap-8">
-				{
-					NAV_LINKS.map((link) => (
-						<li>
-							<a
-								href={link.href}
-								data-nav={link.href}
-								data-nav-link
-								data-same-page={isSamePageNav(link.href) ? "true" : undefined}
-								class:list={[
-									"text-[0.9375rem]",
-									isActive(link.href)
-										? "text-foreground"
-										: "text-muted hover:text-foreground",
-								]}
-							>
-								{link.label}
-							</a>
-						</li>
-					))
-				}
-			</ul>
+			<nav class="hidden sm:block" aria-label="Navegación principal">
+				<ul class="m-0 flex list-none gap-4 p-0 sm:gap-8">
+					{
+						NAV_LINKS.map((link) => (
+							<li>
+								<a
+									href={link.href}
+									data-nav={link.href}
+									data-nav-link
+									data-same-page={isSamePageNav(link.href) ? "true" : undefined}
+									class:list={[
+										"text-[0.9375rem]",
+										isActive(link.href)
+											? "text-foreground"
+											: "text-muted hover:text-foreground",
+									]}
+								>
+									{link.label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
 		</div>
 
 		<div class="flex items-center gap-3">
