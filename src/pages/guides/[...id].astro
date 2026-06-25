@@ -3,13 +3,15 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { navigationTree } from "../../config/navigation";
 import {
+	flattenSerie,
 	flattenSeries,
 	getLessonNavigation,
 	getSerieForGuideId,
+	lessonMatchesGuideId,
 	resolveGuideNavLinks,
 } from "../../helpers/flattenSerie";
 import type { GuideNavLink } from "../../helpers/flattenSerie";
-import MountainHero from "../../components/MountainHero.astro";
+import TerminalHeader from "../../components/TerminalHeader.astro";
 import Callout from "../../components/Callout.astro";
 import Tip from "../../components/callouts/Tip.astro";
 import Warning from "../../components/callouts/Warning.astro";
@@ -24,6 +26,11 @@ export async function getStaticPaths() {
 		const navigation = getLessonNavigation(lessons, guide.id);
 		const { previous, next } = resolveGuideNavLinks(navigation, guides);
 		const serie = getSerieForGuideId(guide.id, navigationTree);
+		const currentLesson = serie
+			? flattenSerie(serie).find((lesson) =>
+					lessonMatchesGuideId(lesson, guide.id),
+				)
+			: undefined;
 
 		return {
 			params: { id: guide.id },
@@ -32,6 +39,10 @@ export async function getStaticPaths() {
 				previous,
 				next,
 				accentColor: serie?.color ?? "#E44D26",
+				language: serie?.title ?? "",
+				languageSlug: serie?.slug ?? "",
+				languageImage: serie?.image ?? "",
+				module: currentLesson?.module ?? "",
 			},
 		};
 	});
@@ -42,27 +53,39 @@ interface Props {
 	previous: GuideNavLink | null;
 	next: GuideNavLink | null;
 	accentColor: string;
+	language: string;
+	languageSlug: string;
+	languageImage: string;
+	module: string;
 }
 
-const { guide, previous, next, accentColor } = Astro.props;
+const {
+	guide,
+	previous,
+	next,
+	accentColor,
+	language,
+	languageSlug,
+	languageImage,
+	module,
+} = Astro.props;
 const { title, subtitle } = guide.data;
 const { Content } = await render(guide);
 ---
 
 <Layout title={`${title} · Matías Carrera`} description={subtitle}>
 	<main style={`--guide-accent: ${accentColor}`}>
-		<MountainHero>
-			<header class="mb-12 w-full text-center" transition:animate="fade">
-				<h1
-					class="text-4xl font-bold leading-tight text-foreground md:text-8xl"
-				>
-					{title}
-				</h1>
-				<p class="mt-4 text-xl leading-relaxed text-muted">
-					{subtitle}
-				</p>
-			</header>
-		</MountainHero>
+		<div class="container pt-16 pb-4 md:pt-24">
+			<TerminalHeader
+				language={language}
+				languageSlug={languageSlug}
+				languageImage={languageImage}
+				module={module}
+				lesson={title}
+				subtitle={subtitle}
+				file={guide.id.split("/").pop()}
+			/>
+		</div>
 
 		<div class="container py-12">
 			<div class="mx-auto w-full max-w-3xl">
