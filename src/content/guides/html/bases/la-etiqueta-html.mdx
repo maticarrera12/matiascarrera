@@ -1,75 +1,64 @@
 ---
-title: "Semantica Web"
-subtitle: "La importancia de la semantica en el desarrollo web"
+title: "La etiqueta de HTML"
+subtitle: "¿Qué es una etiqueta HTML?"
 ---
 
-## Historia de HTML
+## Se categorizan
 
-HTML (**HyperText Markup Language**) es el lenguaje estándar utilizado para estructurar el contenido de las páginas web.
+Como ya te conte, no son palabras sueltas, sino que tienen un significado especial. Las podemos dividir en:
 
-Fue creado en 1991 por **Tim Berners-Lee** mientras trabajaba en el CERN. Su objetivo era permitir que investigadores compartieran documentos mediante enlaces de hipertexto.
+1. Textuales
+2. Agrupacion
+3. Multimedia
+4. Tablas
+5. Formularios
+6. Interactivas
+7. Semánticas
+8. Scripting
 
-Con el paso de los años surgieron distintas versiones:
+# Estructura
+{/* ![Estructura de una etiqueta HTML](../../assets/images/estructura-etiqueta-html.png) */}
 
-* HTML 2.0 (1995)
-* HTML 3.2 (1997)
-* HTML 4.01 (1999)
-* XHTML (2000)
-* HTML5 (2014)
+Tiene una etiqueta de apertura y en general tienen una etiqueta de cierre. Pero ya veremos que hay etiquetas que no tienen cierre.
 
-Actualmente, **HTML5** es la versión utilizada por todos los navegadores modernos.
+Pueden incluir dentro de ellas otras etiquetas.
 
-## ¿Qué es HTML?
+```html
+<div>
+    <h1>Hola Mundo</h1>
+    <p>Mi primera página web.</p>
+</div>
+```
 
-HTML no es un lenguaje de programación.
+<Warning>
 
-Es un **lenguaje de marcado**, lo que significa que utiliza etiquetas para describir la estructura del contenido.
+Las etiquetas no se pueden anidar una dentro de la otra.
+
+</Warning>
+
+# Atributos
+
+Los atributos son palabras que se utilizan para modificar el comportamiento de la etiqueta.
 
 Por ejemplo:
 
 ```html
-<h1>Hola Mundo</h1>
-<p>Mi primera página web.</p>
+<input type="text" disabled placeholder="Ingrese su nombre">
 ```
 
-El navegador interpreta esas etiquetas y las transforma en elementos visuales.
+Hay 3 tipos de atributos: 
+1. Conjunto de valores: Con valores especifcos.
+2. Valores libres: Solo un valor.
+3. Atributos booleanos: No tienen valor. Omitidos se consideran <code>false</code> , si se nombran se consideran <code>true</code> 
 
-## Anatomía de un documento HTML
-
-Un documento HTML básico tiene la siguiente estructura:
+El orden de los atributos no importa, pero si el nombre del atributo y el valor. Si se declara varias veces se toma el último.
 
 ```html
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Mi primera página</title>
-  </head>
-  <body>
-    <h1>Bienvenido</h1>
-    <p>Este es mi primer documento HTML.</p>
-  </body>
-</html>
+<video src="video.mp4"></video>
+<video controls></video>
+<video preload="auto"></video>
 ```
 
-## Ejemplo con componente MDX
+# Contenido 
 
-Si estás utilizando MDX, también podés renderizar componentes directamente dentro del contenido.
-
-```html
-<h1>Hola Mundo</h1>
-<p>Mi primera página web.</p>
-```
-
-## Ventajas de HTML
-
-1. Fácil de aprender.
-2. Compatible con todos los navegadores.
-3. Base fundamental del desarrollo web.
-4. Funciona junto a CSS y JavaScript.
-
-> Todo sitio web comienza con HTML. Luego CSS se encarga de los estilos y JavaScript de la interactividad.
-
-## Resumen
-
-HTML es el lenguaje que define la estructura de una página web. Aprenderlo correctamente es el primer paso para convertirse en desarrollador frontend.
+El contenido de una etiqueta es lo que se encuentra entre la etiqueta de apertura y la etiqueta de cierre. Es lo que queremos que se muestre en la página.

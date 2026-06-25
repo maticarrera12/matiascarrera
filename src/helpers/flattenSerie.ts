@@ -69,34 +69,34 @@ export function getLessonNavigation(
 
 export function lessonToNavLink(
 	lesson: FlatLesson,
-	guideIds: readonly string[],
+	guides: readonly { id: string; data: { title: string } }[],
 ): GuideNavLink | null {
-	const id = guideIds.find((guideId) =>
-		lessonMatchesGuideId(lesson, guideId),
+	const guide = guides.find((entry) =>
+		lessonMatchesGuideId(lesson, entry.id),
 	);
 
-	if (!id) return null;
+	if (!guide) return null;
 
 	return {
-		href: `/guides/${id}`,
-		title: lesson.title,
+		href: `/guides/${guide.id}`,
+		title: guide.data.title,
 		module: lesson.module,
 	};
 }
 
 export function resolveGuideNavLinks(
 	navigation: LessonNavigation,
-	guideIds: readonly string[],
+	guides: readonly { id: string; data: { title: string } }[],
 ): {
 	previous: GuideNavLink | null;
 	next: GuideNavLink | null;
 } {
 	return {
 		previous: navigation.previous
-			? lessonToNavLink(navigation.previous, guideIds)
+			? lessonToNavLink(navigation.previous, guides)
 			: null,
 		next: navigation.next
-			? lessonToNavLink(navigation.next, guideIds)
+			? lessonToNavLink(navigation.next, guides)
 			: null,
 	};
 }

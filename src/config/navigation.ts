@@ -36,21 +36,17 @@ export const navigationTree: Serie[] = [
 						title: 'Introducción a HTML5',
                         icon: "mdi:html5",
 						lessons: [
-                            {
+							{
 								title: 'Historia e Introducción a HTML',
 								file: 'introduccion-html.md',
-							},
-							{
-								title: 'Semantica Web',
-								file: 'semantica-web.md',
 							},
 							{
 								title: 'La etiqueta de HTML',
 								file: 'la-etiqueta-html.md',
 							},
 							{
-								title: 'Atributos comunes de HTML',
-								file: 'la-etiqueta-html.md',
+								title: 'Atributos comunes',
+								file: 'atributos-comunes-html.md',
 							},
 						],
 					},

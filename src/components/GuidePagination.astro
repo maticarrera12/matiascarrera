@@ -78,11 +78,6 @@ const { accentColor, previous, next } = Astro.props;
 		gap: 1rem;
 	}
 
-	@media (max-width: 640px) {
-		.guide-pagination__grid {
-			grid-template-columns: 1fr;
-		}
-	}
 
 	.guide-pagination__card {
 		display: flex;
@@ -98,7 +93,8 @@ const { accentColor, previous, next } = Astro.props;
 	}
 
 	.guide-pagination__card:hover {
-		background: color-mix(in srgb, var(--guide-accent) 8%, transparent);
+		background: var(--guide-accent);
+		color: white;
 	}
 
 	.guide-pagination__card--prev:hover {

@@ -2,6 +2,7 @@
 @plugin "@tailwindcss/typography";
 @import "./theme-toggle.css";
 @import "./prose.css";
+@import "./callout.css";
 
 @custom-variant light (&:where(html[data-color-mode="light"], html[data-color-mode="light"] *));
 @custom-variant dark (&:where(html[data-color-mode="dark"], html[data-color-mode="dark"] *));
@@ -74,15 +75,27 @@
 		ul,
 		ol,
 		li,
-		blockquote,
 		figure,
 		figcaption,
 		hr,
 		strong,
 		em,
 		a
-	) {
+	):not(:where(.callout *)) {
 		all: revert;
+	}
+
+	.content-defaults :where(blockquote) {
+		border-left: 3px solid var(--guide-accent, var(--color-primary));
+		margin: 2rem 0;
+		padding: 0.5rem 0 0.5rem 1.5rem;
+		font-style: italic;
+		color: var(--color-gray-700);
+		background: transparent;
+	}
+
+	.content-defaults :where(blockquote p) {
+		margin: 0;
 	}
 
 	.content-defaults :where(pre),

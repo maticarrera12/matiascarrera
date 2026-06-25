@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import GuidePagination from "../../components/GuidePagination.astro";
 import { navigationTree } from "../../config/navigation";
 import {
 	flattenSeries,
@@ -11,15 +10,19 @@ import {
 } from "../../helpers/flattenSerie";
 import type { GuideNavLink } from "../../helpers/flattenSerie";
 import MountainHero from "../../components/MountainHero.astro";
+import Callout from "../../components/Callout.astro";
+import Tip from "../../components/callouts/Tip.astro";
+import Warning from "../../components/callouts/Warning.astro";
+import Error from "../../components/callouts/Error.astro";
+import GuidePagination from "../../components/GuidePagination.astro";
 
 export async function getStaticPaths() {
 	const guides = await getCollection("guides");
-	const guideIds = guides.map((entry) => entry.id);
 	const lessons = flattenSeries(navigationTree);
 
 	return guides.map((guide) => {
 		const navigation = getLessonNavigation(lessons, guide.id);
-		const { previous, next } = resolveGuideNavLinks(navigation, guideIds);
+		const { previous, next } = resolveGuideNavLinks(navigation, guides);
 		const serie = getSerieForGuideId(guide.id, navigationTree);
 
 		return {
@@ -47,9 +50,9 @@ const { Content } = await render(guide);
 ---
 
 <Layout title={`${title} · Matías Carrera`} description={subtitle}>
-	<main class={`--guide-accent: ${accentColor}`}>
+	<main style={`--guide-accent: ${accentColor}`}>
 		<MountainHero>
-			<header class="mb-12 text-center">
+			<header class="mb-12 w-full text-center" transition:animate="fade">
 				<h1
 					class="text-4xl font-bold leading-tight text-foreground md:text-8xl"
 				>
@@ -60,10 +63,11 @@ const { Content } = await render(guide);
 				</p>
 			</header>
 		</MountainHero>
-		<div>
+
+		<div class="container py-12">
 			<div class="mx-auto w-full max-w-3xl">
 				<article class="content-defaults">
-					<Content />
+					<Content components={{ Callout, Tip, Warning, Error }} />
 				</article>
 
 				<GuidePagination
