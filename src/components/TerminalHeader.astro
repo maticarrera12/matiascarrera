@@ -76,11 +76,19 @@ const siteLabel = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 						</span>
 					)
 				}
-				<a class="terminal__crumb" href={`/guides/${languageSlug}`}>
-					~/{languageSlug}
-				</a>
-				<span class="terminal__sep" aria-hidden="true">/</span>
-				<span class="terminal__crumb terminal__crumb--module">{moduleSlug}</span>
+				<ol class="terminal__crumbs">
+					<li>
+						<a
+							class="terminal__crumb"
+							href={`/guides/${languageSlug}`}
+						>
+							~/{languageSlug}
+						</a>
+					</li>
+					<li class="terminal__crumb terminal__crumb--module">
+						{moduleSlug}
+					</li>
+				</ol>
 			</nav>
 
 			<p class="terminal__command">
@@ -216,21 +224,38 @@ const siteLabel = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 		flex-shrink: 0;
 	}
 
+	.terminal__crumbs {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.terminal__crumbs li {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.terminal__crumbs li + li::before {
+		content: "/";
+		color: var(--term-muted);
+	}
+
 	.terminal__crumb {
 		color: #58a6ff;
 		text-decoration: none;
 	}
 
-	.terminal__crumb:hover {
+	a.terminal__crumb:hover {
 		text-decoration: underline;
 	}
 
 	.terminal__crumb--module {
 		color: var(--term-text);
-	}
-
-	.terminal__sep {
-		color: var(--term-muted);
 	}
 
 	.terminal__command {
