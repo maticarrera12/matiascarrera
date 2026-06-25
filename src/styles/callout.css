@@ -1,0 +1,136 @@
+/* Callout — badge esquina sup-izq, radio invertido (espejo de auth-cta, escala 0.64) */
+@layer components {
+	.callout {
+		--callout-badge: 4rem;
+		--callout-scoop: calc(var(--callout-badge) * 0.3);
+		--callout-scoop-shadow-x: calc(var(--callout-scoop) / 6);
+		--callout-scoop-shadow-y: calc(var(--callout-scoop) / -3);
+		margin: 2.5rem 0 2rem;
+		overflow: visible;
+	}
+
+	.callout__card {
+		position: relative;
+		background: var(--callout-accent);
+		border-radius: calc(var(--callout-badge) * 0.5);
+		border-top-left-radius: calc(var(--callout-badge) * 0.7);
+		overflow: visible;
+	}
+
+	.callout__box {
+		position: relative;
+		padding: calc(var(--callout-badge) * 0.1);
+		background: var(--callout-surface);
+		border-radius: calc(var(--callout-badge) * 0.1);
+		overflow: visible;
+	}
+
+	.callout__content {
+		padding: 1rem 1.25rem 0.75rem calc(var(--callout-badge) + 0.75rem);
+	}
+
+	.callout__badge {
+		position: absolute;
+		top: calc(var(--callout-badge) * -0.15);
+		left: 0;
+		z-index: 2;
+		width: var(--callout-badge);
+		height: var(--callout-badge);
+		background: var(--color-background);
+		border-bottom-right-radius: 50%;
+	}
+
+	.callout__badge::before {
+		content: '';
+		position: absolute;
+		bottom: calc(-1 * var(--callout-scoop));
+		left: 0;
+		width: var(--callout-scoop);
+		height: var(--callout-scoop);
+		background: transparent;
+		border-top-left-radius: var(--callout-scoop);
+		box-shadow: calc(-1 * var(--callout-scoop-shadow-x)) var(--callout-scoop-shadow-y) 0
+			var(--callout-scoop-shadow-x) var(--color-background);
+	}
+
+	.callout__badge::after {
+		content: '';
+		position: absolute;
+		top: calc(var(--callout-badge) * 0.15);
+		right: calc(-1 * var(--callout-scoop));
+		width: var(--callout-scoop);
+		height: var(--callout-scoop);
+		background: transparent;
+		border-top-left-radius: var(--callout-scoop);
+		box-shadow: calc(-1 * var(--callout-scoop-shadow-x)) var(--callout-scoop-shadow-y) 0
+			var(--callout-scoop-shadow-x) var(--color-background);
+	}
+
+	.callout__badge-inner {
+		position: absolute;
+		inset: calc(var(--callout-badge) * 0.1);
+		display: grid;
+		place-items: center;
+		background: var(--callout-surface);
+		border-radius: 50%;
+		color: var(--callout-accent);
+	}
+
+	.callout__icon {
+		width: 1.25rem;
+		height: 1.25rem;
+	}
+
+	.callout__title {
+		margin: 0 0 0.5rem;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--callout-accent);
+	}
+
+	.callout__body {
+		font-size: 0.9375rem;
+		line-height: 1.65;
+		color: var(--color-text);
+	}
+
+	.callout__body p {
+		margin: 0;
+	}
+
+	.callout__body p + p {
+		margin-top: 0.75rem;
+	}
+
+	.callout--tip {
+		--callout-accent: #34d399;
+		--callout-surface: color-mix(in srgb, #34d399 12%, var(--color-background));
+	}
+
+	.callout--warning {
+		--callout-accent: #fbbf24;
+		--callout-surface: color-mix(in srgb, #fbbf24 12%, var(--color-background));
+	}
+
+	.callout--error {
+		--callout-accent: #f87171;
+		--callout-surface: color-mix(in srgb, #f87171 12%, var(--color-background));
+	}
+
+	html[data-color-mode='light'] .callout--tip {
+		--callout-accent: #059669;
+		--callout-surface: color-mix(in srgb, #059669 8%, var(--color-background));
+	}
+
+	html[data-color-mode='light'] .callout--warning {
+		--callout-accent: #d97706;
+		--callout-surface: color-mix(in srgb, #d97706 8%, var(--color-background));
+	}
+
+	html[data-color-mode='light'] .callout--error {
+		--callout-accent: #dc2626;
+		--callout-surface: color-mix(in srgb, #dc2626 8%, var(--color-background));
+	}
+}

@@ -1,0 +1,367 @@
+---
+interface Props {
+	/** Language / serie title, e.g. "HTML". */
+	language: string;
+	/** Serie slug for the breadcrumb path + link, e.g. "html". */
+	languageSlug: string;
+	/** Module title, e.g. "Introducción a HTML5". */
+	module: string;
+	/** Language logo shown as the prompt marker, e.g. "/images/technologies/html.webp". */
+	languageImage?: string;
+	/** Lesson title (the guide title). */
+	lesson: string;
+	/** Lesson subtitle, rendered as a shell comment. */
+	subtitle?: string;
+	/** File basename for the `cat` command, e.g. "la-etiqueta-html". */
+	file?: string;
+	/** Avatar image path. */
+	avatar?: string;
+	/** Site URL shown next to the avatar. */
+	siteUrl?: string;
+}
+
+const {
+	language,
+	languageSlug,
+	module,
+	languageImage,
+	lesson,
+	subtitle,
+	file,
+	avatar = '/images/profile.png',
+	siteUrl = 'https://mcarreradev.com',
+} = Astro.props;
+
+const slugify = (value: string): string =>
+	value
+		.toLowerCase()
+		.normalize('NFD')
+		.replace(/[̀-ͯ]/g, '')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/(^-|-$)/g, '');
+
+const moduleSlug = slugify(module);
+const path = `~/${languageSlug}/${moduleSlug}`;
+const command = `cat ${file ?? slugify(lesson)}.mdx`;
+const siteLabel = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+
+<section class="terminal" transition:animate="fade">
+	<div class="terminal__bar" aria-hidden="true">
+		<span class="terminal__lights">
+			<span class="terminal__light terminal__light--close"></span>
+			<span class="terminal__light terminal__light--min"></span>
+			<span class="terminal__light terminal__light--max"></span>
+		</span>
+		<span class="terminal__bar-title">guides — zsh</span>
+		<span class="terminal__bar-spacer"></span>
+	</div>
+
+	<div class="terminal__body">
+		<div class="terminal__main">
+			<nav class="terminal__prompt" aria-label="Ruta de la lección">
+				{
+					languageImage ? (
+						<img
+							class="terminal__logo"
+							src={languageImage}
+							alt={`Logo de ${language}`}
+							width="20"
+							height="20"
+							loading="lazy"
+						/>
+					) : (
+						<span class="terminal__caret" aria-hidden="true">
+							➜
+						</span>
+					)
+				}
+				<ol class="terminal__crumbs">
+					<li>
+						<a
+							class="terminal__crumb"
+							href={`/guides/${languageSlug}`}
+						>
+							~/{languageSlug}
+						</a>
+					</li>
+					<li class="terminal__crumb terminal__crumb--module">
+						{moduleSlug}
+					</li>
+				</ol>
+			</nav>
+
+			<p class="terminal__command">
+				<span class="terminal__dollar" aria-hidden="true">$</span>
+				{command}
+			</p>
+
+			<h1 class="terminal__lesson">{lesson}</h1>
+
+			{subtitle && <p class="terminal__comment"># {subtitle}</p>}
+
+			<p class="terminal__cursor" aria-hidden="true">
+				<span class="terminal__dollar">$</span><span class="terminal__blink"></span>
+			</p>
+		</div>
+
+		<a
+			class="terminal__author"
+			href={siteUrl}
+			aria-label={`Sitio del autor: ${siteLabel}`}
+		>
+			<img
+				class="terminal__avatar"
+				src={avatar}
+				alt="Matías Carrera"
+				width="56"
+				height="56"
+				loading="lazy"
+			/>
+			<span class="terminal__author-meta">
+				<span class="terminal__author-name">Matías Carrera</span>
+				<span class="terminal__author-url">{siteLabel}</span>
+			</span>
+		</a>
+	</div>
+</section>
+
+<style>
+	.terminal {
+		--term-accent: var(--guide-accent, var(--color-primary));
+		--term-bg: #0d1117;
+		--term-bar: #161b22;
+		--term-text: #c9d1d9;
+		--term-muted: #8b949e;
+		--term-border: #30363d;
+		width: 100%;
+		max-width: 56rem;
+		margin: 0 auto;
+		font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Code',
+			'JetBrains Mono', monospace;
+		background: var(--term-bg);
+		border: 1px solid var(--term-border);
+		border-radius: 0.75rem;
+		overflow: hidden;
+		box-shadow:
+			0 20px 45px -20px rgb(0 0 0 / 0.6),
+			0 0 0 1px rgb(255 255 255 / 0.02) inset;
+	}
+
+	.terminal__bar {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.625rem 1rem;
+		background: var(--term-bar);
+		border-bottom: 1px solid var(--term-border);
+	}
+
+	.terminal__lights {
+		display: inline-flex;
+		gap: 0.5rem;
+		flex-shrink: 0;
+	}
+
+	.terminal__light {
+		width: 0.75rem;
+		height: 0.75rem;
+		border-radius: 50%;
+		display: inline-block;
+	}
+
+	.terminal__light--close {
+		background: #ff5f56;
+	}
+	.terminal__light--min {
+		background: #ffbd2e;
+	}
+	.terminal__light--max {
+		background: #27c93f;
+	}
+
+	.terminal__bar-title {
+		flex: 1;
+		text-align: center;
+		font-size: 0.8125rem;
+		color: var(--term-muted);
+	}
+
+	.terminal__bar-spacer {
+		width: 3.25rem;
+		flex-shrink: 0;
+	}
+
+	.terminal__body {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 1.5rem 1.75rem 1.75rem;
+	}
+
+	.terminal__main {
+		min-width: 0;
+	}
+
+	.terminal__prompt {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		font-size: 0.9375rem;
+	}
+
+	.terminal__caret {
+		color: var(--term-accent);
+		font-weight: 700;
+	}
+
+	.terminal__logo {
+		width: 1.25rem;
+		height: 1.25rem;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+
+	.terminal__crumbs {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.terminal__crumbs li {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.terminal__crumbs li + li::before {
+		content: "/";
+		color: var(--term-muted);
+	}
+
+	.terminal__crumb {
+		color: #58a6ff;
+		text-decoration: none;
+	}
+
+	a.terminal__crumb:hover {
+		text-decoration: underline;
+	}
+
+	.terminal__crumb--module {
+		color: var(--term-text);
+	}
+
+	.terminal__command {
+		margin: 0.75rem 0 0;
+		font-size: 0.9375rem;
+		color: var(--term-muted);
+	}
+
+	.terminal__dollar {
+		color: var(--term-accent);
+		margin-right: 0.5rem;
+		font-weight: 700;
+	}
+
+	.terminal__lesson {
+		margin: 0.85rem 0 0;
+		font-size: clamp(1.75rem, 4vw, 2.75rem);
+		line-height: 1.15;
+		font-weight: 700;
+		color: #fff;
+	}
+
+	.terminal__comment {
+		margin: 0.6rem 0 0;
+		font-size: 1rem;
+		color: var(--term-muted);
+	}
+
+	.terminal__cursor {
+		margin: 1rem 0 0;
+		display: flex;
+		align-items: center;
+	}
+
+	.terminal__blink {
+		display: inline-block;
+		width: 0.55rem;
+		height: 1.1rem;
+		background: var(--term-accent);
+		animation: terminal-blink 1.1s steps(2, start) infinite;
+	}
+
+	@keyframes terminal-blink {
+		50% {
+			opacity: 0;
+		}
+	}
+
+	.terminal__author {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-shrink: 0;
+		text-decoration: none;
+		padding: 0.5rem 0.75rem;
+		border-radius: 0.5rem;
+		border: 1px solid transparent;
+		transition: border-color 0.2s ease, background 0.2s ease;
+	}
+
+	.terminal__author:hover {
+		border-color: var(--term-border);
+		background: rgb(255 255 255 / 0.03);
+	}
+
+	.terminal__avatar {
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 50%;
+		border: 2px solid var(--term-accent);
+		object-fit: cover;
+	}
+
+	.terminal__author-meta {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.3;
+	}
+
+	.terminal__author-name {
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: var(--term-text);
+	}
+
+	.terminal__author-url {
+		font-size: 0.75rem;
+		color: var(--term-accent);
+	}
+
+	@media (max-width: 40rem) {
+		.terminal__body {
+			flex-direction: column-reverse;
+			align-items: stretch;
+			gap: 1.25rem;
+		}
+
+		.terminal__author {
+			align-self: flex-start;
+			padding-left: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.terminal__blink {
+			animation: none;
+		}
+	}
+</style>

@@ -17,6 +17,14 @@ const blog = defineCollection({
 	}),
 });
 
+const guides = defineCollection({
+	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
+	schema: z.object({
+		title: z.string(),
+		subtitle: z.string(),
+	}),
+});
+
 const projects = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
 	schema: z.object({
@@ -49,8 +57,8 @@ const projects = defineCollection({
 	}),
 });
 
-const tecnologies = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/tecnologies' }),
+const technologies = defineCollection({
+	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/technologies' }),
 	schema: z.object({
 		name: z.string(),
 		image: z.string(),
@@ -58,4 +66,4 @@ const tecnologies = defineCollection({
 	}),
 });
 
-export const collections = { blog, projects, tecnologies };
+export const collections = { blog, guides, projects, technologies };

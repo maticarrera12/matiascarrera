@@ -1,0 +1,239 @@
+---
+import { Code } from 'astro:components';
+
+interface Props {
+	/** HTML source for the example. */
+	html?: string;
+	/** CSS source for the example. */
+	css?: string;
+	/** JS source for the example. */
+	js?: string;
+	/** Optional label shown above the tabs. */
+	title?: string;
+	/** Tab open by default: a provided language or "result". Defaults to "result". */
+	defaultTab?: 'html' | 'css' | 'js' | 'result';
+	/** Min height of the live preview, in px. */
+	previewHeight?: number;
+}
+
+const {
+	html = '',
+	css = '',
+	js = '',
+	title,
+	defaultTab = 'result',
+	previewHeight = 220,
+} = Astro.props;
+
+type Lang = 'html' | 'css' | 'js';
+
+const codeTabs: { lang: Lang; label: string; code: string }[] = [
+	{ lang: 'html', label: 'HTML', code: html },
+	{ lang: 'css', label: 'CSS', code: css },
+	{ lang: 'js', label: 'JS', code: js },
+].filter((t) => t.code.trim().length > 0);
+
+// Unique id so multiple instances on one page don't collide.
+const uid = `ce-${crypto.randomUUID().slice(0, 8)}`;
+
+// Build an isolated document for the live preview.
+const srcDoc = `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, sans-serif; margin: 1rem; }
+${css}
+</style>
+</head>
+<body>
+${html}
+<script>${js}<\/script>
+</body>
+</html>`;
+
+const tabs = [
+	...codeTabs.map((t) => ({ id: t.lang, label: t.label })),
+	{ id: 'result', label: 'Resultado' },
+];
+
+const hasDefault = tabs.some((t) => t.id === defaultTab);
+const activeId = hasDefault ? defaultTab : tabs[0].id;
+---
+
+<div class="code-example" data-code-example>
+	{title && <p class="code-example__title">{title}</p>}
+
+	<div class="code-example__tablist" role="tablist" aria-label={title ?? 'Ejemplo de código'}>
+		{
+			tabs.map((tab) => (
+				<button
+					type="button"
+					role="tab"
+					id={`${uid}-tab-${tab.id}`}
+					class="code-example__tab"
+					aria-controls={`${uid}-panel-${tab.id}`}
+					aria-selected={tab.id === activeId ? 'true' : 'false'}
+					tabindex={tab.id === activeId ? 0 : -1}
+				>
+					{tab.label}
+				</button>
+			))
+		}
+	</div>
+
+	{
+		codeTabs.map((t) => (
+			<div
+				id={`${uid}-panel-${t.lang}`}
+				role="tabpanel"
+				aria-labelledby={`${uid}-tab-${t.lang}`}
+				class="code-example__panel code-example__panel--code"
+				hidden={t.lang !== activeId}
+			>
+				<Code code={t.code} lang={t.lang} theme="tokyo-night" />
+			</div>
+		))
+	}
+
+	<div
+		id={`${uid}-panel-result`}
+		role="tabpanel"
+		aria-labelledby={`${uid}-tab-result`}
+		class="code-example__panel code-example__panel--result"
+		hidden={activeId !== 'result'}
+	>
+		<iframe
+			class="code-example__preview"
+			title={title ? `Resultado: ${title}` : 'Resultado del ejemplo'}
+			srcdoc={srcDoc}
+			sandbox="allow-scripts"
+			loading="lazy"
+			style={`min-height: ${previewHeight}px`}
+		></iframe>
+	</div>
+</div>
+
+<script>
+	function setupCodeExample(root: HTMLElement) {
+		const tabs = Array.from(
+			root.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+		);
+		const panels = Array.from(
+			root.querySelectorAll<HTMLElement>('[role="tabpanel"]')
+		);
+
+		function activate(tab: HTMLButtonElement, focus = true) {
+			for (const t of tabs) {
+				const selected = t === tab;
+				t.setAttribute('aria-selected', String(selected));
+				t.tabIndex = selected ? 0 : -1;
+			}
+			const targetId = tab.getAttribute('aria-controls');
+			for (const panel of panels) {
+				panel.hidden = panel.id !== targetId;
+			}
+			if (focus) tab.focus();
+		}
+
+		tabs.forEach((tab, index) => {
+			tab.addEventListener('click', () => activate(tab, false));
+			tab.addEventListener('keydown', (event) => {
+				let next: number | null = null;
+				if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+				else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+				else if (event.key === 'Home') next = 0;
+				else if (event.key === 'End') next = tabs.length - 1;
+				if (next !== null) {
+					event.preventDefault();
+					activate(tabs[next]);
+				}
+			});
+		});
+	}
+
+	document
+		.querySelectorAll<HTMLElement>('[data-code-example]')
+		.forEach(setupCodeExample);
+</script>
+
+<style>
+	.code-example {
+		--ce-accent: var(--guide-accent, var(--color-primary));
+		margin: 2rem 0;
+		border: 1px solid var(--color-border);
+		border-radius: 0.5rem;
+		overflow: hidden;
+		background: var(--color-background);
+	}
+
+	.code-example__title {
+		margin: 0;
+		padding: 0.625rem 1rem;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		color: var(--color-muted);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.code-example__tablist {
+		display: flex;
+		gap: 0.25rem;
+		padding: 0.5rem 0.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+		overflow-x: auto;
+	}
+
+	.code-example__tab {
+		appearance: none;
+		background: transparent;
+		border: none;
+		border-bottom: 2px solid transparent;
+		padding: 0.5rem 0.875rem;
+		font: inherit;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--color-muted);
+		cursor: pointer;
+		white-space: nowrap;
+		transition: color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.code-example__tab:hover {
+		color: var(--color-foreground);
+	}
+
+	.code-example__tab[aria-selected='true'] {
+		color: var(--ce-accent);
+		border-bottom-color: var(--ce-accent);
+	}
+
+	.code-example__tab:focus-visible {
+		outline: 2px solid var(--ce-accent);
+		outline-offset: 2px;
+		border-radius: 0.25rem;
+	}
+
+	.code-example__panel[hidden] {
+		display: none;
+	}
+
+	.code-example__panel--code :global(pre) {
+		margin: 0;
+		padding: 1rem;
+		border-radius: 0;
+		overflow-x: auto;
+	}
+
+	.code-example__panel--result {
+		background: white;
+	}
+
+	.code-example__preview {
+		display: block;
+		width: 100%;
+		border: none;
+	}
+</style>

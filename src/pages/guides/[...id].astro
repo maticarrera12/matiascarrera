@@ -1,0 +1,120 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { navigationTree } from "../../config/navigation";
+import {
+	buildSidebarTree,
+	flattenSerie,
+	flattenSeries,
+	getLessonNavigation,
+	getSerieForGuideId,
+	lessonMatchesGuideId,
+	resolveGuideNavLinks,
+} from "../../helpers/flattenSerie";
+import type {
+	GuideNavLink,
+	SidebarChapter,
+} from "../../helpers/flattenSerie";
+import GuideSidebar from "../../components/GuideSidebar.astro";
+import TerminalHeader from "../../components/TerminalHeader.astro";
+import Callout from "../../components/Callout.astro";
+import Tip from "../../components/callouts/Tip.astro";
+import Warning from "../../components/callouts/Warning.astro";
+import Error from "../../components/callouts/Error.astro";
+import GuidePagination from "../../components/GuidePagination.astro";
+
+export async function getStaticPaths() {
+	const guides = await getCollection("guides");
+	const lessons = flattenSeries(navigationTree);
+
+	return guides.map((guide) => {
+		const navigation = getLessonNavigation(lessons, guide.id);
+		const { previous, next } = resolveGuideNavLinks(navigation, guides);
+		const serie = getSerieForGuideId(guide.id, navigationTree);
+		const currentLesson = serie
+			? flattenSerie(serie).find((lesson) =>
+					lessonMatchesGuideId(lesson, guide.id),
+				)
+			: undefined;
+		const sidebarTree = serie ? buildSidebarTree(serie, guides) : [];
+
+		return {
+			params: { id: guide.id },
+			props: {
+				guide,
+				previous,
+				next,
+				accentColor: serie?.color ?? "#E44D26",
+				language: serie?.title ?? "",
+				languageSlug: serie?.slug ?? "",
+				languageImage: serie?.image ?? "",
+				module: currentLesson?.module ?? "",
+				sidebarTree,
+			},
+		};
+	});
+}
+
+interface Props {
+	guide: Awaited<ReturnType<typeof getCollection<"guides">>>[number];
+	previous: GuideNavLink | null;
+	next: GuideNavLink | null;
+	accentColor: string;
+	language: string;
+	languageSlug: string;
+	languageImage: string;
+	module: string;
+	sidebarTree: SidebarChapter[];
+}
+
+const {
+	guide,
+	previous,
+	next,
+	accentColor,
+	language,
+	languageSlug,
+	languageImage,
+	module,
+	sidebarTree,
+} = Astro.props;
+const { title, subtitle } = guide.data;
+const { Content } = await render(guide);
+---
+
+<Layout title={`${title} · Matías Carrera`} description={subtitle}>
+	<main style={`--guide-accent: ${accentColor}`}>
+		<GuideSidebar
+			language={language}
+			languageSlug={languageSlug}
+			tree={sidebarTree}
+			currentId={guide.id}
+		/>
+
+		<div class="container pt-16 pb-4 md:pt-24">
+			<TerminalHeader
+				language={language}
+				languageSlug={languageSlug}
+				languageImage={languageImage}
+				module={module}
+				lesson={title}
+				subtitle={subtitle}
+				file={guide.id.split("/").pop()}
+			/>
+		</div>
+
+		<div class="container py-12">
+			<div class="mx-auto w-full max-w-3xl">
+				<article class="content-defaults">
+					<Content components={{ Callout, Tip, Warning, Error }} />
+				</article>
+
+				<GuidePagination
+					accentColor={accentColor}
+					previous={previous}
+					next={next}
+				/>
+			</div>
+		</div>
+	</main>
+</Layout>

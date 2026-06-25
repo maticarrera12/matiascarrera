@@ -9,7 +9,7 @@ const { class: className, align = 'center' } = Astro.props;
 const slotClass =
 	align === 'start'
 		? 'container relative z-10 flex flex-1 flex-col items-start justify-center pt-24 pb-52'
-		: 'relative z-10 flex flex-1 flex-col items-center justify-center px-4 pt-24 pb-52';
+		: 'container relative z-10 flex flex-1 flex-col items-center justify-center pt-24 pb-52';
 ---
 
 <section class:list={['mountain-hero relative isolate min-h-[60vh] overflow-hidden flex flex-col', className]}>

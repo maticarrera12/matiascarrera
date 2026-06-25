@@ -1,0 +1,63 @@
+---
+title: "Introducción a HTML"
+subtitle: "¿Qué es HTML?"
+---
+
+import CodeExample from '../../../../components/CodeExample.astro';
+
+HTML nacio en 1991 por Tim Berners-Lee mientras trabajaba en el CERN. Su objetivo era permitir que investigadores compartieran documentos mediante enlaces de hipertexto.
+
+{/* <CodeExample
+	html={`<a class="link" href="https://www.google.com">Google</a>`}
+	css={`.link {\n  color: #c2410c;\n  font-weight: 700;\n  text-decoration: underline;\n}`}
+	js={`document.querySelector('.link').addEventListener('click', (e) => {\n  e.preventDefault();\n  alert('Te llevaría a Google');\n});`}
+/> */}
+
+```html
+<a href="https://www.google.com">mcarreradev.com</a>
+```
+
+El navegador interpreta esa etiqueta y la transforma en un enlace.
+
+
+
+
+## ¿Qué es HTML?
+
+HTML no es un lenguaje de programación.
+
+Es un **lenguaje de marcado**, lo que significa que utiliza etiquetas para describir la estructura del contenido. 
+HTML viene de **HyperText Markup Language**.
+- HyperText: texto con enlaces.
+- Markup: marcado, etiquetas.
+
+El navegador interpreta esas etiquetas y las transforma en elementos visuales.
+
+## Ventajas de HTML
+
+1. Fácil de aprender.
+2. Compatible con todos los navegadores.
+3. Base fundamental del desarrollo web.
+4. Funciona junto a CSS y JavaScript.
+
+
+## ¿Qué es una etiqueta HTML?
+
+Una etiqueta HTML es un elemento que se utiliza para definir el contenido de una página web, son la base del lenguaje HTML. No cualquier palabra es una etiqueta HTML, solo las que tienen un significado especial.
+
+Por ejemplo:
+
+```html
+<h1>Hola Mundo</h1>
+```
+
+`<h1>` es una etiqueta HTML. `Hola Mundo` es el contenido de la etiqueta.
+
+## La importancia de la semantica HTML
+
+A partir de HTML5, se han creado etiquetas semánticas que se utilizan para definir el contenido de una página web. No se busca darle un estilo visual, sino orden e importancia.
+
+Antes teniamos por ejemplo la etiqueta `<div>` que se utilizaba para agrupar contenido.
+Ahora tenemos etiquetas como `<header>`, `<main>`, `<footer>` que se utilizan para definir el contenido de la página.
+
+> Todo sitio web comienza con HTML. Luego CSS se encarga de los estilos y JavaScript de la interactividad.

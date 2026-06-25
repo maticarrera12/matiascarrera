@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @import "./theme-toggle.css";
+@import "./prose.css";
+@import "./callout.css";
 
 @custom-variant light (&:where(html[data-color-mode="light"], html[data-color-mode="light"] *));
 @custom-variant dark (&:where(html[data-color-mode="dark"], html[data-color-mode="dark"] *));
@@ -59,6 +61,59 @@
 @layer components {
 	.container {
 		@apply mx-auto w-full max-w-[68.75rem] px-8 max-[35.1875rem]:px-4;
+	}
+
+	/* Undo Tailwind preflight inside MD/MDX — browser defaults, no design tokens */
+	.content-defaults :where(
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		ul,
+		ol,
+		li,
+		figure,
+		figcaption,
+		hr,
+		strong,
+		em,
+		a
+	):not(:where(.callout *)) {
+		all: revert;
+	}
+
+	.content-defaults :where(blockquote) {
+		border-left: 3px solid var(--guide-accent, var(--color-primary));
+		margin: 2rem 0;
+		padding: 0.5rem 0 0.5rem 1.5rem;
+		font-style: italic;
+		color: var(--color-gray-700);
+		background: transparent;
+	}
+
+	.content-defaults :where(blockquote p) {
+		margin: 0;
+	}
+
+	.content-defaults :where(pre),
+	.content-defaults :where(.astro-code) {
+		border-radius: 0.75rem;
+		padding: 1.25rem 1.5rem;
+		font-size: 0.875rem;
+		line-height: 1.7;
+		overflow-x: auto;
+		margin: 2rem 0;
+	}
+
+	.content-defaults :where(:not(pre) > code) {
+		background: var(--color-cloud-500);
+		color: var(--color-primary);
+		padding: 0.15rem 0.4rem;
+		border-radius: 0.25rem;
+		font-size: 0.875em;
 	}
 
 	.sky-gradient {

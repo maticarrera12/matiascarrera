@@ -1,0 +1,46 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type CalloutType = 'tip' | 'warning' | 'error';
+
+interface Props {
+	type?: CalloutType;
+	title?: string;
+}
+
+const { type = 'tip', title } = Astro.props;
+
+const variants: Record<
+	CalloutType,
+	{ label: string; icon: string }
+> = {
+	tip: { label: 'Nota', icon: 'lucide:circle-check' },
+	warning: { label: 'Advertencia', icon: 'lucide:triangle-alert' },
+	error: { label: 'Error', icon: 'lucide:circle-alert' },
+};
+
+const variant = variants[type];
+const heading = title ?? variant.label;
+---
+
+<aside
+	class:list={['callout', `callout--${type}`]}
+	role="note"
+	aria-label={heading}
+>
+	<div class="callout__card">
+		<div class="callout__box">
+			<div class="callout__badge" aria-hidden="true">
+				<div class="callout__badge-inner">
+					<Icon name={variant.icon} class="callout__icon" is:inline />
+				</div>
+			</div>
+			<div class="callout__content">
+				<p class="callout__title">{heading}</p>
+				<div class="callout__body">
+					<slot />
+				</div>
+			</div>
+		</div>
+	</div>
+</aside>

@@ -1,0 +1,167 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { GuideNavLink } from '../helpers/flattenSerie';
+
+interface Props {
+	accentColor: string;
+	previous?: GuideNavLink | null;
+	next?: GuideNavLink | null;
+}
+
+const { accentColor, previous, next } = Astro.props;
+---
+
+{
+	(previous || next) && (
+		<nav
+			class="guide-pagination"
+			aria-label="Navegación entre lecciones"
+			style={`--guide-accent: ${accentColor}`}
+		>
+			<div class="guide-pagination__grid">
+				{previous ? (
+					<a
+						href={previous.href}
+						class="guide-pagination__card guide-pagination__card--prev"
+						rel="prev"
+						aria-label={`Lección anterior: ${previous.title}`}
+					>
+						<span class="guide-pagination__inner">
+							<span class="guide-pagination__arrow" aria-hidden="true">
+								<Icon name="lucide:arrow-left" class="size-6" is:inline />
+							</span>
+							<span class="guide-pagination__copy">
+								<span class="guide-pagination__dir">Lección anterior</span>
+								<span class="guide-pagination__title">{previous.title}</span>
+							</span>
+						</span>
+					</a>
+				) : (
+					<div />
+				)}
+				{next ? (
+					<a
+						href={next.href}
+						class="guide-pagination__card guide-pagination__card--next"
+						rel="next"
+						aria-label={`Lección siguiente: ${next.title}`}
+					>
+						<span class="guide-pagination__inner">
+							<span class="guide-pagination__copy">
+								<span class="guide-pagination__dir">Lección siguiente</span>
+								<span class="guide-pagination__title">{next.title}</span>
+							</span>
+							<span class="guide-pagination__arrow" aria-hidden="true">
+								<Icon name="lucide:arrow-right" class="size-6" is:inline />
+							</span>
+						</span>
+					</a>
+				) : (
+					<div />
+				)}
+			</div>
+		</nav>
+	)
+}
+
+<style>
+	.guide-pagination {
+		width: 100%;
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-gray-300);
+	}
+
+	.guide-pagination__grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+
+
+	.guide-pagination__card {
+		display: flex;
+		align-items: center;
+		min-height: 5.25rem;
+		padding: 1.125rem 1.5rem;
+		text-decoration: none;
+		border: 2px solid var(--guide-accent);
+		color: var(--guide-accent);
+		transition:
+			background-color 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.guide-pagination__card:hover {
+		background: var(--guide-accent);
+		color: white;
+	}
+
+	.guide-pagination__card--prev:hover {
+		transform: translateX(-3px);
+	}
+
+	.guide-pagination__card--next {
+		justify-content: flex-end;
+	}
+
+	.guide-pagination__card--next:hover {
+		transform: translateX(3px);
+	}
+
+	.guide-pagination__inner {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		min-width: 0;
+	}
+
+	.guide-pagination__arrow {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		line-height: 0;
+	}
+
+	.guide-pagination__copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		min-width: 0;
+	}
+
+	.guide-pagination__card--next .guide-pagination__copy {
+		align-items: flex-end;
+		text-align: right;
+	}
+
+	.guide-pagination__dir {
+		font-size: 0.75rem;
+		font-weight: 700;
+		line-height: 1.25;
+	}
+
+	.guide-pagination__title {
+		font-size: 0.9375rem;
+		line-height: 1.3;
+		font-weight: 600;
+		color: var(--color-text);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		text-align: left;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.guide-pagination__card {
+			transition: none;
+		}
+
+		.guide-pagination__card--prev:hover,
+		.guide-pagination__card--next:hover {
+			transform: none;
+		}
+	}
+</style>
