@@ -1,0 +1,426 @@
+---
+import { Icon } from "astro-icon/components";
+import type { SidebarChapter } from "../helpers/flattenSerie";
+
+interface Props {
+	/** Serie title, e.g. "HTML". */
+	language: string;
+	/** Serie slug for the path label, e.g. "html". */
+	languageSlug: string;
+	/** Resolved chapters → modules → lessons tree. */
+	tree: SidebarChapter[];
+	/** Current guide id, used to highlight the active lesson. */
+	currentId: string;
+}
+
+const { language, languageSlug, tree, currentId } = Astro.props;
+
+const isModuleActive = (module: SidebarChapter["modules"][number]): boolean =>
+	module.lessons.some((lesson) => lesson.id === currentId);
+---
+
+<button
+	type="button"
+	class="sidebar-tab"
+	aria-label="Abrir índice de la guía"
+	aria-controls="guide-sidebar"
+	aria-expanded="false"
+	data-sidebar-open
+>
+	<Icon name="lucide:panel-left-open" class="size-5" is:inline />
+	<span class="sidebar-tab__label">Índice</span>
+</button>
+
+<div class="sidebar-backdrop" data-sidebar-backdrop hidden></div>
+
+<aside
+	id="guide-sidebar"
+	class="sidebar"
+	aria-label={`Índice de la guía de ${language}`}
+	aria-hidden="true"
+>
+	<div class="sidebar__bar">
+		<span class="sidebar__lights" aria-hidden="true">
+			<span class="sidebar__light sidebar__light--close"></span>
+			<span class="sidebar__light sidebar__light--min"></span>
+			<span class="sidebar__light sidebar__light--max"></span>
+		</span>
+		<span class="sidebar__path">~/{languageSlug}</span>
+		<button
+			type="button"
+			class="sidebar__close"
+			aria-label="Cerrar índice"
+			data-sidebar-close
+		>
+			<Icon name="lucide:x" class="size-5" is:inline />
+		</button>
+	</div>
+
+	<nav class="sidebar__nav">
+		{
+			tree.map((chapter, chapterIndex) => (
+				<section class="sidebar__chapter">
+					<h2 class="sidebar__chapter-title">
+						<span class="sidebar__chapter-num">
+							{String(chapterIndex + 1).padStart(2, "0")}
+						</span>
+						{chapter.title}
+					</h2>
+
+					{chapter.modules.map((module) => (
+						<details
+							class="sidebar__module"
+							open={isModuleActive(module)}
+						>
+							<summary class="sidebar__summary">
+								<Icon
+									name="lucide:folder"
+									class="sidebar__folder size-4"
+									is:inline
+								/>
+								<span class="sidebar__module-title">
+									{module.title}
+								</span>
+								<Icon
+									name="lucide:chevron-right"
+									class="sidebar__chevron size-4"
+									is:inline
+								/>
+							</summary>
+
+							<ul class="sidebar__lessons">
+								{module.lessons.map((lesson) => {
+									const active = lesson.id === currentId;
+									return (
+										<li>
+											<a
+												href={lesson.href}
+												class="sidebar__lesson"
+												aria-current={
+													active ? "page" : undefined
+												}
+											>
+												<Icon
+													name="lucide:file-code-2"
+													class="sidebar__file size-4"
+													is:inline
+												/>
+												<span>{lesson.title}</span>
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						</details>
+					))}
+				</section>
+			))
+		}
+	</nav>
+</aside>
+
+<script>
+	function setupSidebar() {
+		const sidebar = document.getElementById("guide-sidebar");
+		const tab = document.querySelector<HTMLButtonElement>(
+			"[data-sidebar-open]",
+		);
+		const backdrop = document.querySelector<HTMLElement>(
+			"[data-sidebar-backdrop]",
+		);
+		const closeBtn = document.querySelector<HTMLButtonElement>(
+			"[data-sidebar-close]",
+		);
+
+		if (!sidebar || !tab || !backdrop || !closeBtn) return;
+
+		function open() {
+			document.body.classList.add("sidebar-is-open");
+			backdrop!.hidden = false;
+			sidebar!.setAttribute("aria-hidden", "false");
+			tab!.setAttribute("aria-expanded", "true");
+			closeBtn!.focus();
+		}
+
+		function close() {
+			document.body.classList.remove("sidebar-is-open");
+			backdrop!.hidden = true;
+			sidebar!.setAttribute("aria-hidden", "true");
+			tab!.setAttribute("aria-expanded", "false");
+			tab!.focus();
+		}
+
+		tab.addEventListener("click", open);
+		backdrop.addEventListener("click", close);
+		closeBtn.addEventListener("click", close);
+		document.addEventListener("keydown", (event) => {
+			if (
+				event.key === "Escape" &&
+				document.body.classList.contains("sidebar-is-open")
+			) {
+				close();
+			}
+		});
+	}
+
+	setupSidebar();
+	document.addEventListener("astro:after-swap", setupSidebar);
+</script>
+
+<style>
+	.sidebar,
+	.sidebar-tab,
+	.sidebar-backdrop {
+		--sb-accent: var(--guide-accent, var(--color-primary));
+		--sb-bg: #0d1117;
+		--sb-bar: #161b22;
+		--sb-text: #c9d1d9;
+		--sb-muted: #8b949e;
+		--sb-border: #30363d;
+		font-family: ui-monospace, "SF Mono", "Cascadia Code", "Fira Code",
+			"JetBrains Mono", monospace;
+	}
+
+	/* Pull tab */
+	.sidebar-tab {
+		position: fixed;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 40;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.6rem 0.7rem;
+		background: var(--sb-accent);
+		color: #fff;
+		border: none;
+		border-radius: 0 0.5rem 0.5rem 0;
+		cursor: pointer;
+		box-shadow: 0 6px 18px -6px rgb(0 0 0 / 0.5);
+		writing-mode: vertical-rl;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		transition: padding-left 0.2s ease;
+	}
+
+	.sidebar-tab:hover {
+		padding-left: 1rem;
+	}
+
+	.sidebar-tab__label {
+		text-transform: uppercase;
+	}
+
+	/* Backdrop */
+	.sidebar-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 45;
+		background: rgb(0 0 0 / 0.55);
+		opacity: 0;
+		transition: opacity 0.25s ease;
+	}
+
+	:global(body.sidebar-is-open) .sidebar-backdrop {
+		opacity: 1;
+	}
+
+	/* Drawer */
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 50;
+		display: flex;
+		flex-direction: column;
+		width: min(20rem, 86vw);
+		height: 100dvh;
+		background: var(--sb-bg);
+		border-right: 1px solid var(--sb-border);
+		transform: translateX(-100%);
+		transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 0 40px -10px rgb(0 0 0 / 0.6);
+	}
+
+	:global(body.sidebar-is-open) .sidebar {
+		transform: translateX(0);
+	}
+
+	.sidebar__bar {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.7rem 0.9rem;
+		background: var(--sb-bar);
+		border-bottom: 1px solid var(--sb-border);
+		flex-shrink: 0;
+	}
+
+	.sidebar__lights {
+		display: inline-flex;
+		gap: 0.45rem;
+	}
+
+	.sidebar__light {
+		width: 0.7rem;
+		height: 0.7rem;
+		border-radius: 50%;
+	}
+	.sidebar__light--close {
+		background: #ff5f56;
+	}
+	.sidebar__light--min {
+		background: #ffbd2e;
+	}
+	.sidebar__light--max {
+		background: #27c93f;
+	}
+
+	.sidebar__path {
+		flex: 1;
+		font-size: 0.8125rem;
+		color: var(--sb-muted);
+	}
+
+	.sidebar__close {
+		display: inline-flex;
+		padding: 0.2rem;
+		background: transparent;
+		border: none;
+		color: var(--sb-muted);
+		cursor: pointer;
+		border-radius: 0.25rem;
+	}
+
+	.sidebar__close:hover {
+		color: var(--sb-text);
+		background: rgb(255 255 255 / 0.06);
+	}
+
+	.sidebar__nav {
+		flex: 1;
+		overflow-y: auto;
+		padding: 1rem 0.75rem 2rem;
+	}
+
+	.sidebar__chapter + .sidebar__chapter {
+		margin-top: 1.5rem;
+	}
+
+	.sidebar__chapter-title {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0 0 0.5rem;
+		padding: 0 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--sb-muted);
+	}
+
+	.sidebar__chapter-num {
+		color: var(--sb-accent);
+	}
+
+	.sidebar__module {
+		border-radius: 0.4rem;
+	}
+
+	.sidebar__summary {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--sb-text);
+		cursor: pointer;
+		list-style: none;
+		border-radius: 0.4rem;
+	}
+
+	.sidebar__summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.sidebar__summary:hover {
+		background: rgb(255 255 255 / 0.04);
+	}
+
+	.sidebar__folder {
+		color: var(--sb-accent);
+		flex-shrink: 0;
+	}
+
+	.sidebar__module-title {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.sidebar__chevron {
+		color: var(--sb-muted);
+		flex-shrink: 0;
+		transition: transform 0.2s ease;
+	}
+
+	.sidebar__module[open] .sidebar__chevron {
+		transform: rotate(90deg);
+	}
+
+	.sidebar__lessons {
+		list-style: none;
+		margin: 0.15rem 0 0.5rem;
+		padding: 0 0 0 0.85rem;
+		border-left: 1px solid var(--sb-border);
+		margin-left: 1rem;
+	}
+
+	.sidebar__lesson {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.4rem 0.5rem;
+		font-size: 0.8125rem;
+		color: var(--sb-muted);
+		text-decoration: none;
+		border-radius: 0.35rem;
+		border-left: 2px solid transparent;
+		transition: color 0.15s ease, background 0.15s ease;
+	}
+
+	.sidebar__file {
+		flex-shrink: 0;
+		opacity: 0.7;
+	}
+
+	.sidebar__lesson:hover {
+		color: var(--sb-text);
+		background: rgb(255 255 255 / 0.04);
+	}
+
+	.sidebar__lesson[aria-current="page"] {
+		color: #fff;
+		background: color-mix(in srgb, var(--sb-accent) 16%, transparent);
+		border-left-color: var(--sb-accent);
+	}
+
+	.sidebar__lesson[aria-current="page"] .sidebar__file {
+		color: var(--sb-accent);
+		opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.sidebar,
+		.sidebar-backdrop,
+		.sidebar__chevron,
+		.sidebar-tab {
+			transition: none;
+		}
+	}
+</style>

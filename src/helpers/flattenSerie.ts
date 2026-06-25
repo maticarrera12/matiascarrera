@@ -101,6 +101,40 @@ export function resolveGuideNavLinks(
 	};
 }
 
+export type SidebarLesson = { title: string; href: string; id: string };
+export type SidebarModule = {
+	title: string;
+	icon: string;
+	lessons: SidebarLesson[];
+};
+export type SidebarChapter = { title: string; modules: SidebarModule[] };
+
+export function buildSidebarTree(
+	serie: Serie,
+	guides: readonly { id: string }[],
+): SidebarChapter[] {
+	return serie.chapters.map((chapter) => ({
+		title: chapter.title,
+		modules: chapter.modules.map((module) => ({
+			title: module.title,
+			icon: module.icon,
+			lessons: module.lessons.map((lesson): SidebarLesson => {
+				const basename = lessonBasename(lesson.file);
+				const guide = guides.find(
+					(entry) =>
+						entry.id === basename ||
+						entry.id.endsWith(`/${basename}`),
+				);
+				return {
+					title: lesson.title,
+					href: guide ? `/guides/${guide.id}` : "#",
+					id: guide?.id ?? basename,
+				};
+			}),
+		})),
+	}));
+}
+
 export function getSerieForGuideId(
 	guideId: string,
 	series: readonly Serie[],

@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import { navigationTree } from "../../config/navigation";
 import {
+	buildSidebarTree,
 	flattenSerie,
 	flattenSeries,
 	getLessonNavigation,
@@ -10,7 +11,11 @@ import {
 	lessonMatchesGuideId,
 	resolveGuideNavLinks,
 } from "../../helpers/flattenSerie";
-import type { GuideNavLink } from "../../helpers/flattenSerie";
+import type {
+	GuideNavLink,
+	SidebarChapter,
+} from "../../helpers/flattenSerie";
+import GuideSidebar from "../../components/GuideSidebar.astro";
 import TerminalHeader from "../../components/TerminalHeader.astro";
 import Callout from "../../components/Callout.astro";
 import Tip from "../../components/callouts/Tip.astro";
@@ -31,6 +36,7 @@ export async function getStaticPaths() {
 					lessonMatchesGuideId(lesson, guide.id),
 				)
 			: undefined;
+		const sidebarTree = serie ? buildSidebarTree(serie, guides) : [];
 
 		return {
 			params: { id: guide.id },
@@ -43,6 +49,7 @@ export async function getStaticPaths() {
 				languageSlug: serie?.slug ?? "",
 				languageImage: serie?.image ?? "",
 				module: currentLesson?.module ?? "",
+				sidebarTree,
 			},
 		};
 	});
@@ -57,6 +64,7 @@ interface Props {
 	languageSlug: string;
 	languageImage: string;
 	module: string;
+	sidebarTree: SidebarChapter[];
 }
 
 const {
@@ -68,6 +76,7 @@ const {
 	languageSlug,
 	languageImage,
 	module,
+	sidebarTree,
 } = Astro.props;
 const { title, subtitle } = guide.data;
 const { Content } = await render(guide);
@@ -75,6 +84,13 @@ const { Content } = await render(guide);
 
 <Layout title={`${title} · Matías Carrera`} description={subtitle}>
 	<main style={`--guide-accent: ${accentColor}`}>
+		<GuideSidebar
+			language={language}
+			languageSlug={languageSlug}
+			tree={sidebarTree}
+			currentId={guide.id}
+		/>
+
 		<div class="container pt-16 pb-4 md:pt-24">
 			<TerminalHeader
 				language={language}
