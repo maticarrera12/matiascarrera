@@ -111,6 +111,64 @@
 	color: var(--color-text);
 }
 
+/* Ordered lists with numbered badges — shared by blog (.post-body) and guides (.content-defaults) */
+.post-body ol,
+.content-defaults ol {
+	list-style: none;
+	counter-reset: badge;
+	padding-left: 0;
+	margin: 1.5rem 0;
+}
+
+.post-body ol > li,
+.content-defaults ol > li {
+	counter-increment: badge;
+	position: relative;
+	padding-left: 2.75rem;
+	margin-bottom: 0.75rem;
+	line-height: 1.7;
+	color: var(--color-text);
+}
+
+.post-body ol > li::before,
+.content-defaults ol > li::before {
+	content: counter(badge);
+	position: absolute;
+	left: 0;
+	top: 0.15em;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: var(--guide-accent, var(--color-primary));
+	color: white;
+	font-size: 0.8125rem;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	border-radius: 0.25rem;
+}
+
+/* Unordered lists with accent-colored markers — shared by blog and guides */
+.post-body ul,
+.content-defaults ul {
+	list-style: disc;
+	padding-left: 1.5rem;
+	margin: 1.5rem 0;
+}
+
+.post-body ul > li,
+.content-defaults ul > li {
+	margin-bottom: 0.5rem;
+	line-height: 1.7;
+	color: var(--color-text);
+}
+
+.post-body ul > li::marker,
+.content-defaults ul > li::marker {
+	color: var(--guide-accent, var(--color-primary));
+}
+
 .post-body strong {
 	font-weight: 700;
 	color: var(--color-text);
