@@ -27,7 +27,7 @@ export const navigationTree: Serie[] = [
 		title: 'HTML',
 		slug: 'html',
 		color: '#E44D26',
-		image: 'html.png',
+		image: '/images/technologies/html.webp',
 		chapters: [
 			{
 				title: 'Bases',

@@ -57,8 +57,8 @@ const projects = defineCollection({
 	}),
 });
 
-const tecnologies = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/tecnologies' }),
+const technologies = defineCollection({
+	loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/technologies' }),
 	schema: z.object({
 		name: z.string(),
 		image: z.string(),
@@ -66,4 +66,4 @@ const tecnologies = defineCollection({
 	}),
 });
 
-export const collections = { blog, guides, projects, tecnologies };
+export const collections = { blog, guides, projects, technologies };

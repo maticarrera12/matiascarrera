@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 
-const tecnologies = (await getCollection('tecnologies')).sort(
+const technologies = (await getCollection('technologies')).sort(
 	(a, b) => a.data.order - b.data.order,
 );
 ---
@@ -23,7 +23,7 @@ const tecnologies = (await getCollection('tecnologies')).sort(
 			role="list"
 		>
 			{
-				tecnologies.map((tech) => (
+				technologies.map((tech) => (
 					<li class="flex items-center gap-3 px-2 py-5 sm:py-6">
 						<img
 							src={tech.data.image}
