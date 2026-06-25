@@ -25,6 +25,7 @@ const { accentColor, previous, next } = Astro.props;
 						class="guide-pagination__card guide-pagination__card--prev"
 						rel="prev"
 						aria-label={`Lección anterior: ${previous.title}`}
+						style={`--guide-accent: ${previous.color}`}
 					>
 						<span class="guide-pagination__inner">
 							<span class="guide-pagination__arrow" aria-hidden="true">
@@ -45,6 +46,7 @@ const { accentColor, previous, next } = Astro.props;
 						class="guide-pagination__card guide-pagination__card--next"
 						rel="next"
 						aria-label={`Lección siguiente: ${next.title}`}
+						style={`--guide-accent: ${next.color}`}
 					>
 						<span class="guide-pagination__inner">
 							<span class="guide-pagination__copy">
