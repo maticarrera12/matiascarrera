@@ -1,65 +1,34 @@
 ---
-title: "Historia e Introducción a HTML"
-subtitle: "Los orígenes del lenguaje que dio vida a la Web"
+title: "Introducción a HTML"
+subtitle: "¿Qué es HTML?"
 ---
 
-## Historia de HTML
+import CodeExample from '../../../../components/CodeExample.astro';
 
-HTML (**HyperText Markup Language**) es el lenguaje estándar utilizado para estructurar el contenido de las páginas web.
+HTML nacio en 1991 por Tim Berners-Lee mientras trabajaba en el CERN. Su objetivo era permitir que investigadores compartieran documentos mediante enlaces de hipertexto.
 
-Fue creado en 1991 por **Tim Berners-Lee** mientras trabajaba en el CERN. Su objetivo era permitir que investigadores compartieran documentos mediante enlaces de hipertexto.
+<CodeExample
+	title="Tu primer enlace"
+	html={`<a class="link" href="https://www.google.com">Google</a>`}
+	css={`.link {\n  color: #c2410c;\n  font-weight: 700;\n  text-decoration: underline;\n}`}
+	js={`document.querySelector('.link').addEventListener('click', (e) => {\n  e.preventDefault();\n  alert('Te llevaría a Google');\n});`}
+/>
 
-Con el paso de los años surgieron distintas versiones:
+El navegador interpreta esa etiqueta y la transforma en un enlace.
 
-* HTML 2.0 (1995)
-* HTML 3.2 (1997)
-* HTML 4.01 (1999)
-* XHTML (2000)
-* HTML5 (2014)
 
-Actualmente, **HTML5** es la versión utilizada por todos los navegadores modernos.
+
 
 ## ¿Qué es HTML?
 
 HTML no es un lenguaje de programación.
 
-Es un **lenguaje de marcado**, lo que significa que utiliza etiquetas para describir la estructura del contenido.
-
-Por ejemplo:
-
-```html
-<h1>Hola Mundo</h1>
-<p>Mi primera página web.</p>
-```
+Es un **lenguaje de marcado**, lo que significa que utiliza etiquetas para describir la estructura del contenido. 
+HTML viene de **HyperText Markup Language**.
+- HyperText: texto con enlaces.
+- Markup: marcado, etiquetas.
 
 El navegador interpreta esas etiquetas y las transforma en elementos visuales.
-
-## Anatomía de un documento HTML
-
-Un documento HTML básico tiene la siguiente estructura:
-
-```html
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Mi primera página</title>
-  </head>
-  <body>
-    <h1>Bienvenido</h1>
-    <p>Este es mi primer documento HTML.</p>
-  </body>
-</html>
-```
-
-## Ejemplo con componente MDX
-
-Si estás utilizando MDX, también podés renderizar componentes directamente dentro del contenido.
-
-```html
-<h1>Hola Mundo</h1>
-<p>Mi primera página web.</p>
-```
 
 ## Ventajas de HTML
 
@@ -68,8 +37,24 @@ Si estás utilizando MDX, también podés renderizar componentes directamente de
 3. Base fundamental del desarrollo web.
 4. Funciona junto a CSS y JavaScript.
 
+
+## ¿Qué es una etiqueta HTML?
+
+Una etiqueta HTML es un elemento que se utiliza para definir el contenido de una página web, son la base del lenguaje HTML. No cualquier palabra es una etiqueta HTML, solo las que tienen un significado especial.
+
+Por ejemplo:
+
+```html
+<h1>Hola Mundo</h1>
+```
+
+`<h1>` es una etiqueta HTML. `Hola Mundo` es el contenido de la etiqueta.
+
+## La importancia de la semantica HTML
+
+A partir de HTML5, se han creado etiquetas semánticas que se utilizan para definir el contenido de una página web. No se busca darle un estilo visual, sino orden e importancia.
+
+Antes teniamos por ejemplo la etiqueta `<div>` que se utilizaba para agrupar contenido.
+Ahora tenemos etiquetas como `<header>`, `<main>`, `<footer>` que se utilizan para definir el contenido de la página.
+
 > Todo sitio web comienza con HTML. Luego CSS se encarga de los estilos y JavaScript de la interactividad.
-
-## Resumen
-
-HTML es el lenguaje que define la estructura de una página web. Aprenderlo correctamente es el primer paso para convertirse en desarrollador frontend.
