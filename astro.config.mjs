@@ -16,7 +16,16 @@ export default defineConfig({
 
   markdown: {
     shikiConfig: {
-      theme: 'tokyo-night'
+      theme: 'tokyo-night',
+      // Tag every rendered code block with its language so components
+      // (e.g. CodeExample) can route fenced blocks to the right tab.
+      transformers: [
+        {
+          pre(node) {
+            node.properties['data-language'] = this.options.lang;
+          },
+        },
+      ],
     },
   },
   fonts: [

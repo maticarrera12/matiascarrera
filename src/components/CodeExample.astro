@@ -1,43 +1,51 @@
 ---
-import { Code } from 'astro:components';
-
 interface Props {
-	/** HTML source for the example. */
-	html?: string;
-	/** CSS source for the example. */
-	css?: string;
-	/** JS source for the example. */
-	js?: string;
 	/** Optional label shown above the tabs. */
 	title?: string;
-	/** Tab open by default: a provided language or "result". Defaults to "result". */
-	defaultTab?: 'html' | 'css' | 'js' | 'result';
+	/** Tab open by default: a language id ("html"/"css"/"js") or "result". */
+	defaultTab?: string;
 	/** Min height of the live preview, in px. */
 	previewHeight?: number;
 }
 
-const {
-	html = '',
-	css = '',
-	js = '',
-	title,
-	defaultTab = 'result',
-	previewHeight = 220,
-} = Astro.props;
+const { title, defaultTab = "result", previewHeight = 220 } = Astro.props;
+---
 
-type Lang = 'html' | 'css' | 'js';
+<div
+	class="code-example"
+	data-code-example
+	data-default-tab={defaultTab}
+	data-preview-height={String(previewHeight)}
+	data-title={title}
+>
+	{title && <p class="code-example__title">{title}</p>}
 
-const codeTabs: { lang: Lang; label: string; code: string }[] = [
-	{ lang: 'html', label: 'HTML', code: html },
-	{ lang: 'css', label: 'CSS', code: css },
-	{ lang: 'js', label: 'JS', code: js },
-].filter((t) => t.code.trim().length > 0);
+	<div class="code-example__source" data-code-source>
+		<slot />
+	</div>
+</div>
 
-// Unique id so multiple instances on one page don't collide.
-const uid = `ce-${crypto.randomUUID().slice(0, 8)}`;
+<script>
+	type Block = { lang: string; label: string; code: string; el: HTMLElement };
 
-// Build an isolated document for the live preview.
-const srcDoc = `<!doctype html>
+	let ceCounter = 0;
+
+	function normalizeLang(raw: string): { lang: string; label: string } {
+		const value = (raw || "").toLowerCase();
+		if (value === "js" || value === "javascript")
+			return { lang: "js", label: "JS" };
+		if (value === "html") return { lang: "html", label: "HTML" };
+		if (value === "css") return { lang: "css", label: "CSS" };
+		return { lang: value || "code", label: (raw || "CODE").toUpperCase() };
+	}
+
+	function buildSrcDoc(blocks: Block[]): string {
+		const find = (lang: string) =>
+			blocks.find((b) => b.lang === lang)?.code ?? "";
+		const css = find("css");
+		const html = find("html");
+		const js = find("js");
+		return `<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -53,110 +61,136 @@ ${html}
 <script>${js}<\/script>
 </body>
 </html>`;
-
-const tabs = [
-	...codeTabs.map((t) => ({ id: t.lang, label: t.label })),
-	{ id: 'result', label: 'Resultado' },
-];
-
-const hasDefault = tabs.some((t) => t.id === defaultTab);
-const activeId = hasDefault ? defaultTab : tabs[0].id;
----
-
-<div class="code-example" data-code-example>
-	{title && <p class="code-example__title">{title}</p>}
-
-	<div class="code-example__tablist" role="tablist" aria-label={title ?? 'Ejemplo de código'}>
-		{
-			tabs.map((tab) => (
-				<button
-					type="button"
-					role="tab"
-					id={`${uid}-tab-${tab.id}`}
-					class="code-example__tab"
-					aria-controls={`${uid}-panel-${tab.id}`}
-					aria-selected={tab.id === activeId ? 'true' : 'false'}
-					tabindex={tab.id === activeId ? 0 : -1}
-				>
-					{tab.label}
-				</button>
-			))
-		}
-	</div>
-
-	{
-		codeTabs.map((t) => (
-			<div
-				id={`${uid}-panel-${t.lang}`}
-				role="tabpanel"
-				aria-labelledby={`${uid}-tab-${t.lang}`}
-				class="code-example__panel code-example__panel--code"
-				hidden={t.lang !== activeId}
-			>
-				<Code code={t.code} lang={t.lang} theme="tokyo-night" />
-			</div>
-		))
 	}
 
-	<div
-		id={`${uid}-panel-result`}
-		role="tabpanel"
-		aria-labelledby={`${uid}-tab-result`}
-		class="code-example__panel code-example__panel--result"
-		hidden={activeId !== 'result'}
-	>
-		<iframe
-			class="code-example__preview"
-			title={title ? `Resultado: ${title}` : 'Resultado del ejemplo'}
-			srcdoc={srcDoc}
-			sandbox="allow-scripts"
-			loading="lazy"
-			style={`min-height: ${previewHeight}px`}
-		></iframe>
-	</div>
-</div>
-
-<script>
 	function setupCodeExample(root: HTMLElement) {
-		const tabs = Array.from(
-			root.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+		if (root.dataset.ceReady === "true") return;
+		const source = root.querySelector<HTMLElement>("[data-code-source]");
+		if (!source) return;
+
+		const blockEls = Array.from(
+			source.querySelectorAll<HTMLElement>("pre[data-language]"),
 		);
-		const panels = Array.from(
-			root.querySelectorAll<HTMLElement>('[role="tabpanel"]')
+		if (blockEls.length === 0) return;
+
+		const blocks: Block[] = blockEls.map((el) => {
+			const { lang, label } = normalizeLang(el.dataset.language ?? "");
+			return { lang, label, code: el.textContent ?? "", el };
+		});
+
+		const uid = `ce-${ceCounter++}`;
+		const title = root.dataset.title;
+		const previewHeight = root.dataset.previewHeight ?? "220";
+		const tabs = [
+			...blocks.map((b) => ({ id: b.lang, label: b.label })),
+			{ id: "result", label: "Resultado" },
+		];
+		const wanted = root.dataset.defaultTab ?? "result";
+		const activeId = tabs.some((t) => t.id === wanted)
+			? wanted
+			: tabs[0].id;
+
+		// Tablist
+		const tablist = document.createElement("div");
+		tablist.className = "code-example__tablist";
+		tablist.setAttribute("role", "tablist");
+		tablist.setAttribute("aria-label", title || "Ejemplo de código");
+
+		const panels: HTMLElement[] = [];
+
+		const makePanel = (id: string): HTMLElement => {
+			const panel = document.createElement("div");
+			panel.id = `${uid}-panel-${id}`;
+			panel.setAttribute("role", "tabpanel");
+			panel.setAttribute("aria-labelledby", `${uid}-tab-${id}`);
+			panel.hidden = id !== activeId;
+			return panel;
+		};
+
+		tabs.forEach((tab) => {
+			const button = document.createElement("button");
+			button.type = "button";
+			button.id = `${uid}-tab-${tab.id}`;
+			button.className = "code-example__tab";
+			button.setAttribute("role", "tab");
+			button.setAttribute("aria-controls", `${uid}-panel-${tab.id}`);
+			button.setAttribute(
+				"aria-selected",
+				String(tab.id === activeId),
+			);
+			button.tabIndex = tab.id === activeId ? 0 : -1;
+			button.textContent = tab.label;
+			tablist.append(button);
+		});
+
+		// Code panels reuse the already-highlighted <pre>
+		blocks.forEach((block) => {
+			const panel = makePanel(block.lang);
+			panel.className = "code-example__panel code-example__panel--code";
+			panel.append(block.el);
+			panels.push(panel);
+		});
+
+		// Result panel
+		const resultPanel = makePanel("result");
+		resultPanel.className =
+			"code-example__panel code-example__panel--result";
+		const iframe = document.createElement("iframe");
+		iframe.className = "code-example__preview";
+		iframe.title = title ? `Resultado: ${title}` : "Resultado del ejemplo";
+		iframe.setAttribute("sandbox", "allow-scripts");
+		iframe.loading = "lazy";
+		iframe.style.minHeight = `${previewHeight}px`;
+		iframe.srcdoc = buildSrcDoc(blocks);
+		resultPanel.append(iframe);
+		panels.push(resultPanel);
+
+		// Swap source for the enhanced UI
+		source.remove();
+		root.append(tablist, ...panels);
+		root.dataset.ceReady = "true";
+
+		const tabButtons = Array.from(
+			tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
 		);
 
-		function activate(tab: HTMLButtonElement, focus = true) {
-			for (const t of tabs) {
-				const selected = t === tab;
-				t.setAttribute('aria-selected', String(selected));
-				t.tabIndex = selected ? 0 : -1;
+		function activate(button: HTMLButtonElement, focus = true) {
+			for (const b of tabButtons) {
+				const selected = b === button;
+				b.setAttribute("aria-selected", String(selected));
+				b.tabIndex = selected ? 0 : -1;
 			}
-			const targetId = tab.getAttribute('aria-controls');
-			for (const panel of panels) {
-				panel.hidden = panel.id !== targetId;
-			}
-			if (focus) tab.focus();
+			const targetId = button.getAttribute("aria-controls");
+			for (const panel of panels) panel.hidden = panel.id !== targetId;
+			if (focus) button.focus();
 		}
 
-		tabs.forEach((tab, index) => {
-			tab.addEventListener('click', () => activate(tab, false));
-			tab.addEventListener('keydown', (event) => {
+		tabButtons.forEach((button, index) => {
+			button.addEventListener("click", () => activate(button, false));
+			button.addEventListener("keydown", (event) => {
 				let next: number | null = null;
-				if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-				else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
-				else if (event.key === 'Home') next = 0;
-				else if (event.key === 'End') next = tabs.length - 1;
+				if (event.key === "ArrowRight")
+					next = (index + 1) % tabButtons.length;
+				else if (event.key === "ArrowLeft")
+					next = (index - 1 + tabButtons.length) % tabButtons.length;
+				else if (event.key === "Home") next = 0;
+				else if (event.key === "End") next = tabButtons.length - 1;
 				if (next !== null) {
 					event.preventDefault();
-					activate(tabs[next]);
+					activate(tabButtons[next]);
 				}
 			});
 		});
 	}
 
-	document
-		.querySelectorAll<HTMLElement>('[data-code-example]')
-		.forEach(setupCodeExample);
+	function setupAll() {
+		document
+			.querySelectorAll<HTMLElement>("[data-code-example]")
+			.forEach(setupCodeExample);
+	}
+
+	setupAll();
+	document.addEventListener("astro:after-swap", setupAll);
 </script>
 
 <style>
@@ -178,7 +212,20 @@ const activeId = hasDefault ? defaultTab : tabs[0].id;
 		border-bottom: 1px solid var(--color-border);
 	}
 
-	.code-example__tablist {
+	/* Authored fenced blocks before enhancement: stack them cleanly */
+	.code-example__source :global(pre) {
+		margin: 0;
+		border-radius: 0;
+	}
+
+	.code-example__source :global(pre + pre) {
+		border-top: 1px solid var(--color-border);
+	}
+
+	/* Tabs, panels and preview are created in JS, so they don't get Astro's
+	   scope attribute — target them globally. Class names are unique to this
+	   component, and --ce-accent inherits from the scoped root. */
+	:global(.code-example__tablist) {
 		display: flex;
 		gap: 0.25rem;
 		padding: 0.5rem 0.5rem 0;
@@ -186,7 +233,7 @@ const activeId = hasDefault ? defaultTab : tabs[0].id;
 		overflow-x: auto;
 	}
 
-	.code-example__tab {
+	:global(.code-example__tab) {
 		appearance: none;
 		background: transparent;
 		border: none;
@@ -201,37 +248,37 @@ const activeId = hasDefault ? defaultTab : tabs[0].id;
 		transition: color 0.15s ease, border-color 0.15s ease;
 	}
 
-	.code-example__tab:hover {
+	:global(.code-example__tab:hover) {
 		color: var(--color-foreground);
 	}
 
-	.code-example__tab[aria-selected='true'] {
+	:global(.code-example__tab[aria-selected="true"]) {
 		color: var(--ce-accent);
 		border-bottom-color: var(--ce-accent);
 	}
 
-	.code-example__tab:focus-visible {
+	:global(.code-example__tab:focus-visible) {
 		outline: 2px solid var(--ce-accent);
 		outline-offset: 2px;
 		border-radius: 0.25rem;
 	}
 
-	.code-example__panel[hidden] {
+	:global(.code-example__panel[hidden]) {
 		display: none;
 	}
 
-	.code-example__panel--code :global(pre) {
+	:global(.code-example__panel--code pre) {
 		margin: 0;
 		padding: 1rem;
 		border-radius: 0;
 		overflow-x: auto;
 	}
 
-	.code-example__panel--result {
+	:global(.code-example__panel--result) {
 		background: white;
 	}
 
-	.code-example__preview {
+	:global(.code-example__preview) {
 		display: block;
 		width: 100%;
 		border: none;
