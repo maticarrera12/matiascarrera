@@ -1,0 +1,31 @@
+/*
+ * Shared terminal/console design tokens.
+ * Single source of truth for the home code-card and the guides consoles
+ * (TerminalHeader, GuideSidebar). Keep these in sync — do not redefine
+ * the palette locally in components.
+ */
+:root {
+	/* GitHub-dark window palette */
+	--term-bg: #0d1117;
+	--term-bar: #161b22;
+	--term-text: #c9d1d9;
+	--term-muted: #8b949e;
+	--term-border: #30363d;
+
+	/* Traffic-light controls */
+	--term-light-close: #ff5f56;
+	--term-light-min: #ffbd2e;
+	--term-light-max: #27c93f;
+
+	/* Monospace stack */
+	--term-font: ui-monospace, "SF Mono", "Cascadia Code", "Fira Code",
+		"JetBrains Mono", monospace;
+
+	/* tokyo-night syntax tokens (match Shiki theme used in guides) */
+	--term-syntax-keyword: #bb9af7;
+	--term-syntax-string: #9ece6a;
+	--term-syntax-prop: #7aa2f7;
+	--term-syntax-var: #c0caf5;
+	--term-syntax-punct: #89ddff;
+	--term-syntax-bracket: #565f89;
+}

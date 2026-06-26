@@ -171,14 +171,14 @@ const isModuleActive = (module: SidebarChapter["modules"][number]): boolean =>
 	.sidebar,
 	.sidebar-tab,
 	.sidebar-backdrop {
+		/* Palette + font come from src/styles/terminal.css (shared tokens). */
 		--sb-accent: var(--guide-accent, var(--color-primary));
-		--sb-bg: #0d1117;
-		--sb-bar: #161b22;
-		--sb-text: #c9d1d9;
-		--sb-muted: #8b949e;
-		--sb-border: #30363d;
-		font-family: ui-monospace, "SF Mono", "Cascadia Code", "Fira Code",
-			"JetBrains Mono", monospace;
+		--sb-bg: var(--term-bg);
+		--sb-bar: var(--term-bar);
+		--sb-text: var(--term-text);
+		--sb-muted: var(--term-muted);
+		--sb-border: var(--term-border);
+		font-family: var(--term-font);
 	}
 
 	/* Pull tab */
@@ -269,13 +269,13 @@ const isModuleActive = (module: SidebarChapter["modules"][number]): boolean =>
 		border-radius: 50%;
 	}
 	.sidebar__light--close {
-		background: #ff5f56;
+		background: var(--term-light-close);
 	}
 	.sidebar__light--min {
-		background: #ffbd2e;
+		background: var(--term-light-min);
 	}
 	.sidebar__light--max {
-		background: #27c93f;
+		background: var(--term-light-max);
 	}
 
 	.sidebar__path {

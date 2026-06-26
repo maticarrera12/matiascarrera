@@ -128,17 +128,12 @@ const siteLabel = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 <style>
 	.terminal {
+		/* Palette + font come from src/styles/terminal.css (shared tokens). */
 		--term-accent: var(--guide-accent, var(--color-primary));
-		--term-bg: #0d1117;
-		--term-bar: #161b22;
-		--term-text: #c9d1d9;
-		--term-muted: #8b949e;
-		--term-border: #30363d;
 		width: 100%;
 		max-width: 56rem;
 		margin: 0 auto;
-		font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Fira Code',
-			'JetBrains Mono', monospace;
+		font-family: var(--term-font);
 		background: var(--term-bg);
 		border: 1px solid var(--term-border);
 		border-radius: 0.75rem;
@@ -171,13 +166,13 @@ const siteLabel = siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 	}
 
 	.terminal__light--close {
-		background: #ff5f56;
+		background: var(--term-light-close);
 	}
 	.terminal__light--min {
-		background: #ffbd2e;
+		background: var(--term-light-min);
 	}
 	.terminal__light--max {
-		background: #27c93f;
+		background: var(--term-light-max);
 	}
 
 	.terminal__bar-title {

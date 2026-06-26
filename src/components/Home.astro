@@ -177,10 +177,21 @@ import SocialButton from "./SocialButton.astro";
 						class="code-card__chrome flex items-center gap-2 px-5 py-4"
 						aria-hidden="true"
 					>
-						<div class="h-3 w-3 rounded-full bg-red-400/80"></div>
-						<div class="h-3 w-3 rounded-full bg-yellow-400/80">
+						<div
+							class="h-3 w-3 rounded-full"
+							style="background: var(--term-light-close)"
+						>
 						</div>
-						<div class="h-3 w-3 rounded-full bg-green-400/80"></div>
+						<div
+							class="h-3 w-3 rounded-full"
+							style="background: var(--term-light-min)"
+						>
+						</div>
+						<div
+							class="h-3 w-3 rounded-full"
+							style="background: var(--term-light-max)"
+						>
+						</div>
 
 						<div class="code-card__filename ml-auto text-xs font-medium">
 							matias.tsx
@@ -188,14 +199,14 @@ import SocialButton from "./SocialButton.astro";
 					</div>
 
 					<pre
-						class="overflow-x-auto p-8 font-mono text-sm leading-7"
-					><code><span class="text-[#c678dd]">const</span> <span class="text-white">developer</span> <span class="text-zinc-500">=</span> <span class="text-zinc-400">{"{"}</span>
-  <span class="text-[#e06c75]">name</span><span class="text-zinc-500">:</span> <span class="text-[#98c379]">'Matias Carrera'</span>,
-  <span class="text-[#e06c75]">role</span><span class="text-zinc-500">:</span> <span class="text-[#98c379]">'Fullstack Developer'</span>,
-  <span class="text-[#e06c75]">focus</span><span class="text-zinc-500">:</span> <span class="text-zinc-400">[</span><span class="text-[#98c379]">'UX/UI'</span>, <span class="text-[#98c379]">'Frontend'</span>, <span class="text-[#98c379]">'Product'</span><span class="text-zinc-400">]</span>,
-  <span class="text-[#e06c75]">stack</span><span class="text-zinc-500">:</span> <span class="text-zinc-400">[</span><span class="text-[#98c379]">'React'</span>, <span class="text-[#98c379]">'Next.js'</span>, <span class="text-[#98c379]">'Astro'</span><span class="text-zinc-400">]</span>,
-  <span class="text-[#e06c75]">currentlyBuilding</span><span class="text-zinc-500">:</span> <span class="text-[#98c379]">'mcarreradev.com'</span>,
-<span class="text-zinc-400">{"}"}</span></code></pre>
+						class="code-card__code overflow-x-auto p-8 text-sm leading-7"
+					><code><span class="tok-kw">const</span> <span class="tok-var">developer</span> <span class="tok-punct">=</span> <span class="tok-bracket">{"{"}</span>
+  <span class="tok-prop">name</span><span class="tok-punct">:</span> <span class="tok-str">'Matias Carrera'</span>,
+  <span class="tok-prop">role</span><span class="tok-punct">:</span> <span class="tok-str">'Fullstack Developer'</span>,
+  <span class="tok-prop">focus</span><span class="tok-punct">:</span> <span class="tok-bracket">[</span><span class="tok-str">'UX/UI'</span>, <span class="tok-str">'Frontend'</span>, <span class="tok-str">'Product'</span><span class="tok-bracket">]</span>,
+  <span class="tok-prop">stack</span><span class="tok-punct">:</span> <span class="tok-bracket">[</span><span class="tok-str">'React'</span>, <span class="tok-str">'Next.js'</span>, <span class="tok-str">'Astro'</span><span class="tok-bracket">]</span>,
+  <span class="tok-prop">currentlyBuilding</span><span class="tok-punct">:</span> <span class="tok-str">'mcarreradev.com'</span>,
+<span class="tok-bracket">{"}"}</span></code></pre>
 				</figure>
 			</div>
 		</div>
@@ -284,23 +295,39 @@ import SocialButton from "./SocialButton.astro";
 		color: hsl(220 8% 58%);
 	}
 
-	/* Light mode: oscuro cálido translúcido — armoniza con el fondo */
+	/* Syntax tokens unified with the guides consoles (tokyo-night) */
+	.code-card__code {
+		font-family: var(--term-font);
+		color: var(--term-syntax-var);
+	}
+
+	.code-card .tok-kw {
+		color: var(--term-syntax-keyword);
+	}
+	.code-card .tok-var {
+		color: var(--term-syntax-var);
+	}
+	.code-card .tok-punct {
+		color: var(--term-syntax-punct);
+	}
+	.code-card .tok-bracket {
+		color: var(--term-syntax-bracket);
+	}
+	.code-card .tok-prop {
+		color: var(--term-syntax-prop);
+	}
+	.code-card .tok-str {
+		color: var(--term-syntax-string);
+	}
+
+	/* Light mode: frosted terminal glass — dark enough to keep the
+	   tokyo-night syntax legible, but translucent so the sky shows through. */
 	html[data-color-mode="light"] .code-card {
-		border-color: rgb(60 35 15 / 0.20);
-		background: hsl(30 18% 13% / 0.88);
-		box-shadow:
-			0 24px 48px -12px rgb(40 25 10 / 0.28),
-			0 0 0 1px rgb(60 35 15 / 0.08);
-		-webkit-backdrop-filter: blur(20px) saturate(1.15);
-		backdrop-filter: blur(20px) saturate(1.15);
-	}
-
-	html[data-color-mode="light"] .code-card__chrome {
-		border-bottom-color: rgb(255 220 180 / 0.08);
-	}
-
-	html[data-color-mode="light"] .code-card__filename {
-		color: hsl(35 15% 68%);
+		border-color: rgb(255 255 255 / 0.12);
+		background: color-mix(in srgb, var(--term-bg) 70%, transparent);
+		box-shadow: 0 20px 45px -20px rgb(15 23 42 / 0.35);
+		-webkit-backdrop-filter: blur(28px) saturate(1.2);
+		backdrop-filter: blur(28px) saturate(1.2);
 	}
 
 	@media (max-width: 50rem) {
