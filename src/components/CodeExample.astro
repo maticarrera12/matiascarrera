@@ -39,28 +39,47 @@ const { title, defaultTab = "result", previewHeight = 220 } = Astro.props;
 		return { lang: value || "code", label: (raw || "CODE").toUpperCase() };
 	}
 
-	function buildSrcDoc(blocks: Block[]): string {
+	function buildSrcDoc(blocks: Block[], theme: "light" | "dark"): string {
 		const find = (lang: string) =>
 			blocks.find((b) => b.lang === lang)?.code ?? "";
 		const css = find("css");
 		const html = find("html");
 		const js = find("js");
+		// Defaults come BEFORE the authored CSS so demos can override them.
+		// Theme follows the site (data-ce-theme), swapped via postMessage so
+		// the iframe never reloads and demo JS state survives a toggle.
 		return `<!doctype html>
-<html lang="es">
+<html lang="es" data-ce-theme="${theme}">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  :root { color-scheme: light dark; }
+  :root { color-scheme: light; --ce-bg: #ffffff; --ce-fg: #1a1b26; }
+  :root[data-ce-theme="dark"] { color-scheme: dark; --ce-bg: #1a1b26; --ce-fg: #c0caf5; }
+  html, body { background: var(--ce-bg); color: var(--ce-fg); }
   body { font-family: system-ui, sans-serif; margin: 1rem; }
 ${css}
 </style>
 </head>
 <body>
 ${html}
+<script>
+  addEventListener("message", function (e) {
+    if (e.data && e.data.type === "ce-theme" && (e.data.mode === "light" || e.data.mode === "dark")) {
+      document.documentElement.setAttribute("data-ce-theme", e.data.mode);
+    }
+  });
+<\/script>
 <script>${js}<\/script>
 </body>
 </html>`;
+	}
+
+	function siteTheme(): "light" | "dark" {
+		return document.documentElement.getAttribute("data-color-mode") ===
+			"dark"
+			? "dark"
+			: "light";
 	}
 
 	function setupCodeExample(root: HTMLElement) {
@@ -141,8 +160,20 @@ ${html}
 		iframe.setAttribute("sandbox", "allow-scripts");
 		iframe.loading = "lazy";
 		iframe.style.minHeight = `${previewHeight}px`;
-		iframe.srcdoc = buildSrcDoc(blocks);
+		iframe.srcdoc = buildSrcDoc(blocks, siteTheme());
 		resultPanel.append(iframe);
+
+		// Keep the preview in sync with the site theme without reloading it.
+		const themeObserver = new MutationObserver(() => {
+			iframe.contentWindow?.postMessage(
+				{ type: "ce-theme", mode: siteTheme() },
+				"*",
+			);
+		});
+		themeObserver.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["data-color-mode"],
+		});
 		panels.push(resultPanel);
 
 		// Swap source for the enhanced UI
@@ -275,7 +306,7 @@ ${html}
 	}
 
 	:global(.code-example__panel--result) {
-		background: white;
+		background: var(--color-background);
 	}
 
 	:global(.code-example__preview) {
