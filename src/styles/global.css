@@ -117,6 +117,60 @@
 		font-size: 0.875em;
 	}
 
+	/* Non-standard mode: repurpose Markdown emphasis as typographic accents.
+	   *em*    -> site primary color (not the language accent) + monospace.
+	   **strong** -> more pronounced (heavier) and lighter than em. */
+	.content-defaults :where(em):not(:where(.callout *)) {
+		color: var(--color-primary);
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-style: normal;
+	}
+
+	.content-defaults :where(strong):not(:where(.callout *)) {
+		color: color-mix(in oklab, var(--color-text), white 25%);
+		font-weight: 800;
+	}
+
+	/* Markdown (GFM) tables — single source of styling, modern aesthetic.
+	   display:block + overflow-x lets wide tables scroll on small screens;
+	   the browser keeps column alignment via anonymous table boxes. */
+	.content-defaults :where(table) {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		border-collapse: collapse;
+		margin: 2rem 0;
+		font-size: 0.9375rem;
+		line-height: 1.5;
+	}
+
+	.content-defaults :where(th),
+	.content-defaults :where(td) {
+		padding: 0.625rem 0.875rem;
+		text-align: left;
+		vertical-align: top;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.content-defaults :where(thead th) {
+		font-weight: 700;
+		color: var(--color-text);
+		white-space: nowrap;
+		border-bottom: 2px solid var(--guide-accent, var(--color-primary));
+	}
+
+	.content-defaults :where(tbody tr:last-child td) {
+		border-bottom: none;
+	}
+
+	.content-defaults :where(tbody tr:hover) {
+		background: color-mix(
+			in oklab,
+			var(--guide-accent, var(--color-primary)) 8%,
+			transparent
+		);
+	}
+
 	.sky-gradient {
 		background: linear-gradient(to bottom, var(--color-sky-from), var(--color-sky-to));
 	}
