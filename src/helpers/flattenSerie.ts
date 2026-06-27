@@ -1,9 +1,10 @@
-import type { Lesson, Serie } from '../config/navigation';
+import type { Lesson, Serie } from '@/config/navigation';
 
 export type FlatLesson = Lesson & {
 	chapter: string;
 	module: string;
 	serieSlug: string;
+	serieTitle: string;
 	serieColor: string;
 };
 
@@ -17,6 +18,7 @@ export type GuideNavLink = {
 	title: string;
 	module: string;
 	serieSlug: string;
+	serieTitle: string;
 	color: string;
 };
 
@@ -41,6 +43,7 @@ export function flattenSerie(serie: Serie): FlatLesson[] {
 					chapter: chapter.title,
 					module: module.title,
 					serieSlug: serie.slug,
+					serieTitle: serie.title,
 					serieColor: serie.color,
 				}),
 			),
@@ -88,6 +91,7 @@ export function lessonToNavLink(
 		title: guide.data.title,
 		module: lesson.module,
 		serieSlug: lesson.serieSlug,
+		serieTitle: lesson.serieTitle,
 		color: lesson.serieColor,
 	};
 }

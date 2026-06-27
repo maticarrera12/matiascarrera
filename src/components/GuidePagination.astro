@@ -1,14 +1,34 @@
 ---
 import { Icon } from 'astro-icon/components';
-import type { GuideNavLink } from '../helpers/flattenSerie';
+import type { GuideNavLink } from '@/helpers/flattenSerie';
 
 interface Props {
 	accentColor: string;
 	previous?: GuideNavLink | null;
 	next?: GuideNavLink | null;
+	/** Module/serie of the current lesson, used to relabel the "next" card
+	 *  when navigation crosses a boundary. */
+	currentModule?: string;
+	currentSerieSlug?: string;
 }
 
-const { accentColor, previous, next } = Astro.props;
+const { accentColor, previous, next, currentModule, currentSerieSlug } =
+	Astro.props;
+
+// "Next" is relabelled when it crosses into a new module or course; "previous"
+// stays a normal lesson link because going back lands on the last lesson of the
+// previous module, not its start.
+let nextDir = 'Lección siguiente';
+let nextTitle = next?.title ?? '';
+if (next) {
+	if (currentSerieSlug && next.serieSlug !== currentSerieSlug) {
+		nextDir = 'Curso siguiente';
+		nextTitle = next.serieTitle;
+	} else if (currentModule && next.module !== currentModule) {
+		nextDir = 'Módulo siguiente';
+		nextTitle = next.module;
+	}
+}
 ---
 
 {
@@ -45,13 +65,13 @@ const { accentColor, previous, next } = Astro.props;
 						href={next.href}
 						class="guide-pagination__card guide-pagination__card--next"
 						rel="next"
-						aria-label={`Lección siguiente: ${next.title}`}
+						aria-label={`${nextDir}: ${nextTitle}`}
 						style={`--guide-accent: ${next.color}`}
 					>
 						<span class="guide-pagination__inner">
 							<span class="guide-pagination__copy">
-								<span class="guide-pagination__dir">Lección siguiente</span>
-								<span class="guide-pagination__title">{next.title}</span>
+								<span class="guide-pagination__dir">{nextDir}</span>
+								<span class="guide-pagination__title">{nextTitle}</span>
 							</span>
 							<span class="guide-pagination__arrow" aria-hidden="true">
 								<Icon name="lucide:arrow-right" class="size-6" is:inline />

@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import { navigationTree } from "../../config/navigation";
+import Layout from "@/layouts/Layout.astro";
+import { navigationTree } from "@/config/navigation";
 import {
 	buildSidebarTree,
 	flattenSerie,
@@ -10,18 +10,18 @@ import {
 	getSerieForGuideId,
 	lessonMatchesGuideId,
 	resolveGuideNavLinks,
-} from "../../helpers/flattenSerie";
+} from "@/helpers/flattenSerie";
 import type {
 	GuideNavLink,
 	SidebarChapter,
-} from "../../helpers/flattenSerie";
-import GuideSidebar from "../../components/GuideSidebar.astro";
-import TerminalHeader from "../../components/TerminalHeader.astro";
-import Callout from "../../components/Callout.astro";
-import Tip from "../../components/callouts/Tip.astro";
-import Warning from "../../components/callouts/Warning.astro";
-import Error from "../../components/callouts/Error.astro";
-import GuidePagination from "../../components/GuidePagination.astro";
+} from "@/helpers/flattenSerie";
+import GuideSidebar from "@/components/GuideSidebar.astro";
+import TerminalHeader from "@/components/TerminalHeader.astro";
+import Callout from "@/components/Callout.astro";
+import Tip from "@/components/callouts/Tip.astro";
+import Warning from "@/components/callouts/Warning.astro";
+import Error from "@/components/callouts/Error.astro";
+import GuidePagination from "@/components/GuidePagination.astro";
 
 export async function getStaticPaths() {
 	const guides = await getCollection("guides");
@@ -113,6 +113,8 @@ const { Content } = await render(guide);
 					accentColor={accentColor}
 					previous={previous}
 					next={next}
+					currentModule={module}
+					currentSerieSlug={languageSlug}
 				/>
 			</div>
 		</div>
