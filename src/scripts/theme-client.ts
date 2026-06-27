@@ -5,7 +5,7 @@ import {
 	STORAGE_KEY,
 	type ColorMode,
 	toCssValue,
-} from '../lib/theme';
+} from '@/lib/theme';
 
 declare global {
 	interface Window {

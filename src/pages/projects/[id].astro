@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
-import GalleryLightbox from '../../components/GalleryLightbox.astro';
-import Layout from '../../layouts/Layout.astro';
-import { AUTHOR } from '../../const';
+import GalleryLightbox from '@/components/GalleryLightbox.astro';
+import Layout from '@/layouts/Layout.astro';
+import { AUTHOR } from '@/const';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');

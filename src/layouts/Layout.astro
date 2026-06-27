@@ -10,13 +10,13 @@ import {
 	SITE_DESCRIPTION,
 	SITE_TITLE,
 	SITE_URL,
-} from '../const';
+} from '@/const';
 
 const faviconHref = `/favicon.ico?v=${FAVICON_VERSION}`;
-import { getThemeInitInlineScript } from '../lib/theme-init-script';
-import Footer from '../components/Footer.astro';
-import Nav from '../components/Nav.astro';
-import { REVEAL_BOOT_SCRIPT } from '../scripts/reveal-inline';
+import { getThemeInitInlineScript } from '@/lib/theme-init-script';
+import Footer from '@/components/Footer.astro';
+import Nav from '@/components/Nav.astro';
+import { REVEAL_BOOT_SCRIPT } from '@/scripts/reveal-inline';
 
 interface Props {
 	title?: string;
@@ -79,7 +79,7 @@ import Analytics from '@vercel/analytics/astro'
 		<Footer transition:persist="site-footer" />
 		<Analytics />
 		<script>
-			import { initThemeClient } from '../scripts/theme-client';
+			import { initThemeClient } from '@/scripts/theme-client';
 
 			initThemeClient();
 		</script>
