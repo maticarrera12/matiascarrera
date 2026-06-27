@@ -1,0 +1,88 @@
+---
+title: "Atributos comunes"
+subtitle: "¿Cuales son los atributos comunes de HTML?"
+---
+
+import CodeExample from "@/components/CodeExample.astro"
+
+Ya sabemos que las etiquetas HTML son fragmentos de código que indican a los navegadores cómo interpretar, estructurar y mostrar el contenido de una página web. Los atributos son palabras especiales que nos permiten personzalizar o modificar el comportamiento de una etiqueta.
+
+Hay 3 que son comunes a todas las etiquetasy estan sumamente relacionados con el CSS y el JavaScript.
+
+- `class`: Se utiliza para asignar una clase a una etiqueta. Es una forma de agrupar etiquetas con el mismo estilo.
+- `id`: Se utiliza para asignar un identificador a una etiqueta. Es una forma de identificar una etiqueta de manera única.
+- `style`: Se utiliza para asignar un estilo a una etiqueta. Es una forma de aplicar estilos específicos a una etiqueta.
+
+
+{/* Posible tab-->*/}
+
+## Id
+
+Sirve para dar identificadores unicos a una etiqueta. No debe repetirse en la misma página.
+
+Tiene normas:
+
+- Debe comenzar con una letra.
+- Puede contener letras, números, guiones bajos y guiones medios.
+- No puede contener espacios.
+- No puede contener caracteres especiales.
+- No puede contener caracteres de control.
+- No puede contener caracteres de control.
+
+
+<Warning>
+
+El atributo `id` es muy importante para el CSS y el JavaScript. No se debe usar para estilos visuales, sino para identificar una etiqueta de manera única. Por ejemplo, si tenemos un formulario, podemos usar el atributo `id` para identificar una seccion de una pgina y scrollear hasta ella desde el `nav`
+
+</Warning>
+
+
+```html
+<nav id="navbar">
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+```
+
+## Class
+
+Sirve para asignar una clase a una etiqueta. Es una forma de agrupar etiquetas con el mismo estilo. Sirve para aplicar estilos CSS de manera mas general.
+
+
+<CodeExample>
+
+```html
+<nav class="navbar">
+    <a class="nav-link">Inicio</a>
+    <a class="nav-link">Blog</a>
+    <a class="nav-link">Guias</a>
+</nav>
+```
+
+```css
+.nav-link:hover{ /*:hover nos permite estilar cuando se pasa el mouse por encima del elemento*/
+    text-decoration: underline,
+}
+```
+</CodeExample>
+
+Al tener la misma clase podemos estilar todas al mismo tiempo. 
+
+El atributo class debe declararse una vez dentro de la etiqueta y si, tiene diferentes clases, nombrarlas con un espacio.
+
+## Style
+
+Sirve para poner codigo CSS en la propia etiqueta, es llamado estilos en linea. A mi particularmente no me gusta utilizarlo a menos que este utilizando TailwindCSS, que se basa en el estilado rapido en linea. Lo mejor es separar HTML y CSS, de lo contrario se considera una mala practica.
+
+<CodeExample>
+
+```html
+<div style="background: deeppink">
+    <p style="color: black">Este es mi texto>
+</div>
+```
+
+</CodeExample>

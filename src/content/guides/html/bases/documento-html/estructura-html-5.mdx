@@ -1,0 +1,53 @@
+---
+title: "Estructura de un documento HTML"
+subtitle: "Partes y funciones"
+---
+
+import Warning from '@/components/callouts/Warning.astro';
+
+Los documentos HTML tienen una estructura bien definida, para que el navegador pueda leerlos, entenderlos y estructurarlos.
+Podemos tomar un atajo para construirlo poniendo en el editor de codigo simplemete `!` + <kbd>TAB</kbd> y nos dara esto:
+
+## Estructura 
+
+```html
+<!DOCTYPE html> /*Tipo de documento*/
+<html lang="en">
+<head>  /*Cabecera del documento*/
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> /*Cuerpo del documento*/
+    
+</body>
+</html>
+```
+
+<Warning>
+El documento debe ser del tipo html para que el atajo funcione y contar con emmet
+</Warning>
+
+
+## El !DOCTYPE
+
+Define, como su nombre lo indica, el tipo de documento, se escribe en la primera linea del documento, es obligatorio, aunque sin ponerlo el navegador intentara leerlo igual, y le indica al navegador que tipo de HTML es. 
+Leyendo esto, el navegador se adapta a cada tipo de documento.
+Si no se indica, el navegador entra en **Quirk Mode** ( *modo no estandar* ), y se activa un modo de retrocompatibilidad con paginas antiguas.
+
+## Etiqueta `head`
+
+No es una parte visual, se incluye metadatos, datos que no tienen que verse de forma visual.
+
+Como por ejemplo:
+
+- Titulo de la pagina web ( *Que aparece en la pestana del navegador* ). **Obligatoria**.
+- Descripcion de la web ( *Aparece en los resultados* )
+- Miniatura de la web ( *Aparece en los enlaces* )
+- Icono de la web ( *Aparece al lado del titulo* )
+
+Tambien es donde se importan o referencian otros archivos externos ( *.css,.js, ficheros). 
+
+## Etiqueta `body`
+
+Aca si va a estar todo el contenido visual de nuestra web. Todo el esqueleto estara dentro de `body`. Es de lo mas importante de una web y va justo despues de `head`.

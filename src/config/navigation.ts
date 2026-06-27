@@ -44,6 +44,51 @@ export const navigationTree: Serie[] = [
 								title: 'La etiqueta de HTML',
 								file: 'la-etiqueta-html.md',
 							},
+							{
+								title: 'Atributos comunes',
+								file: 'atributos-comunes.md',
+							},
+						],
+					},
+					{
+						title: 'Documento HTML5',
+                        icon: "mdi:html5",
+						lessons: [
+							{
+								title: 'Estructura ',
+								file: 'estructura-html-5.md',
+							},
+							{
+								title: 'Validacion de errores HTML',
+								file: 'validacion-errores-html.md',
+							},
+							{
+								title: 'Metadatos e idioma',
+								file: 'metadatos-e-idioma-html.md',
+							},
+						],
+					},
+				],
+			},
+		],
+	},
+	{
+		title: 'CSS',
+		slug: 'css',
+		color: '#673399',
+		image: '/images/technologies/css.webp',
+		chapters: [
+			{
+				title: 'Bases',
+				modules: [
+					{
+						title: 'Introducción a CSS',
+                        icon: "mdi:css3",
+						lessons: [
+							{
+								title: 'Historia e Introducción a CSS',
+								file: 'introduccion-css.md',
+							},
 							// {
 							// 	title: 'Atributos comunes',
 							// 	file: 'atributos-comunes-html.md',
