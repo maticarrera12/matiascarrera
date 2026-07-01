@@ -22,6 +22,8 @@ import Tip from "@/components/callouts/Tip.astro";
 import Warning from "@/components/callouts/Warning.astro";
 import Error from "@/components/callouts/Error.astro";
 import GuidePagination from "@/components/guides/GuidePagination.astro";
+import CodeExample from "@/components/guides/CodeExample.astro";
+import Figure from "@/components/Figure.astro";
 
 export async function getStaticPaths() {
 	const guides = await getCollection("guides");
@@ -106,7 +108,16 @@ const { Content } = await render(guide);
 		<div class="container py-12">
 			<div class="mx-auto w-full max-w-3xl">
 				<article class="content-defaults">
-					<Content components={{ Callout, Tip, Warning, Error }} />
+					<Content
+						components={{
+							Callout,
+							Tip,
+							Warning,
+							Error,
+							CodeExample,
+							Figure,
+						}}
+					/>
 				</article>
 
 				<GuidePagination

@@ -180,11 +180,21 @@
 	opacity: 0.4;
 }
 
-.post-body figure {
+.post-body figure,
+.content-defaults figure {
 	margin: 2rem 0;
 }
 
-.post-body figcaption {
+.post-figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+}
+
+.post-body figcaption,
+.content-defaults figcaption,
+.post-figure figcaption {
 	text-align: center;
 	font-size: 0.875rem;
 	color: var(--color-gray-700);

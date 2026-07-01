@@ -3,6 +3,7 @@
 @import "./theme-toggle.css";
 @import "./prose.css";
 @import "./callout.css";
+@import "./code-example.css";
 @import "./terminal.css";
 
 @custom-variant light (&:where(html[data-color-mode="light"], html[data-color-mode="light"] *));
@@ -99,8 +100,8 @@
 		margin: 0;
 	}
 
-	.content-defaults :where(pre),
-	.content-defaults :where(.astro-code) {
+	.content-defaults :where(pre):not(:where(.code-example *)),
+	.content-defaults :where(.astro-code):not(:where(.code-example *)) {
 		border-radius: 0.75rem;
 		padding: 1.25rem 1.5rem;
 		font-size: 0.875rem;
@@ -109,7 +110,7 @@
 		margin: 2rem 0;
 	}
 
-	.content-defaults :where(:not(pre) > code) {
+	.content-defaults :where(:not(pre) > code):not(:where(.code-example *)) {
 		background: var(--color-cloud-500);
 		color: var(--color-primary);
 		padding: 0.15rem 0.4rem;
