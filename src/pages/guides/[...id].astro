@@ -15,13 +15,13 @@ import type {
 	GuideNavLink,
 	SidebarChapter,
 } from "@/helpers/flattenSerie";
-import GuideSidebar from "@/components/GuideSidebar.astro";
-import TerminalHeader from "@/components/TerminalHeader.astro";
-import Callout from "@/components/Callout.astro";
+import GuideSidebar from "@/components/guides/GuideSidebar.astro";
+import TerminalHeader from "@/components/guides/TerminalHeader.astro";
+import Callout from "@/components/guides/Callout.astro";
 import Tip from "@/components/callouts/Tip.astro";
 import Warning from "@/components/callouts/Warning.astro";
 import Error from "@/components/callouts/Error.astro";
-import GuidePagination from "@/components/GuidePagination.astro";
+import GuidePagination from "@/components/guides/GuidePagination.astro";
 
 export async function getStaticPaths() {
 	const guides = await getCollection("guides");
