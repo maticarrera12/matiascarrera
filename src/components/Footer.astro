@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
-import ThemeToggle from './ThemeToggle.astro';
+
 import { AUTHOR, SOCIAL_LINKS } from '@/const';
 import { CLOUD_STRIP_PATH, FOOTER_CLOUD_ACCENT_PATH } from '@/lib/cloud-strip';
+import ThemeToggle from './home/ThemeToggle.astro';
 
 const socialLinks = [
 	{ href: SOCIAL_LINKS.github, icon: 'mdi:github', label: 'GitHub' },

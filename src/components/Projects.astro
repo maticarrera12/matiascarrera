@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import { Icon } from 'astro-icon/components';
-import ProjectCard from './ProjectCard.astro';
 import TechnologiesBar from './TechnologiesBar.astro';
+import ProjectCard from './home/ProjectCard.astro';
 
 const projects = await getCollection('projects');
 const featured = projects
