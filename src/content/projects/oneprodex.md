@@ -8,7 +8,6 @@ gallery:
   - /images/projects/oneprodex-2.png
   - /images/projects/oneprodex-3.png
   - /images/projects/oneprodex-4.png
-  - /images/projects/oneprodex-5.png
 stack: ["Next.js", "TypeScript", "Supabase", "React", "Tailwind CSS", "Framer Motion"]
 repo: https://github.com/maticarrera12/oneprodex
 demo: https://oneprodex.vercel.app
