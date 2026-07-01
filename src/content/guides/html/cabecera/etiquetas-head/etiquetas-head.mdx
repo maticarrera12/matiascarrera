@@ -1,0 +1,64 @@
+---
+title: "Las etiquetas head"
+subtitle: "Introducción a las etiquetas de cabecera HTML"
+---
+
+La cabecera de la página, el `head`, contiene las etiquetas de metadatos (*información sobre el documento*) y se conecta a otros documentos.
+
+## La etiqueta `head`
+
+Es una **etiqueta contenedora** que engloba otras etiquetas, define metadatos y relaciones. Generalmente necesitamos que su contenido se lea y cargue antes que el navegador renderice la página.
+
+| Etiqueta HTML | Donde usar | Descripcion |
+|---|---|---|
+| `title` | `head` | Indica el título de la página. |
+| `base` | `head` | URL base de los enlaces. |
+| `link` | `head` | Establece una relación del documento actual con otro extremo. |
+| `meta` | `head` | Establece un metadato específico en el documento actual. |
+| `style` | `head` y `body` | Estilos CSS que afectan únicamente al documento actual. |
+| `script` | `head` y `body` | Indica un script a cargar o ejecutar en la página actual |
+
+Si bien inicialmente las etiquetas `style` y `script` iban solo en el `head`, hoy también se incluyen en el `body`.
+
+- `style` nos permite incluir estilos CSS en ese HTML puntual.
+- `script` nos permite incluir código JavaScript en la propia página HTML o bien como link para un archivo `.js`
+
+## La etiqueta `meta`
+
+Se utiliza para añadir información adicional sobre el documento actual. Lo más básico que existe es:
+
+```html
+<head>
+    <title>mcarreradev</title>
+    <meta charset="UTF-8">
+</head>
+```
+
+El atributo `charset` se utiliza para indicar al navegador la codificación a utilizar; `UTF-8` es el estándar.
+
+<Tip>
+<p>Debemos utilizar siempre la misma codificación a lo largo de nuestros documentos para evitar problemas con vocales acentuadas o caracteres especiales.</p>
+</Tip>
+
+- El navegador web también debe usar la misma configuración, que suele usar UTF-8 por defecto.
+
+## La etiqueta `title`
+
+Nos sirve para indicar un título para nuestra página, **es obligatoria** y solo debe existir **una**.
+
+Sirve para varias cosas:
+
+1. Se muestra junto al icono en la pestaña
+2. Si se indexa, Google utiliza el título en los resultados donde apareces.
+3. Es un título identificativo que pueden usar bots o sistemas que leen páginas.
+
+Si bien se puede poner cualquier título, hay prácticas mejores que otras:
+
+1. No deben estar vacíos o incompletos.
+2. No deben repetirse entre páginas.
+3. Debe ser descriptivo, breve y reflejar el contenido de la web.
+4. Se recomienda entre 50-60 caracteres.
+5. Repetir palabras clave puede repercutir en el posicionamiento.
+6. Debe ser útil para el usuario.
+
+Muchísimo más avanzado es que los títulos de las páginas sean dinámicos en cuanto al contenido de la web, por ejemplo para mostrar el nombre de un producto que estamos viendo.

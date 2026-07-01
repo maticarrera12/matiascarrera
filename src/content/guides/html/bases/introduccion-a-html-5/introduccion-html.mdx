@@ -5,21 +5,7 @@ subtitle: "¿Qué es HTML?"
 
 import CodeExample from '@/components/CodeExample.astro';
 
-HTML nacio en 1991 por Tim Berners-Lee mientras trabajaba en el CERN. Su objetivo era permitir que investigadores compartieran documentos mediante enlaces de hipertexto.
-
-{/* <CodeExample title="Tu primer enlace">
-
-```html
-<a href="https://www.google.com">mcarreradev.com</a>
-```
-
-```css
-body {
-  background-color: #f0f0f0;
-}
-```
-
-</CodeExample> */}
+HTML nació en 1991 de la mano de Tim Berners-Lee mientras trabajaba en el CERN. Su objetivo era permitir que los investigadores compartieran documentos mediante enlaces de hipertexto.
 
 ```html
 <a href="https://www.mcarreradev.com">mcarreradev.com</a>
@@ -27,31 +13,37 @@ body {
 
 El navegador interpreta esa etiqueta y la transforma en un enlace.
 
-
-
-
 ## ¿Qué es HTML?
 
 HTML no es un lenguaje de programación.
 
-Es un **lenguaje de marcado**, lo que significa que utiliza etiquetas para describir la estructura del contenido. 
-HTML viene de **HyperText Markup Language**.
-- HyperText: texto con enlaces.
-- Markup: marcado, etiquetas.
+Es un **lenguaje de marcado**, lo que significa que utiliza etiquetas para describir la estructura del contenido.
 
-El navegador interpreta esas etiquetas y las transforma en elementos visuales.
+HTML significa **HyperText Markup Language**.
+
+- **HyperText:** texto con enlaces.
+- **Markup:** marcado mediante etiquetas.
+
+El navegador interpreta esas etiquetas y las transforma en los elementos que vemos en una página web.
 
 ## Ventajas de HTML
 
-1. Fácil de aprender.
-2. Compatible con todos los navegadores.
-3. Base fundamental del desarrollo web.
-4. Funciona junto a CSS y JavaScript.
+1. Es fácil de aprender.
+2. Es compatible con todos los navegadores modernos.
+3. Es la base fundamental del desarrollo web.
+4. Funciona junto con CSS y JavaScript.
 
+<Tip>
+
+<p>Aprender HTML antes que CSS o JavaScript hará que entiendas mucho mejor cómo está construida una página web. Una buena base en HTML facilita el aprendizaje de las demás tecnologías.</p>
+
+</Tip>
 
 ## ¿Qué es una etiqueta HTML?
 
-Una etiqueta HTML es un elemento que se utiliza para definir el contenido de una página web, son la base del lenguaje HTML. No cualquier palabra es una etiqueta HTML, solo las que tienen un significado especial.
+Una etiqueta HTML es un elemento que se utiliza para definir el contenido de una página web. Las etiquetas son la base del lenguaje HTML.
+
+No cualquier palabra es una etiqueta HTML; solo aquellas que tienen un significado especial para el navegador.
 
 Por ejemplo:
 
@@ -59,13 +51,15 @@ Por ejemplo:
 <h1>Hola Mundo</h1>
 ```
 
-`<h1>` es una etiqueta HTML. `Hola Mundo` es el contenido de la etiqueta.
+`<h1>` es una etiqueta HTML y `Hola Mundo` es el contenido que se mostrará dentro de ella.
 
-## La importancia de la semantica HTML
+## La importancia de la semántica en HTML
 
-A partir de HTML5, se han creado etiquetas semánticas que se utilizan para definir el contenido de una página web. No se busca darle un estilo visual, sino orden e importancia.
+A partir de HTML5 se incorporaron etiquetas semánticas cuyo objetivo es describir el significado del contenido. Estas etiquetas no buscan darle un estilo visual a la página, sino aportar estructura y significado.
 
-Antes teniamos por ejemplo la etiqueta `<div>` que se utilizaba para agrupar contenido.
-Ahora tenemos etiquetas como `<header>`, `<main>`, `<footer>` que se utilizan para definir el contenido de la página.
+Antes era muy común utilizar la etiqueta `<div>` para agrupar prácticamente todo el contenido.
 
-> Todo sitio web comienza con HTML. Luego CSS se encarga de los estilos y JavaScript de la interactividad.
+Hoy en día existen etiquetas como `<header>`, `<main>` o `<footer>`, que permiten describir mejor la función de cada sección dentro de una página web.
+
+> Todo sitio web comienza con HTML. Luego, CSS se encarga de los estilos y JavaScript de la interactividad.
+

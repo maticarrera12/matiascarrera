@@ -1,0 +1,50 @@
+---
+title: "La etiqueta <base>"
+subtitle: "Rutas relativas en el documento HTML"
+---
+
+Nos sirve para establecer una ruta base para enlaces relativos.
+
+## La etiqueta `base`
+
+Breve resumen de enlaces e hipervínculos:
+
+| Atributo | Descripcion |
+|---|---|
+| `href` | Establece la ruta base para los enlaces relativos del documento HTML |
+| `target` | Establece el destino para los enlaces relativos del documento HTML |
+
+Supongamos que estamos en esta web: `https://mcarreradev.com`
+
+```html
+<head>
+    <title>Sin base</title>
+</head>
+<body>
+    <a href="blog">Blog</a>
+    <a href="guides">Guías</a>
+</body>
+```
+
+1. El primer enlace nos lleva a `https://mcarreradev.com/blog`
+2. El segundo enlace nos lleva a `https://mcarreradev.com/guides`
+
+Con una etiqueta `base` en los enlaces se añade la URL indicada.
+
+### Ejemplo con `base`
+
+```html
+<head>
+    <title>Con base</title>
+    <base href="https://mcarreradev.com/guides" target="_blank">
+</head>
+<body>
+    <a href="html">HTML</a>
+    <a href="css">CSS</a>
+</body>
+```
+
+Ahora, por más que nos encontremos en `https://mcarreradev.com`, al haber fijado la URL base, nos llevará a:
+
+1. El primer enlace hacia `https://mcarreradev.com/guides/html`
+2. El segundo enlace hacia `https://mcarreradev.com/guides/css`

@@ -1,5 +1,5 @@
 ---
 name: TypeScript
-image: /images/tecnhologies/typescript.webp
+image: /images/technologies/typescript.webp
 order: 3
 ---

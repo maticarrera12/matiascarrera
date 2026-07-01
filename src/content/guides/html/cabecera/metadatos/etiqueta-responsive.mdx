@@ -1,0 +1,39 @@
+---
+title: "Para diseño responsive"
+subtitle: "El viewport"
+---
+
+## ¿Qué es el viewport?
+
+Es lo que define la región visible del navegador. Con él, mediante su `content` podemos modificar su comportamiento en dispositivos móviles. Sin esto, la web en mobile no tendrá sus propios estilos y habrá que navegarla al igual que en escritorio a base de hacer zoom.
+
+## Parámetros del viewport
+
+Tenemos por ejemplo:
+
+| Parámetro | Valor por defecto | Descripción |
+|---|---|---|
+| `width` | `device-width` | Establece el tamaño del viewport. |
+| `height` | `device-height` | Establece el alto. |
+| `initial-scale` | `1` | Escala inicial que tendrá el dispositivo. Entre `0.1` y `10`. |
+| `minimum-scale` | `0.1` | Escala mínima |
+| `maximum-scale` | `10` | Escala máxima |
+| `user-scalable` | `1` | Con `yes` o `1`, el usuario podrá hacer zoom. Con `0` o `no`, no |
+| `interactive-widget` | `resizes-visual` | Comportamientos de widgets de UI. Puede usar `resizes-content` o `overlays-content` |
+
+En este ejemplo, el viewport se ajusta al tamaño del dispositivo y el usuario puede hacer zoom. **Recomendado**.
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+```
+
+<Warning>
+Bloquear el zoom es una mala práctica y puede generar problemas de accesibilidad.
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+```
+No deberia hacerse nunca.
+</Warning>
+
+En general usaremos el `width` e `initial-scale` para ajustar el viewport. `height` no es necesario y puede generar problemas de compatibilidad, es poco usado y algunos navegadores lo ignoran.

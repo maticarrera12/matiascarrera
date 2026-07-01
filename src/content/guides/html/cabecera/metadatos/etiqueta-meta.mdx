@@ -1,0 +1,81 @@
+---
+title: "La etiqueta <meta>"
+subtitle: "Metadatos en el documento HTML"
+---
+
+Nos permite indicar metadatos o información interna del documento HTML.
+
+## La etiqueta `meta`
+
+Generalmente tiene los atributos `name` y `content`. `content` es dependiente del valor de `name`.
+
+```html
+<head>
+    <meta name="" content="">
+</head>
+```
+
+Aunque esta etiqueta puede tener otros atributos.
+
+| Atributo | Descripcion |
+|----|----|
+| Codificación | Indica el tipo de codificación que se está usando en el documento. |
+| Tema de color | Establece un color para la zona superior de algunos navegadores móviles. |
+| Redes sociales | Metadatos de redes sociales. |
+| SEO/Google | Descripción para la página actual |
+| Diseño responsive | Región visible del navegador |
+| Simulación HTTP | Simula ciertas cabeceras HTTP de servidor desde el cliente |
+
+No voy a meterme nuevamente en Codificación porque ya lo vimos, pero vamos con las siguientes.
+
+## Tema de color
+
+Nos permite establecer un tema de color de la interfaz superior del navegador
+
+<Warning>
+<p>No está soportado en todos los navegadores</p>
+</Warning>
+
+| Valor | Valor Content | Descripcion |
+|----|----|----|
+| `theme-color` | color | Color en hexadecimal |
+
+```html
+<head>
+    <meta name="theme-color" content="#ff3366">
+</head>
+```
+
+## Metadatos de simulación HTTP
+
+Indican a los robots de los buscadores que deben modificar las cabeceras HTTP para realizar acciones que deberían hacerse en el servidor. Proporciona una alternativa en el caso en que no sea posible.
+
+Utilizan el atributo `http-equiv`. Pueden ser ignoradas en algunos navegadores, ser contraproducentes o afectar al rendimiento. Tenemos a:
+
+### Redirección con `refresh`
+
+La etiqueta `meta http-equiv="refresh"` establece redirecciones del lado del cliente. Las redirecciones con motivos de SEO deben hacerse del lado del servidor y establecer el código de respuesta correcto `301` o `302`. Haciéndolo así, la web se carga y redirecciona, en vez de redireccionar antes de cargar.
+
+| Valor | Content | Descripcion|
+|---|---|---|
+| refresh | segundos;url=url | Redirige a la URL luego de los segundos indicados|
+
+```html
+<head>
+    <meta http-equiv="refresh" content="20;url=https://mcarreradev.com">
+</head>
+```
+
+### Etiquetas de caché
+
+Otro uso para `meta http-equiv` tiene que ver con la caché. Nuevamente, hoy se definen del lado del servidor, pero por motivos históricos siguen existiendo.
+
+| Valor | Content | Descripcion |
+|---|---|---|
+| expires | fecha | Fecha a partir de la cual expira la caché |
+| cache-control | max-age-n | Caché válida hasta `n` segundos |
+| cache-control | must-revalidate | Se usa con el anterior, permite guardar y evaluar si se puede usar la caché |
+| cache-control | public | Indica al navegador que puede ser guardado en caché pública |
+| cache-control | private | Solo puede guardarse caché en el navegador |
+| cache-control | no-cache | Evaluar si usar la caché o no |
+| cache-control | no-store | No debería guardarse en caché |

@@ -1,0 +1,71 @@
+---
+title: "Etiquetas SEO para Google"
+subtitle: "Optimización para motores de búsqueda"
+---
+
+Las etiquetas SEO para Google son un conjunto de etiquetas que nos permiten optimizar nuestra página para motores de búsqueda. No son obligatorias, pero son recomendadas para mejorar la indexación y la posición en los resultados de búsqueda. **SEO** significa Search Engine Optimization.
+
+## Metadatos para SEO
+
+Los más usuales son:
+
+| Valor | Descripción |
+|---|---|
+| `description` | Descripción útil para resultados de búsqueda. |
+| `keywords` | Palabras clave separadas por coma ( *ya no se lee* ). |
+| `author` | Establece el autor de la web. |
+| `application-name` | Nombre de la aplicación, usado en PWA |
+| `generator` | Nombre del software usado para crear la web |
+
+`description` es lo que usualmente sale debajo del título en los resultados de búsqueda. Explica el contenido y no debe ser mayor a 150-160 caracteres porque Google lo corta.
+
+## Metadatos de indexación
+
+Sirven para indicarle a Google si podemos indexar nuestra página o no. Google las recomienda.
+
+| Valor | Contenido | Descripción |
+|---|---|---|
+| `google` | `notranslate` | Indica que no queremos que Google traduzca nuestra página. |
+| `google` | `nositelinksearchbox` | Indica que no queremos que Google muestre el buscador de Google en nuestra página. |
+| `google` | `( *parámetros* )` | Indica al motor de búsqueda qué cosas hacer con la página. |
+
+## `meta name="robots"`
+
+La etiqueta robots es una etiqueta que nos permite indicarle a Google si podemos indexar nuestra página o no. Google las recomienda.
+
+```html
+<meta name="robots" content="noindex, nofollow" />
+```
+
+<Warning>
+  <p> En este ejemplo, la página no será indexada ni seguirá enlaces externos. </p>
+</Warning>
+
+| Content | Descripción |
+|---|---|
+| `index` | Indica que queremos que Google indexe nuestra página. |
+| `follow` | Indica que queremos que Google siga los enlaces de nuestra página. |
+| `noindex` | Indica que no queremos que Google indexe nuestra página. |
+| `nofollow` | Indica que no queremos que Google siga los enlaces de nuestra página. |
+| `noarchive` | Indica que no queremos que Google guarde una copia de nuestra página. |
+| `nosnippet` | Indica que no queremos que Google muestre una descripción de nuestra página. |
+| `noimageindex` | Indica que no queremos que Google indexe las imágenes de nuestra página. |
+| `unavailable_after` | Indica que la página no está disponible después de una fecha. |
+| `notranslate` | Indica que no queremos que Google traduzca nuestra página. |
+| `none` | Equivale a `noindex, nofollow` al mismo tiempo. |
+
+## Etiqueta canonical
+
+La etiqueta canonical es una etiqueta que nos permite indicarle a Google cuál es la URL oficial de nuestra página. Esto es útil cuando tenemos varias URL para la misma página, como por ejemplo una página con y sin www.
+
+```html
+<link rel="canonical" href="https://mcarreradev.com" />
+```
+
+## Etiqueta sitemap
+
+La etiqueta sitemap es una etiqueta que nos permite indicarle a Google donde se encuentra nuestro sitemap.
+
+```html
+<link rel="sitemap" href="https://mcarreradev.com/sitemap.xml" />   
+```

@@ -5,49 +5,67 @@ subtitle: "Partes y funciones"
 
 import Warning from '@/components/callouts/Warning.astro';
 
-Los documentos HTML tienen una estructura bien definida, para que el navegador pueda leerlos, entenderlos y estructurarlos.
-Podemos tomar un atajo para construirlo poniendo en el editor de codigo simplemete `!` + <kbd>TAB</kbd> y nos dara esto:
+Los documentos HTML tienen una estructura bien definida para que el navegador pueda leerlos, entenderlos y representarlos correctamente.
 
-## Estructura 
+Podemos tomar un atajo para construirla escribiendo en el editor de código simplemente `!` + <kbd>TAB</kbd>, lo que generará la siguiente estructura:
+
+## Estructura
 
 ```html
-<!DOCTYPE html> /*Tipo de documento*/
+<!DOCTYPE html> <!-- Tipo de documento -->
 <html lang="en">
-<head>  /*Cabecera del documento*/
+<head> <!-- Cabecera del documento -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body> /*Cuerpo del documento*/
-    
+<body> <!-- Cuerpo del documento -->
+
 </body>
 </html>
 ```
 
 <Warning>
-El documento debe ser del tipo html para que el atajo funcione y contar con emmet
+
+El documento debe ser del tipo `.html` para que el atajo funcione y contar con Emmet habilitado.
+
 </Warning>
 
+## El `<!DOCTYPE html>`
 
-## El !DOCTYPE
+Define, como su nombre lo indica, el tipo de documento. Se escribe en la primera línea del archivo y es obligatorio.
 
-Define, como su nombre lo indica, el tipo de documento, se escribe en la primera linea del documento, es obligatorio, aunque sin ponerlo el navegador intentara leerlo igual, y le indica al navegador que tipo de HTML es. 
-Leyendo esto, el navegador se adapta a cada tipo de documento.
-Si no se indica, el navegador entra en **Quirk Mode** ( *modo no estandar* ), y se activa un modo de retrocompatibilidad con paginas antiguas.
+Aunque el navegador intentará interpretar el documento incluso si no está presente, esta declaración le indica que el documento utiliza HTML5.
+
+Si no se especifica, el navegador entra en **Quirks Mode** (*modo no estándar*), activando un modo de retrocompatibilidad pensado para páginas web antiguas.
+
+## Etiqueta `html`
+
+Es la etiqueta raíz del documento y contiene todo el contenido de la página.
+
+En ella suele encontrarse el atributo `lang`, que indica el idioma principal del documento.
+
+```html
+<html lang="es">
+```
+
+Esto ayuda a los navegadores, lectores de pantalla y motores de búsqueda a interpretar correctamente el contenido.
 
 ## Etiqueta `head`
 
-No es una parte visual, se incluye metadatos, datos que no tienen que verse de forma visual.
+No es una parte visual de la página. Aquí se incluyen los metadatos, es decir, información que el navegador necesita pero que el usuario no ve directamente.
 
-Como por ejemplo:
+Por ejemplo:
 
-- Titulo de la pagina web ( *Que aparece en la pestana del navegador* ). **Obligatoria**.
-- Descripcion de la web ( *Aparece en los resultados* )
-- Miniatura de la web ( *Aparece en los enlaces* )
-- Icono de la web ( *Aparece al lado del titulo* )
+- Título de la página web (*el que aparece en la pestaña del navegador*). **Obligatorio**.
+- Descripción de la web (*puede aparecer en los resultados de búsqueda*).
+- Miniatura de la web (*cuando se comparte un enlace*).
+- Icono de la web (*favicon*).
 
-Tambien es donde se importan o referencian otros archivos externos ( *.css,.js, ficheros). 
+También es donde se importan o referencian otros archivos externos (`.css`, `.js`, fuentes, etc.).
 
 ## Etiqueta `body`
 
-Aca si va a estar todo el contenido visual de nuestra web. Todo el esqueleto estara dentro de `body`. Es de lo mas importante de una web y va justo despues de `head`.
+Aquí sí estará todo el contenido visual de nuestra web. Todo el esqueleto de la página estará dentro de `body`.
+
+Es una de las etiquetas más importantes del documento y va justo después de `head`.

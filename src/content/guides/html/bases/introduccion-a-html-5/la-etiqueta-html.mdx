@@ -1,18 +1,18 @@
 ---
-title: "La etiqueta de HTML"
+title: "La etiqueta HTML"
 subtitle: "¿Qué es una etiqueta HTML?"
 ---
+
 import CodeExample from '@/components/CodeExample.astro';
 
+Las etiquetas HTML son fragmentos de código que indican al navegador cómo interpretar, estructurar y mostrar el contenido de una página web.
 
-Las etiquetas HTML son fragmentos de código que indican a los navegadores cómo interpretar, estructurar y mostrar el contenido de una página web.
+## Categorias de etiquetas
 
-## Se categorizan
-
-Como ya te conte, no son palabras sueltas, sino que tienen un significado especial. Las podemos dividir en:
+Como ya vimos, las etiquetas HTML no son palabras sueltas, sino que tienen un significado especial. Podemos agruparlas en las siguientes categorías:
 
 1. Textuales
-2. Agrupacion
+2. Agrupación
 3. Multimedia
 4. Tablas
 5. Formularios
@@ -21,11 +21,12 @@ Como ya te conte, no son palabras sueltas, sino que tienen un significado especi
 8. Scripting
 
 # Estructura
+
 {/* ![Estructura de una etiqueta HTML](../../assets/images/estructura-etiqueta-html.png) */}
 
-Tiene una etiqueta de apertura y en general tienen una etiqueta de cierre. Pero ya veremos que hay etiquetas que no tienen cierre.
+La mayoría de las etiquetas están compuestas por una **etiqueta de apertura**, un **contenido** y una **etiqueta de cierre**. Sin embargo, existen algunas excepciones que veremos más adelante.
 
-Pueden incluir dentro de ellas otras etiquetas.
+Las etiquetas también pueden contener otras etiquetas en su interior.
 
 ```html
 <div>
@@ -34,15 +35,29 @@ Pueden incluir dentro de ellas otras etiquetas.
 </div>
 ```
 
-<Warning>
+<Error>
 
-Las etiquetas no se pueden anidar una dentro de la otra.
+<p>Las etiquetas <strong>sí pueden anidarse</strong>, pero no pueden cruzarse.</p>
 
-</Warning>
+✅ Correcto:
+
+```html
+<p>Hola <strong>Mundo</strong></p>
+```
+
+❌ Incorrecto:
+
+```html
+<p>Hola <strong>Mundo</p></strong>
+```
+
+<p>Siempre debes cerrar primero la última etiqueta que abriste.</p>
+
+</Error>
 
 # Atributos
 
-Los atributos son palabras que se utilizan para modificar el comportamiento de la etiqueta.
+Los atributos son propiedades que modifican el comportamiento o aportan información adicional a una etiqueta.
 
 Por ejemplo:
 
@@ -50,12 +65,13 @@ Por ejemplo:
 <input type="text" disabled placeholder="Ingrese su nombre">
 ```
 
-Hay 3 tipos de atributos: 
-- Conjunto de valores: Con valores especifcos.
-- Valores libres: Solo un valor.
-- Atributos booleanos: No tienen valor. Omitidos se consideran <code>false</code> , si se nombran se consideran <code>true</code> 
+Existen tres tipos de atributos:
 
-El orden de los atributos no importa, pero si el nombre del atributo y el valor. Si se declara varias veces se toma el último.
+- **Conjunto de valores:** aceptan un conjunto de valores específicos.
+- **Valores libres:** pueden recibir cualquier valor válido.
+- **Atributos booleanos:** no necesitan un valor. Si están presentes, su valor es `true`; si se omiten, se consideran `false`.
+
+El orden de los atributos no afecta el funcionamiento de la etiqueta. Sin embargo, un mismo atributo no debería declararse más de una vez; si ocurre, el navegador utilizará el último valor encontrado.
 
 ```html
 <video src="video.mp4"></video>
@@ -63,6 +79,16 @@ El orden de los atributos no importa, pero si el nombre del atributo y el valor.
 <video preload="auto"></video>
 ```
 
-# Contenido 
+<Tip>
 
-El contenido de una etiqueta es lo que se encuentra entre la etiqueta de apertura y la etiqueta de cierre. Es lo que queremos que se muestre en la página.
+Es recomendable escribir primero los atributos más importantes, como `src`, `href`, `type` o `id`, y dejar al final los atributos booleanos u opcionales. Aunque el navegador no lo necesita, mejora la legibilidad del código.
+
+</Tip>
+
+# Contenido
+
+El contenido de una etiqueta es todo aquello que se encuentra entre la etiqueta de apertura y la etiqueta de cierre. Es el texto o los elementos que queremos mostrar en la página.
+
+```html
+<p>Este es el contenido de la etiqueta.</p>
+```

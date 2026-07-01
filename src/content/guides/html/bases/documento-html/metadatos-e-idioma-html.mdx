@@ -1,6 +1,133 @@
 ---
 title: "Metadatos e idioma"
-subtitle: "Configurar metadatos y el idioma del documento"
+subtitle: "Configurar metadatos y el idioma"
 ---
 
-Próximamente.
+import CodeExample from '@/components/CodeExample.astro'
+
+Hay una serie de atributos HTML menos frecuentes, pero con mucha utilidad, disponibles en cualquier etiqueta HTML.
+
+## Atributos de metadatos
+
+{/*Posible Tab*/}
+
+### Tooltips: El atributo `title`
+
+Su uso es más común en etiquetas `img`. Al detener el mouse sobre la imagen aparecerá un mensaje de texto sobre el cursor.
+
+<CodeExample>
+
+```html
+<article>
+    <img
+        src="https://wallpapers.com/images/hd/lionel-messi-with-world-cup-trophy-v62jd8a0e7d3epr9.jpg"
+        alt="Lionel Messi con la copa del mundo"
+        title="Este es el mejor jugador de la historia"
+    >
+    <p>Lionel</p>
+</article>
+```
+
+```css
+img {
+    width: 150px;
+    height: auto;
+}
+```
+
+</CodeExample>
+
+No debemos confundir `alt` y `title`. El primero debe ser un texto alternativo que describe la imagen si esta no puede mostrarse. `title` puede describir la imagen, pero no reemplaza al texto alternativo.
+
+### `data-*`
+
+También se pueden incluir metadatos en una etiqueta HTML, no solo en el `head`. Con el prefijo `data-` podemos crear atributos personalizados para almacenar información, generalmente orientada a JavaScript o CSS.
+
+```html
+<div id="frutas">
+    <ul>
+        <li data-cals="116">Banana</li>
+        <li data-cals="80">Manzana</li>
+        <li data-cals="66">Naranja</li>
+    </ul>
+</div>
+```
+
+En este ejemplo guardamos el número de calorías que tiene cada fruta, y podremos acceder a ese valor desde CSS o JavaScript para utilizarlo.
+
+### `accesskey`: Atajos de teclado
+
+Podemos lograr que el usuario, al presionar una tecla o una combinación de ellas, pueda acceder o manipular determinados elementos.
+
+<CodeExample>
+
+```html
+<form>
+    <label for="search">Buscar</label>
+    <input id="search" type="search" accesskey="b">
+    <button accesskey="e">Enviar</button>
+</form>
+```
+
+</CodeExample>
+
+Así, pulsando <kbd>ALT</kbd> + <kbd>B</kbd>, haremos foco en el campo de búsqueda y con <kbd>ALT</kbd> + <kbd>E</kbd> activaremos el botón de enviar.
+
+Vale la pena aclarar que esto aún hoy no está completamente normalizado y depende del navegador y del sistema operativo.
+
+{/*Se puede agregar la tabla*/}
+
+{/*Fin de la tab*/}
+
+## Atributos de idioma
+
+{/*Posible Tab*/}
+
+### El atributo `lang`
+
+Con él indicamos el idioma del contenido de la etiqueta. Debe utilizar el [código ISO 639-1](https://es.wikipedia.org/wiki/ISO_639-1) del idioma correspondiente.
+
+Es obligatorio establecerlo en la etiqueta `html`, indicando así el idioma principal del documento.
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+    {...}
+</html>
+```
+
+### `translate`: Traducciones
+
+Acepta los valores `yes` o `no`. Si no se añade, por defecto será `yes`.
+
+Nos puede servir para evitar traducir títulos de obras, marcas o apellidos.
+
+```html
+<p>
+    Como jugaba <span translate="no">Drinkwater</span>.
+</p>
+```
+
+Así le indicamos al navegador o a herramientas como Google Translate que ese contenido específico no debe traducirse.
+
+### El atributo `dir`
+
+Sirve para indicar la direccionalidad del texto, es decir, si se escribe de izquierda a derecha o de derecha a izquierda. Está pensado para idiomas que utilizan este tipo de escritura.
+
+Por defecto su valor es `ltr` (*left to right*), pero podemos cambiarlo a `rtl` (*right to left*).
+
+<CodeExample>
+
+```html
+<p dir="ltr">
+    Hola, mundo.
+</p>
+
+<p dir="rtl">
+    مرحباً بالعالم
+</p>
+```
+
+</CodeExample>
+
+{/*Fin de la tab*/}

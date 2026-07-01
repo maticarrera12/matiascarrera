@@ -1,0 +1,73 @@
+---
+title: "Etiqueta para redes sociales"
+subtitle: "Previsualización en enlaces"
+---
+
+Son etiquetas que nos permiten personalizar la previsualización generada en enlaces. Aquí podemos indicar títulos, descripciones o imágenes.
+
+## En HTML estándar
+
+Son etiquetas que ya vimos como:
+
+- `title` lo utiliza Google para el título oficial.
+- `meta name="description"` es la etiqueta oficial de metadatos, de acá Google genera las descripciones de sus resultados de búsqueda.
+
+```html
+<head>
+    <title>Matías Carrera | Full Stack Developer</title>
+    <meta name="description" content="Estas son mis guías de aprendizaje de HTML, CSS, JavaScript, React, Next.js, Astro, Tailwind CSS, TypeScript, Node.js, entre otras tecnologías.">
+</head>
+```
+
+## En Open Graph
+
+Es un protocolo que permite personalizar los metadatos de redes sociales. Al generar un enlace, el navegador puede mostrar una previsualización de la página, mirando el HTML del documento.
+
+Si no los encuentra, puede usar los metadatos de HTML estandar o crear sus propios metadatos en base a criterios internos, o bien, no mostrar nada.
+
+```html
+<head>
+    <meta property="og:title" content="Matías Carrera | Full Stack Developer">
+    <meta property="og:description" content="Estas son mis guías de aprendizaje de HTML, CSS, JavaScript, React, Next.js, Astro, Tailwind CSS, TypeScript, Node.js, entre otras tecnologías.">
+    <meta property="og:image" content="https://mcarreradev.com/og-image.png">
+    <meta property="og:url" content="https://mcarreradev.com">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="mcarreradev">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Matías Carrera | Full Stack Developer">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:secure_url" content="https://mcarreradev.com/og-image.png">
+</head>
+```
+
+| Propiedad | Valor | Descripción |
+|---|---|---|
+| `og:title` | `Matías Carrera \| Full Stack Developer` | Título de la página |
+| `og:description` | `Guías de aprendizaje de HTML, CSS, JavaScript...` | Descripción de la página |
+| `og:image` | `https://mcarreradev.com/og-image.png` | URL de la imagen |
+| `og:url` | `https://mcarreradev.com` | URL de la página |
+| `og:type` | `website`, `article`, `profile` | Tipo de contenido |
+| `og:locale` | `es_AR` | Locale de la página |
+| `og:site_name` | `mcarreradev` | Nombre del sitio |
+
+## En Twitter/X
+
+Se debe escribir otro set de metadatos para Twitter/X. Hoy en día, Twitter/X hace fallback a Open Graph o a los metadatos de HTML estándar.
+
+```html
+<head>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Matías Carrera | Full Stack Developer">
+    <meta name="twitter:description" content="Estas son mis guías de aprendizaje de HTML, CSS, JavaScript, React, Next.js, Astro, Tailwind CSS, TypeScript, Node.js, entre otras tecnologías.">
+    <meta name="twitter:image" content="https://mcarreradev.com/og-image.png">
+</head>
+```
+
+| Propiedad | Valor | Descripción |
+|---|---|---|
+| `twitter:card` | `summary`, `summary_large_image` | Tipo de tarjeta |
+| `twitter:title` | `Matías Carrera \| Full Stack Developer` | Título de la página |
+| `twitter:description` | `Guías de aprendizaje de HTML, CSS, JavaScript...` | Descripción de la página |
+| `twitter:image` | `https://mcarreradev.com/og-image.png` | URL de la imagen |

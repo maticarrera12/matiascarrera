@@ -1,24 +1,23 @@
 ---
 title: "Atributos comunes"
-subtitle: "¿Cuales son los atributos comunes de HTML?"
+subtitle: "¿Cuáles son los atributos comunes de HTML?"
 ---
 
 import CodeExample from "@/components/CodeExample.astro"
 
-Ya sabemos que las etiquetas HTML son fragmentos de código que indican a los navegadores cómo interpretar, estructurar y mostrar el contenido de una página web. Los atributos son palabras especiales que nos permiten personzalizar o modificar el comportamiento de una etiqueta.
+Ya sabemos que las etiquetas HTML son fragmentos de código que indican a los navegadores cómo interpretar, estructurar y mostrar el contenido de una página web. Los atributos son palabras especiales que nos permiten personalizar o modificar el comportamiento de una etiqueta.
 
-Hay 3 que son comunes a todas las etiquetasy estan sumamente relacionados con el CSS y el JavaScript.
+Hay 3 que son comunes a prácticamente todas las etiquetas y están sumamente relacionados con el CSS y el JavaScript.
 
 - `class`: Se utiliza para asignar una clase a una etiqueta. Es una forma de agrupar etiquetas con el mismo estilo.
 - `id`: Se utiliza para asignar un identificador a una etiqueta. Es una forma de identificar una etiqueta de manera única.
 - `style`: Se utiliza para asignar un estilo a una etiqueta. Es una forma de aplicar estilos específicos a una etiqueta.
 
-
 {/* Posible tab-->*/}
 
 ## Id
 
-Sirve para dar identificadores unicos a una etiqueta. No debe repetirse en la misma página.
+Sirve para dar identificadores únicos a una etiqueta. No debe repetirse en la misma página.
 
 Tiene normas:
 
@@ -27,15 +26,14 @@ Tiene normas:
 - No puede contener espacios.
 - No puede contener caracteres especiales.
 - No puede contener caracteres de control.
-- No puede contener caracteres de control.
-
 
 <Warning>
 
-El atributo `id` es muy importante para el CSS y el JavaScript. No se debe usar para estilos visuales, sino para identificar una etiqueta de manera única. Por ejemplo, si tenemos un formulario, podemos usar el atributo `id` para identificar una seccion de una pgina y scrollear hasta ella desde el `nav`
+<p>El atributo <strong>id</strong> es muy importante para el CSS y el JavaScript. No se debe usar para aplicar estilos visuales, sino para identificar una etiqueta de manera única.</p>
+
+<p>Por ejemplo, si tenemos un formulario, podemos usar el atributo <strong>id</strong> para identificar una sección de una página y desplazarnos hasta ella desde un enlace del <strong>nav</strong>.</p>
 
 </Warning>
-
 
 ```html
 <nav id="navbar">
@@ -49,8 +47,7 @@ El atributo `id` es muy importante para el CSS y el JavaScript. No se debe usar 
 
 ## Class
 
-Sirve para asignar una clase a una etiqueta. Es una forma de agrupar etiquetas con el mismo estilo. Sirve para aplicar estilos CSS de manera mas general.
-
+Sirve para asignar una clase a una etiqueta. Es una forma de agrupar etiquetas con el mismo estilo. Sirve para aplicar estilos CSS de manera más general.
 
 <CodeExample>
 
@@ -58,31 +55,48 @@ Sirve para asignar una clase a una etiqueta. Es una forma de agrupar etiquetas c
 <nav class="navbar">
     <a class="nav-link">Inicio</a>
     <a class="nav-link">Blog</a>
-    <a class="nav-link">Guias</a>
+    <a class="nav-link">Guías</a>
 </nav>
 ```
 
 ```css
-.nav-link:hover{ /*:hover nos permite estilar cuando se pasa el mouse por encima del elemento*/
-    text-decoration: underline,
+.nav-link:hover { /* :hover nos permite estilar cuando se pasa el mouse por encima del elemento */
+    text-decoration: underline;
 }
 ```
+
 </CodeExample>
 
-Al tener la misma clase podemos estilar todas al mismo tiempo. 
+Al tener la misma clase podemos estilar todas las etiquetas al mismo tiempo.
 
-El atributo class debe declararse una vez dentro de la etiqueta y si, tiene diferentes clases, nombrarlas con un espacio.
+El atributo `class` debe declararse una sola vez dentro de la etiqueta y, si tiene diferentes clases, deben separarse con un espacio.
+
+```html
+<button class="btn btn-primary">
+    Guardar
+</button>
+```
+
+<Tip>
+
+Aunque `class`, `id` y `style` son atributos comunes, existen muchos otros atributos que solo funcionan en determinadas etiquetas. Por ejemplo, `href` pertenece a los enlaces (`<a>`), mientras que `src` se utiliza en las imágenes (`<img>`).
+
+</Tip>
 
 ## Style
 
-Sirve para poner codigo CSS en la propia etiqueta, es llamado estilos en linea. A mi particularmente no me gusta utilizarlo a menos que este utilizando TailwindCSS, que se basa en el estilado rapido en linea. Lo mejor es separar HTML y CSS, de lo contrario se considera una mala practica.
+Sirve para escribir código CSS directamente en la propia etiqueta; esto se conoce como **estilos en línea**.
+
+A mí particularmente no me gusta utilizarlo, a menos que esté utilizando Tailwind CSS, que se basa en escribir clases utilitarias directamente en el HTML. Lo mejor es separar HTML y CSS; de lo contrario, generalmente se considera una mala práctica.
 
 <CodeExample>
 
 ```html
 <div style="background: deeppink">
-    <p style="color: black">Este es mi texto>
+    <p style="color: black">Este es mi texto</p>
 </div>
 ```
 
 </CodeExample>
+
+{/* Fin de la tab */}

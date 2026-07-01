@@ -3,17 +3,52 @@ title: "Validación de errores HTML"
 subtitle: "Cómo detectar y corregir errores en tu HTML"
 ---
 
+import htmlValidator from "@/assets/guides/html/htmlValidator.png"
+import Figure from '@/components/Figure.astro'
+
 ## Tipos de errores
 
-Estos son errores que nos podemos encontrar.
+Estos son algunos errores que nos podemos encontrar.
 
-| Tipo de error | Descripcion |
-|---|---| 
-| Sintaxis | Codigo mal escrito, el navegador intentara entender que se quiso decir. |
-| Accesibilidad | Si bien esta bien escrito, puede no verse bien en determinados dispositivos, ser inaccesibles para un invidente o similar. |
-| Posicionamiento | Los buscadores de Google pueden no favorecer a la pagina en las busquedas. |
-| Rendimiento | Cargas lentas, mala optimizacion, imagenes faltantes |
-| Usabilidad | La forma en que esta hecho genera friccion con el usuario |
+| Tipo de error | Descripción |
+|---|---|
+| Sintaxis | Código mal escrito. El navegador intentará entender qué se quiso decir. |
+| Accesibilidad | Si bien está bien escrito, puede no verse bien en determinados dispositivos o ser inaccesible para un usuario con discapacidad visual, entre otros casos. |
+| Posicionamiento | Los buscadores como Google pueden no favorecer a la página en los resultados de búsqueda. |
+| Rendimiento | Cargas lentas, mala optimización o imágenes faltantes. |
+| Usabilidad | La forma en que está hecha la página genera fricción con el usuario. |
 
 Por el momento solo vamos a hablar del primer tipo.
 
+Como les conté, HTML es un lenguaje de marcado. Al ser así, los navegadores son muy tolerantes con los errores. Generalmente, al encontrar uno, intentarán interpretarlo de la mejor forma posible para poder seguir mostrando la página y no detener su ejecución.
+
+Hoy ya no dependemos exclusivamente del navegador para detectarlos. Los editores de código modernos, como Visual Studio Code o Cursor, analizan el documento mientras lo escribimos y detectan automáticamente muchos problemas de sintaxis, como etiquetas sin cerrar, atributos mal escritos o estructuras incorrectas. Gracias a esto, la mayoría de los errores más comunes se corrigen antes de llegar al navegador.
+
+Esta validación en tiempo real, si bien detecta muchísimos errores, no reemplaza al 100% a un validador HTML. Estos realizan un análisis más exhaustivo del documento y comprueban si cumple correctamente con el estándar HTML, detectando errores que al editor de código se le escaparon.
+
+El que les voy a mostrar hoy es la herramienta oficial **HTML Validator** de W3C. Podemos utilizarla de 3 formas:
+
+- **Por URL**: Indicando la dirección de una web publicada en Internet.
+- **Por File Upload**: Seleccionando el archivo `.html`.
+- **Por Direct Input**: Pegando el código HTML directamente en el formulario.
+
+<Figure
+  src={htmlValidator}
+  alt="Análisis con HTML Validator de este portfolio"
+  caption="Un proyecto correctamente construido puede seguir teniendo errores de HTML que herramientas como HTML Validator son capaces de detectar."
+/>
+
+También tiene 4 casillas, desmarcadas por defecto, que nos permiten obtener información adicional:
+
+- **Source**: Nos muestra el código fuente numerado por líneas.
+- **Outline**: Una especie de esquema de la página.
+- **Image Report**: Un informe sobre el estado de las imágenes del sitio.
+- **Errors & Warnings Only**: Solo muestra los errores y advertencias.
+
+<Tip>
+
+<p>Acostumbrate a corregir primero los errores que marca tu editor de código y, cuando termines el documento, hacer una última validación con HTML Validator. Es un flujo de trabajo simple que ayuda a detectar problemas antes de publicar una página.</p>
+
+</Tip>
+
+{/* Se puede agregar a futuro otras formas de validar */}
