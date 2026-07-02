@@ -28,7 +28,7 @@ function isSamePageNav(href: string): boolean {
 			<a
 				href="/"
 				data-nav="/"
-				class="text-lg font-bold text-primary"
+				class="rounded-sm text-lg font-bold text-primary outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary"
 				aria-label="Inicio"
 			>
 				Matías Carrera
@@ -45,7 +45,7 @@ function isSamePageNav(href: string): boolean {
 									data-nav-link
 									data-same-page={isSamePageNav(link.href) ? "true" : undefined}
 									class:list={[
-										"text-[0.9375rem]",
+										"rounded-sm text-[0.9375rem] outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary",
 										isActive(link.href)
 											? "text-foreground"
 											: "text-muted hover:text-foreground",
@@ -66,7 +66,7 @@ function isSamePageNav(href: string): boolean {
 			<button
 				type="button"
 				id="mobile-menu-btn"
-				class="mobile-menu-btn sm:hidden flex flex-col items-center justify-center gap-[5px] w-8 h-8 text-foreground hover:text-primary transition-colors"
+				class="mobile-menu-btn sm:hidden flex flex-col items-center justify-center gap-[5px] w-8 h-8 rounded-sm text-foreground outline-offset-4 transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-primary"
 				aria-label="Abrir menú"
 				aria-expanded="false"
 				aria-controls="mobile-menu"
@@ -92,7 +92,7 @@ function isSamePageNav(href: string): boolean {
 								data-nav-link
 								data-same-page={isSamePageNav(link.href) ? "true" : undefined}
 								class:list={[
-									"mobile-nav-link text-2xl font-semibold transition-colors",
+									"mobile-nav-link rounded-sm text-2xl font-semibold transition-colors outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary",
 									isActive(link.href)
 										? "text-foreground"
 										: "text-muted hover:text-foreground",
@@ -307,13 +307,14 @@ function isSamePageNav(href: string): boolean {
 						: activeHref === href
 					: p === href;
 			var isMobile = el.classList.contains("mobile-nav-link");
+			var focusClasses = "rounded-sm outline-offset-4 focus-visible:outline-2 focus-visible:outline-primary";
 			el.className = isMobile
 				? on
-					? "mobile-nav-link text-2xl font-semibold transition-colors text-foreground"
-					: "mobile-nav-link text-2xl font-semibold transition-colors text-muted hover:text-foreground"
+					? "mobile-nav-link text-2xl font-semibold transition-colors text-foreground " + focusClasses
+					: "mobile-nav-link text-2xl font-semibold transition-colors text-muted hover:text-foreground " + focusClasses
 				: on
-				? "text-[0.9375rem] text-foreground"
-				: "text-[0.9375rem] text-muted hover:text-foreground";
+				? "text-[0.9375rem] text-foreground " + focusClasses
+				: "text-[0.9375rem] text-muted hover:text-foreground " + focusClasses;
 		});
 
 		var header = document.querySelector(".nav-header");

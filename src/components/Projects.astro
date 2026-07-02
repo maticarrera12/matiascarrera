@@ -13,7 +13,7 @@ const featured = projects
 	<div class="mb-4 flex flex-row items-center gap-3">
 		<span class="relative flex size-2 shrink-0" aria-hidden="true">
 			<span
-				class="absolute -inset-1 animate-pulse rounded-full bg-primary/50 blur-sm"
+				class="absolute -inset-1 animate-pulse rounded-full bg-primary/50 blur-sm motion-reduce:animate-none"
 			></span>
 			<span class="relative size-2 rounded-full bg-primary"></span>
 		</span>
@@ -25,9 +25,11 @@ const featured = projects
 	<div
 		class="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center"
 	>
-		<h2 class="text-4xl font-bold text-pretty text-foreground md:text-6xl">
+		<h2
+			class="text-4xl font-medium tracking-tight text-pretty text-foreground md:text-6xl"
+		>
 			Proyectos que diseñé <br />
-			y <span class="text-primary">desarrollé</span>
+			y <span class="font-black text-primary">desarrollé</span>
 		</h2>
 
 		<!-- <a
