@@ -18,6 +18,14 @@
 		border-bottom: 1px solid var(--color-border);
 	}
 
+	.code-example__source pre,
+	.code-example__source .astro-code,
+	.code-example__panel--code pre,
+	.code-example__panel--code .astro-code {
+		font-size: 0.875rem;
+		line-height: 1.7;
+	}
+
 	.code-example__source pre {
 		margin: 0;
 		border-radius: 0;
@@ -71,9 +79,10 @@
 		display: none;
 	}
 
-	.code-example__panel--code pre {
+	.code-example__panel--code pre,
+	.code-example__panel--code .astro-code {
 		margin: 0;
-		padding: 1rem;
+		padding: 1.25rem 1.5rem;
 		border-radius: 0;
 		overflow-x: auto;
 	}
