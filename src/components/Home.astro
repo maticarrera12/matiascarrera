@@ -78,6 +78,19 @@ import SocialButton from "./home/SocialButton.astro";
 					<span class="text-primary">centradas en las personas</span>
 				</p> -->
 				<header class="mb-2">
+					<p
+						class="hero-eyebrow reveal flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold tracking-[0.14em] text-muted uppercase"
+					>
+						{
+							AUTHOR.available && (
+								<span class="hero-eyebrow__status inline-flex items-center gap-1.5">
+									<span class="hero-eyebrow__dot" aria-hidden="true" />
+									Disponible para nuevos proyectos
+								</span>
+							)
+						}
+						<span class="hero-eyebrow__location">{AUTHOR.location}</span>
+					</p>
 					<p class="ml6 text-2xl font-bold text-pretty text-foreground">
 						<span class="text-wrapper">
 							<span class="letters">Hola, soy </span><span
@@ -86,11 +99,11 @@ import SocialButton from "./home/SocialButton.astro";
 						</span>
 					</p>
 					<h1
-						class="reveal text-4xl font-bold text-pretty text-foreground lg:text-6xl"
+						class="reveal text-4xl font-medium tracking-tight text-pretty text-foreground lg:text-6xl"
 					>
 						Desarrollador Web <br />
 						<span
-							class="text-6xl font-bold text-primary lg:text-8xl"
+							class="text-6xl font-black tracking-tight text-primary lg:text-8xl"
 							>Full Stack</span
 						>
 					</h1>
@@ -163,14 +176,8 @@ import SocialButton from "./home/SocialButton.astro";
 			<div
 				class="relative mt-12 flex min-w-0 items-center justify-center lg:mt-0"
 			>
-				<div
-					class="absolute inset-0 rounded-full bg-primary/10 blur-3xl"
-					aria-hidden="true"
-				>
-				</div>
-
 				<figure
-					class="code-card relative m-0 w-full overflow-hidden rounded-3xl shadow-2xl"
+					class="code-card reveal relative m-0 w-full overflow-hidden rounded-3xl shadow-2xl"
 					aria-label="Perfil en código"
 				>
 					<div
@@ -222,6 +229,13 @@ import SocialButton from "./home/SocialButton.astro";
 		const root = document.querySelector<HTMLElement>(".ml6");
 		if (!root) return;
 
+		tl?.pause();
+		tl = null;
+
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			return;
+		}
+
 		root.querySelectorAll<HTMLElement>(".letters").forEach((el) => {
 			if (el.dataset.lettersWrapped) return;
 			el.dataset.lettersWrapped = "1";
@@ -230,9 +244,6 @@ import SocialButton from "./home/SocialButton.astro";
 				"<span class='letter'>$&</span>",
 			);
 		});
-
-		tl?.pause();
-		tl = null;
 
 		set(".ml6 .letter", { translateY: "1.1em" });
 
@@ -278,6 +289,40 @@ import SocialButton from "./home/SocialButton.astro";
 	}
 	.hero-mountains-transition path {
 		pointer-events: auto;
+	}
+
+	/* Eyebrow: estado de disponibilidad (dato real de AUTHOR.available) */
+	.hero-eyebrow__dot {
+		display: inline-block;
+		width: 0.4rem;
+		height: 0.4rem;
+		border-radius: 999px;
+		background: #34d399;
+		box-shadow: 0 0 0 3px color-mix(in srgb, #34d399 25%, transparent);
+	}
+
+	@media (min-width: 24rem) {
+		.hero-eyebrow__status + .hero-eyebrow__location::before {
+			content: "·";
+			margin-right: 0.5em;
+			opacity: 0.6;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.hero-eyebrow__dot {
+			animation: hero-dot-pulse 2.4s ease-in-out infinite;
+		}
+	}
+
+	@keyframes hero-dot-pulse {
+		0%,
+		100% {
+			box-shadow: 0 0 0 3px color-mix(in srgb, #34d399 25%, transparent);
+		}
+		50% {
+			box-shadow: 0 0 0 6px color-mix(in srgb, #34d399 12%, transparent);
+		}
 	}
 
 	/* Dark mode: tarjeta cristal sobre el hero */

@@ -4,6 +4,7 @@
 @import "./prose.css";
 @import "./callout.css";
 @import "./code-example.css";
+@import "./reveal.css";
 @import "./terminal.css";
 
 @custom-variant light (&:where(html[data-color-mode="light"], html[data-color-mode="light"] *));

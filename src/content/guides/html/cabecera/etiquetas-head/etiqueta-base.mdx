@@ -3,13 +3,15 @@ title: "La etiqueta <base>"
 subtitle: "Rutas relativas en el documento HTML"
 ---
 
+import Reveal from '@/components/guides/Reveal.astro'
+
 Nos sirve para establecer una ruta base para enlaces relativos.
 
 ## La etiqueta `base`
 
 Breve resumen de enlaces e hipervínculos:
 
-| Atributo | Descripcion |
+| Atributo | Descripción |
 |---|---|
 | `href` | Establece la ruta base para los enlaces relativos del documento HTML |
 | `target` | Establece el destino para los enlaces relativos del documento HTML |
@@ -48,3 +50,61 @@ Ahora, por más que nos encontremos en `https://mcarreradev.com`, al haber fijad
 
 1. El primer enlace hacia `https://mcarreradev.com/guides/html`
 2. El segundo enlace hacia `https://mcarreradev.com/guides/css`
+
+<Warning title="Solo se aplica la primera">
+
+Si el documento tiene más de una etiqueta `base`, el navegador solo tiene en cuenta la primera y descarta las demás.
+
+</Warning>
+
+---
+
+## Ejercicios del modulo
+
+1. `title`
+
+Estás desarrollando tu portfolio, tenés que escribir un title que cumpla con las buenas prácticas:
+
+- No debe estar vacío.
+- Debe describir correctamente el contenido de la página.
+- Debe tener entre 50 y 60 caracteres aproximadamente.
+- No debe repetir palabras innecesariamente.
+- Debe resultar útil para un usuario que lo vea en una pestaña del navegador o en un buscador.
+
+2. `base`
+
+Tenés el siguiente código:
+
+```html
+<body>
+    <a href="blog.html">Blog</a>
+
+    <a href="contacto.html">Contacto</a>
+
+    <img src="logo.png" alt="Logo">
+</body>
+```
+Querés que todos los enlaces e imágenes del documento usen tu dominio como ruta base: 
+
+`https://tudominio.dev/`
+
+No podés modificar las etiquetas de `body`.
+
+- Extra: ¿cómo harías para que se abra en otra ventana?
+
+<Reveal type="solution">
+
+```html
+<head>
+    <base href="https://mcarreradev.dev/">
+</head>
+<body>
+    <a href="blog.html">Blog</a>
+
+    <a href="contacto.html">Contacto</a>
+
+    <img src="logo.png" alt="Logo">
+</body>
+```
+
+</Reveal>

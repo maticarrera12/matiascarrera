@@ -1,0 +1,37 @@
+---
+import { Icon } from 'astro-icon/components';
+
+type RevealType = 'solution' | 'hint';
+
+interface Props {
+	type?: RevealType;
+	/** Overrides the summary label (same text open/closed). */
+	title?: string;
+}
+
+const { type = 'solution', title } = Astro.props;
+
+const variants: Record<
+	RevealType,
+	{ show: string; hide: string; icon: string }
+> = {
+	solution: { show: 'Ver solución', hide: 'Ocultar solución', icon: 'lucide:eye' },
+	hint: { show: 'Ver pista', hide: 'Ocultar pista', icon: 'lucide:lightbulb' },
+};
+
+const variant = variants[type];
+const showLabel = title ?? variant.show;
+const hideLabel = title ?? variant.hide;
+---
+
+<details class:list={['reveal', `reveal--${type}`]}>
+	<summary class="reveal__summary">
+		<Icon name={variant.icon} class="reveal__icon" is:inline />
+		<span class="reveal__label reveal__label--closed">{showLabel}</span>
+		<span class="reveal__label reveal__label--open">{hideLabel}</span>
+		<Icon name="lucide:chevron-down" class="reveal__chevron" is:inline />
+	</summary>
+	<div class="reveal__content">
+		<slot />
+	</div>
+</details>

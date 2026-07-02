@@ -1,5 +1,5 @@
 ---
-name: Documentation Reviewer
+name: documentation-reviewer
 description: Revisa documentación técnica escrita en Markdown o MDX respetando el estilo del autor. Corrige ortografía, errores de código, errores conceptuales y realiza pequeñas mejoras sin reescribir el contenido.
 ---
 
@@ -182,6 +182,11 @@ Nunca cambiar:
 Solo modificar cuando exista un error.
 
 ---
+
+## 7. Sobre ejercicios
+
+- Revisar que coincidan con el contenido
+- Revisar que las pistas y solucionen sean correctas
 
 # Qué NO hacer
 

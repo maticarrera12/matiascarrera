@@ -4,6 +4,7 @@ subtitle: "Configurar metadatos y el idioma"
 ---
 
 import CodeExample from '@/components/guides/CodeExample.astro'
+import Reveal from '@/components/guides/Reveal.astro'
 
 Hay una serie de atributos HTML menos frecuentes, pero con mucha utilidad, disponibles en cualquier etiqueta HTML.
 
@@ -75,6 +76,12 @@ Así, pulsando <kbd>ALT</kbd> + <kbd>B</kbd>, haremos foco en el campo de búsqu
 
 Vale la pena aclarar que esto aún hoy no está completamente normalizado y depende del navegador y del sistema operativo.
 
+<Warning title="Puede pisar otros atajos">
+
+`accesskey` puede entrar en conflicto con atajos ya existentes del navegador, del sistema operativo o de lectores de pantalla. Usalo con cuidado y evitalo si no estás seguro de que no vaya a chocar con otro atajo.
+
+</Warning>
+
 {/*Se puede agregar la tabla*/}
 
 {/*Fin de la tab*/}
@@ -131,3 +138,46 @@ Por defecto su valor es `ltr` (*left to right*), pero podemos cambiarlo a `rtl` 
 </CodeExample>
 
 {/*Fin de la tab*/}
+
+
+---
+
+## Ejercicio del modulo
+
+- Estás desarrollando tu portfolio. Creá una carpeta con el nombre que quieras y dentro creá un archivo `index.html`. Sin usar la abreviatura `!`, escribí su estructura. Indicale su tipo, sus etiquetas principales con sus atributos e indicale su idioma, personalizalo para que sea tuyo.
+- Extra: si recordás una etiqueta HTML que pueda ir en el body, contá algo sobre vos.
+
+<Reveal type="hint">
+
+```html
+<!-- Doctype -->
+<html>
+<head>
+
+</head>
+<body>
+
+</body>
+</html>
+```
+
+</Reveal>
+
+<Reveal type="solution">
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCarreradev</title>
+</head>
+<body> 
+ <h1>Hola, soy Matias Carrera</h1>
+ <p>Soy desarrollador web</p>
+</body>
+</html>
+```
+
+</Reveal>
