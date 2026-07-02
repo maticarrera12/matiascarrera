@@ -41,13 +41,14 @@
 	position: relative;
 	overflow: visible;
 	stroke-width: 2px;
-	transition: transform 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
+	rotate: 0deg;
+	transition:
+		transform 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35),
+		rotate 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
 }
 
-.theme-toggle__icon:hover {
-	cursor: pointer;
+.theme-toggle:hover .theme-toggle__icon {
 	rotate: -90deg;
-	transition: rotate 0.5s cubic-bezier(0.07, 0.7, 0.35, 1.35);
 }
 
 html[data-color-mode='light'] .theme-toggle__icon {
@@ -151,6 +152,7 @@ html.theme-toggle-animate-in[data-color-mode='light'] .theme-toggle__ray {
 	.theme-toggle__moon {
 		transition: none;
 		animation: none;
+		rotate: 0deg;
 	}
 
 	html[data-color-mode='light'] .theme-toggle__icon {
