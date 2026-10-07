@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import SampleCard from './home/SampleCard.astro';
+
+const samples = (await getCollection('samples')).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+---
+
+{
+	samples.length > 0 && (
+		<section id="muestras" class="container scroll-mt-24 py-20">
+			<div class="mb-4 flex flex-row items-center gap-3">
+				<span class="relative flex size-2 shrink-0" aria-hidden="true">
+					<span class="absolute -inset-1 animate-pulse rounded-full bg-primary/50 blur-sm motion-reduce:animate-none" />
+					<span class="relative size-2 rounded-full bg-primary" />
+				</span>
+				<p class="text-sm font-bold text-pretty text-primary">
+					Muestras de trabajo
+				</p>
+			</div>
+
+			<h2 class="text-4xl font-medium tracking-tight text-pretty text-foreground md:text-6xl">
+				Sitios que <span class="font-black text-primary">diseñé</span> <br />
+				para otros
+			</h2>
+
+			<ul class="m-0 mt-16 grid list-none grid-cols-1 items-stretch gap-6 p-0 lg:grid-cols-2">
+				{samples.map((sample) => (
+					<li class="h-full">
+						<SampleCard sample={sample} />
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

@@ -66,4 +66,19 @@ const technologies = defineCollection({
 	}),
 });
 
-export const collections = { blog, guides, projects, technologies };
+const samples = defineCollection({
+	loader: glob({ pattern: '**/*.md', base: './src/content/samples' }),
+	schema: z.object({
+		title: z.string(),
+		kind: z.string(),
+		description: z.string(),
+		stack: z.array(z.string()),
+		url: z.url().optional(),
+		status: z.enum(['live', 'pre-launch']).default('live'),
+		image: z.string().optional(),
+		beforeImage: z.string().optional(),
+		order: z.number().default(99),
+	}),
+});
+
+export const collections = { blog, guides, projects, technologies, samples };
