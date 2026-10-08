@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import SocialButton from "./home/SocialButton.astro";
 ---
 
-<section class="hero relative isolate grid w-full" aria-label="Inicio">
+<section class="hero relative isolate grid min-h-svh w-full" aria-label="Inicio">
 	<!-- Fondo: franja arriba (cielo + montañas) -->
 	<div
 		class="hero-sky pointer-events-none relative col-start-1 row-start-1 z-0 w-full self-start overflow-hidden sky-gradient"
@@ -57,10 +57,10 @@ import SocialButton from "./home/SocialButton.astro";
 
 	<!-- Contenido encima del fondo (misma celda del grid) -->
 	<div
-		class="container relative z-10 col-start-1 row-start-1 -mt-8 w-full pt-20 lg:pt-48 pb-12"
+		class="container relative z-10 col-start-1 row-start-1 w-full self-center py-16 max-lg:pt-28"
 	>
 		<div
-			class="relative z-10 mt-24 grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12"
+			class="relative z-10 grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12"
 		>
 			<div
 				class="flex h-full min-w-0 flex-col justify-between gap-6 text-left text-lg"
