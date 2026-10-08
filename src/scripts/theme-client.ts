@@ -1,11 +1,4 @@
-import {
-	COLOR_SWAP,
-	DEFAULT_COLOR_MODE,
-	PALETTES,
-	STORAGE_KEY,
-	type ColorMode,
-	toCssValue,
-} from '@/lib/theme';
+import { DEFAULT_COLOR_MODE, STORAGE_KEY, type ColorMode } from '@/lib/theme';
 
 declare global {
 	interface Window {
@@ -29,21 +22,10 @@ function getResolvedMode(): ColorMode {
 }
 
 function applyTheme(mode: ColorMode): void {
-	const palette = PALETTES[mode];
 	const root = document.documentElement;
 
 	root.setAttribute('data-color-mode', mode);
 	root.style.colorScheme = mode;
-	root.style.setProperty('--color-swap-duration', `${COLOR_SWAP.duration}ms`);
-	root.style.setProperty(
-		'--color-swap-timing-function',
-		COLOR_SWAP.timingFunction,
-	);
-
-	for (const [key, value] of Object.entries(palette)) {
-		const [name, cssValue] = toCssValue(key, value);
-		root.style.setProperty(name, cssValue);
-	}
 
 	updateThemeToggleLabels(mode);
 
@@ -51,26 +33,6 @@ function applyTheme(mode: ColorMode): void {
 		localStorage.setItem(STORAGE_KEY, mode);
 	} catch {
 		/* private mode */
-	}
-}
-
-function registerAnimatedProperties(mode: ColorMode): void {
-	if (!window.CSS?.registerProperty) return;
-
-	const palette = PALETTES[mode];
-	for (const [key, value] of Object.entries(palette)) {
-		const [name, cssValue] = toCssValue(key, value);
-		if (typeof value === 'string') continue;
-		try {
-			CSS.registerProperty({
-				name,
-				syntax: '<color>',
-				inherits: true,
-				initialValue: cssValue,
-			});
-		} catch {
-			/* already registered */
-		}
 	}
 }
 
@@ -110,7 +72,6 @@ export function initThemeClient(): void {
 
 	if (!window.__themeClientReady) {
 		window.__themeClientReady = true;
-		registerAnimatedProperties(mode);
 		bindThemeToggleDelegation();
 
 		if (current !== mode) {

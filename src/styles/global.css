@@ -11,7 +11,7 @@
 @custom-variant dark (&:where(html[data-color-mode="dark"], html[data-color-mode="dark"] *));
 
 /*
- * Tokens Tailwind → variables CSS del tema (seteadas por theme.ts en runtime).
+ * Tokens Tailwind → variables CSS del tema (definidas en la paleta de @layer base más abajo).
  * Uso: bg-background, text-foreground, text-primary, bg-cloud-500, etc.
  */
 @theme inline {
@@ -32,8 +32,130 @@
 	--color-sky-to: var(--color-sky-to);
 	--color-sky-subtle: var(--color-sky-subtle);
 }
+/*
+ * Palette tokens. Registering the color tokens with @property lets the browser
+ * interpolate them, so switching data-color-mode animates through the
+ * `transition` declared on html below. Dark is the default mode.
+ */
+@property --color-text {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 10% 90%);
+}
+
+@property --color-background {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 15% 6%);
+}
+
+@property --color-primary {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(15deg 63% 57%);
+}
+
+@property --color-cloud-100 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 15% 6%);
+}
+
+@property --color-cloud-300 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(212deg 40% 9%);
+}
+
+@property --color-cloud-400 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(213deg 40% 10%);
+}
+
+@property --color-cloud-500 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(213deg 40% 12%);
+}
+
+@property --color-cloud-700 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 20% 77%);
+}
+
+@property --color-sky-from {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(214deg 40% 11%);
+}
+
+@property --color-sky-to {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(200deg 50% 30%);
+}
+
+@property --color-sky-subtle {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 40% 16%);
+}
+
+@property --color-gray-300 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 10% 30%);
+}
+
+@property --color-gray-700 {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: hsl(210deg 14% 66%);
+}
+
 /* Theme tokens + animated @property transitions */
 @layer base {
+	:root,
+	html[data-color-mode="dark"] {
+		--color-text: hsl(210deg 10% 90%);
+		--color-background: hsl(210deg 15% 6%);
+		--color-primary: hsl(15deg 63% 57%);
+		--color-cloud-100: hsl(210deg 15% 6%);
+		--color-cloud-300: hsl(212deg 40% 9%);
+		--color-cloud-400: hsl(213deg 40% 10%);
+		--color-cloud-500: hsl(213deg 40% 12%);
+		--color-cloud-700: hsl(210deg 20% 77%);
+		--color-sky-from: hsl(214deg 40% 11%);
+		--color-sky-to: hsl(200deg 50% 30%);
+		--color-sky-subtle: hsl(210deg 40% 16%);
+		--color-gray-300: hsl(210deg 10% 30%);
+		--color-gray-700: hsl(210deg 14% 66%);
+		--color-footer-muted: #afcfde;
+		--selection-background-color: rgba(139, 133, 173, 0.35);
+		--selection-text-color: inherit;
+	}
+
+	html[data-color-mode="light"] {
+		--color-text: hsl(220deg 18% 22%);
+		--color-background: hsl(0deg 0% 100%);
+		--color-primary: hsl(15deg 63% 57%);
+		--color-cloud-100: hsl(203deg 60% 95%);
+		--color-cloud-300: hsl(202deg 68% 92%);
+		--color-cloud-400: hsl(201deg 60% 86%);
+		--color-cloud-500: hsl(200deg 80% 83%);
+		--color-cloud-700: hsl(210deg 30% 55%);
+		--color-sky-from: hsl(200deg 70% 78%);
+		--color-sky-to: hsl(200deg 70% 70%);
+		--color-sky-subtle: hsl(200deg 90% 88%);
+		--color-gray-300: hsl(225deg 8% 80%);
+		--color-gray-700: hsl(225deg 12% 40%);
+		--color-footer-muted: #294e60;
+		--selection-background-color: #ffec8f;
+		--selection-text-color: #000;
+	}
+
 	html {
 		scroll-behavior: smooth;
 		scrollbar-gutter: stable;
