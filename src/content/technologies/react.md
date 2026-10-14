@@ -1,5 +1,5 @@
 ---
 name: React
-image: /images/technologies/reactjs.png
+image: /images/technologies/reactjs.webp
 order: 1
 ---

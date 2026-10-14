@@ -2,20 +2,20 @@
 title: KiritaAI
 type: Producto/Saas
 description: SaaS de inteligencia de mercado con IA para descubrir nichos de apps con potencial real en Google Play.
-cover: /images/projects/kiritaai-1.png
+cover: /images/projects/kiritaai-1.webp
 gallery:
-  - /images/projects/kiritaai-1.png
-  - /images/projects/kiritaai-2.png
-  - /images/projects/kiritaai-3.png
-  - /images/projects/kiritaai-4.png
-  - /images/projects/kiritaai-5.png
-  - /images/projects/kiritaai-6.png
+  - /images/projects/kiritaai-1.webp
+  - /images/projects/kiritaai-2.webp
+  - /images/projects/kiritaai-3.webp
+  - /images/projects/kiritaai-4.webp
+  - /images/projects/kiritaai-5.webp
+  - /images/projects/kiritaai-6.webp
 stack: ["Next.js", "TypeScript", "Prisma", "Neon", "OpenAI", "better-auth", "Pusher", "Stripe"]
 repo: https://github.com/maticarrera12/kiritaai
 demo: https://kiritaai.com/
 status: active
 featured: true
-architectureImage: /images/projects/architecture-kiritaai.png
+architectureImage: /images/projects/architecture-kiritaai.webp
 
 overview: KiritaAI es un SaaS de inteligencia de mercado para creators y product builders que quieren construir apps. Analiza con IA cualquier app de Google Play para identificar gaps de funcionalidad, oportunidades de monetización y nichos con potencial. Diariamente descubre 5 nichos en auge usando datos reales de la tienda. Suma una capa de gamificación con logros, misiones y créditos para retención.
 

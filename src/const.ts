@@ -17,7 +17,7 @@ export const AUTHOR = {
   location: 'Buenos Aires, Argentina',
   role: 'Full Stack Developer',
   available: true, // controlás el badge de disponibilidad desde acá
-  photo: '/images/profile.png',
+  photo: '/images/profile.webp',
 };
 
 export const SOCIAL_LINKS = {

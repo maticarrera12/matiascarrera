@@ -2,17 +2,17 @@
 title: OneProdex
 type: Entretenimiento
 description: Plataforma de predicciones para el Mundial FIFA 2026 con grupos privados, bracket completo y puntuación en tiempo real.
-cover: /images/projects/oneprodex-1.png
+cover: /images/projects/oneprodex-1.webp
 gallery:
-  - /images/projects/oneprodex-1.png
-  - /images/projects/oneprodex-2.png
-  - /images/projects/oneprodex-3.png
-  - /images/projects/oneprodex-4.png
+  - /images/projects/oneprodex-1.webp
+  - /images/projects/oneprodex-2.webp
+  - /images/projects/oneprodex-3.webp
+  - /images/projects/oneprodex-4.webp
 stack: ["Next.js", "TypeScript", "Supabase", "React", "Tailwind CSS", "Framer Motion"]
 repo: https://github.com/maticarrera12/oneprodex
 demo: https://oneprodex.vercel.app
 status: active
-architectureImage: /images/projects/architecture-oneprodex.png
+architectureImage: /images/projects/architecture-oneprodex.webp
 featured: true
 overview: OneProdex es una plataforma de predicciones para el Mundial FIFA 2026. Los usuarios se unen a grupos privados, predicen los resultados de la fase de grupos, construyen su bracket de eliminación directa completo y eligen a los ganadores de premios individuales. Todo se puntúa automáticamente y se compite en tiempo real.
 problem: Durante los mundiales, las predicciones entre amigos son un caos — planillas de Excel, encuestas de WhatsApp y sin seguimiento automático. No existe una plataforma que combine predicciones completas (fase de grupos + bracket + premios individuales) con competencia entre conocidos.
