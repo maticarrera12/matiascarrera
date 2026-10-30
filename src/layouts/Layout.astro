@@ -35,6 +35,7 @@ const ogImageUrl = new URL(ogImage, SITE_URL).href;
 
 const themeInitScript = getThemeInitInlineScript();
 import Analytics from '@vercel/analytics/astro'
+import SpeedInsights from '@vercel/speed-insights/astro'
 ---
 
 <!doctype html>
@@ -78,6 +79,7 @@ import Analytics from '@vercel/analytics/astro'
 		</main>
 		<Footer transition:persist="site-footer" />
 		<Analytics />
+		<SpeedInsights />
 		<script>
 			import { initThemeClient } from '@/scripts/theme-client';
 
